@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>Biological Degeneration</title>
-  
+    <link rel="stylesheet" type="text/css" href="./style.css"></link>
+
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
@@ -16,8 +17,15 @@
 </head>
 <body>
     <canvas id="gameWorld" width="1400" height="1000" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+
+    <br>
+    <div id="db" class="db-status">Database</div><br />
+    <div id="agent">
+    <div id="run">wild type 1 - no humans</div><br />
+    <input type="text" id="human_add_rate" value="0" />Human Add Rate<br />
 </body>
 <div id = "day">
     Day: 0
+
 </div>
 </html>
