@@ -23,6 +23,45 @@
     <div id="agent">
     <div id="run">wild type 1 - no humans</div><br />
     <input type="text" id="human_add_rate" value="0" />Human Add Rate<br />
+    <input type="checkbox" id="individualSeedSeparation" checked/>Individuals Select Planting Seeds<br />
+        <input type="checkbox" id="sharedPlantingSeeds" checked/>Share Planting Seeds<br />
+        <input type="text" id="plantSelectionChance" value="1.0" />% chance to selectively plant<br />
+        <input type="text" id="plantSelectionStrength" value="0.2" />% of seeds to plant<br />
+        <label for="seed_selection">Harvesting strategy:</label>
+        <select id="seed_selection">
+            <option value="none">No Harvest</option>
+            <option value="random">Harvest Randomly</option>
+            <option value="weight">Max Seed Weight</option>
+            <option value="deepRoots">Max Root Depth</option>
+            <option value="fecundity">Max Number of Seeds</option>
+            <option value="fruitEnergy">Max Nutritional Value</option>
+            <option value="dispersal">Max Dispersal</option>
+            <option value="minweight">Min Seed Weight</option>
+            <option value="mindeepRoots">Min Root Depth</option>
+            <option value="minfecundity">Min Number of Seeds</option>
+            <option value="minfruitEnergy">Min Nutritional Value</option>
+            <option value="mindispersal">Min Dispersal</option>
+        </select><br />
+        <label for="plant_selection">Planting strategy:</label>
+        <select id="plant_selection">
+            <option value="none">No Planting</option>
+            <option value="random">Random Seeds</option>
+            <option value="bottom">First Harvested</option>
+            <option value="top">Last Harvested</option>
+            <option value="weight">Max Seed Weight</option>
+            <option value="deepRoots">Max Root Depth</option>
+            <option value="fecundity">Max Number of Seeds</option>
+            <option value="fruitEnergy">Max Nutritional Value</option>
+            <option value="dispersal">Max Dispersal</option>
+            <option value="minweight">Min Seed Weight</option>
+            <option value="mindeepRoots">Min Root Depth</option>
+            <option value="minfecundity">Min Number of Seeds</option>
+            <option value="minfruitEnergy">Min Nutritional Value</option>
+            <option value="mindispersal">Min Dispersal</option>
+        </select><br />
+    </div>
+	<br>
+    <button type="button" onclick=reset()>Reset</button>
 </body>
 <div id = "day">
     Day: 0
