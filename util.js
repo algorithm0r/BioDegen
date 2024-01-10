@@ -90,19 +90,20 @@ function loadParameters() {
     // params.seedDeathChance = parseFloat(document.getElementById("seed_death_chance").value);
     // params.growthPenalty = parseInt(document.getElementById("growth_penalty").value);
 
-    params.individualSeedSeparation = document.getElementById("individualSeedSeparation").checked;
-    params.sharedPlantingSeeds = document.getElementById("sharedPlantingSeeds").checked;
-    params.plantSelectionChance = parseFloat(document.getElementById("plantSelectionChance").value);
-    params.plantSelectionStrength = parseFloat(document.getElementById("plantSelectionStrength").value);
-    params.humanAddRate = parseFloat(document.getElementById("human_add_rate").value);
+    PARAMETERS.populationSoftCap = parseFloat(document.getElementById("population_soft_cap").value);
+
+    // params.sharedPlantingSeeds = document.getElementById("sharedPlantingSeeds").checked;
+    // params.plantSelectionChance = parseFloat(document.getElementById("plantSelectionChance").value);
+    // params.plantSelectionStrength = parseFloat(document.getElementById("plantSelectionStrength").value);
+    // params.humanAddRate = parseFloat(document.getElementById("human_add_rate").value);
     // params.seedsDiffMetabolism = document.getElementById("seeds_metabolism").checked;
     // params.metabolicThreshold = parseInt(document.getElementById("metabolic_threshold").value);
     // params.metabolicUnit = parseInt(document.getElementById("metabolic_unit").value);
     // params.skinSize = parseInt(document.getElementById("skin_size").value);
     // params.scoopSize = parseInt(document.getElementById("scoop_size").value);
     // params.basketSize = parseInt(document.getElementById("basket_size").value);
-    params.seedStrategy = document.getElementById("seed_selection").value;
-    params.plantStrategy = document.getElementById("plant_selection").value;
+    // params.seedStrategy = document.getElementById("seed_selection").value;
+    // params.plantStrategy = document.getElementById("plant_selection").value;
 
-    console.log(params);
+    console.log(PARAMETERS);
 };
