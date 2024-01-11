@@ -10,6 +10,24 @@ function Automata(game) {
     this.buildAutomata();
 };
 
+Automata.prototype.createBoard = function () {
+    for (var i = 0; i < PARAMETERS.dimension; i++) {
+        this.board.push([]);
+        for (var j = 0; j < PARAMETERS.dimension; j++) {
+            this.board[i].push(new Cell(this.game, i, j, this));
+        }
+    }
+
+    for (var i = 0; i < PARAMETERS.dimension; i++) {
+        for (var j = 0; j < PARAMETERS.dimension; j++) {
+            this.board[i][j].init(this.board);
+        }
+    }
+    // this.generateRiver();
+    // this.plantSeeds();
+    // this.addShelters();
+};
+
 Automata.prototype.buildAutomata = function () {
     
     this.game.entities = [];
@@ -50,5 +68,5 @@ Automata.prototype.buildAutomata = function () {
     this.board = [];
 
     //probably need this later
-    // this.createBoard();
+    this.createBoard();
 };

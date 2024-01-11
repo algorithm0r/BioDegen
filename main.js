@@ -20,4 +20,5 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.addEntity(new World())
 
 	gameEngine.start();
+	// reset();
 });
