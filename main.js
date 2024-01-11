@@ -8,7 +8,7 @@ function reset() {
     loadParameters();
 
     // Destroy and rebuild the world
-    destroyWorld();
+    destroy();
     buildWorld();
 }
 
