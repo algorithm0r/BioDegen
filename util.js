@@ -91,6 +91,18 @@ function loadParameters() {
     // params.growthPenalty = parseInt(document.getElementById("growth_penalty").value);
 
     PARAMETERS.populationSoftCap = parseFloat(document.getElementById("population_soft_cap").value);
+    PARAMETERS.randomEnvironmentalBonuses = document.getElementById("randEnvBonus").checked;
+    PARAMETERS.maxEnvironmentalBonus = parseFloat(document.getElementById("maxEnvBonus").value);
+    PARAMETERS.numTraits = parseFloat(document.getElementById("numTraits").value);
+    PARAMETERS.traitThreshold = parseFloat(document.getElementById("traitThreshold").value);
+    PARAMETERS.reproductionThresholdStep = parseFloat(document.getElementById("ReproThresholdStep").value);
+    PARAMETERS.reproductionThresholdBase = parseFloat(document.getElementById("ReproThresholdBase").value);
+    PARAMETERS.migrationRate = parseFloat(document.getElementById("migrationRate").value);
+    PARAMETERS.mutationRate = parseFloat(document.getElementById("mutationRate").value);
+
+    PARAMETERS.learningRate = parseFloat(document.getElementById("learnRate").value);
+    PARAMETERS.deathRate = parseFloat(document.getElementById("deathRate").value);
+    PARAMETERS.socialLearningRate = parseFloat(document.getElementById("socialRate").value);
 
     // params.sharedPlantingSeeds = document.getElementById("sharedPlantingSeeds").checked;
     // params.plantSelectionChance = parseFloat(document.getElementById("plantSelectionChance").value);
