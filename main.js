@@ -2,14 +2,6 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 
-// function reset() {
-// 	if (gameEngine.board) {
-// 		gameEngine.board.reset();
-// 	} else {
-// 		gameEngine.entities = [];
-// 		new Automata(gameEngine);
-// 	}
-// };
 
 function reset() {
     // Load parameters or call a method to load them
