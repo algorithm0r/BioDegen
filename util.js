@@ -99,7 +99,6 @@ function loadParameters() {
     PARAMETERS.reproductionThresholdBase = parseFloat(document.getElementById("ReproThresholdBase").value);
     PARAMETERS.migrationRate = parseFloat(document.getElementById("migrationRate").value);
     PARAMETERS.mutationRate = parseFloat(document.getElementById("mutationRate").value);
-
     PARAMETERS.learningRate = parseFloat(document.getElementById("learnRate").value);
     PARAMETERS.deathRate = parseFloat(document.getElementById("deathRate").value);
     PARAMETERS.socialLearningRate = parseFloat(document.getElementById("socialRate").value);

@@ -17,3 +17,32 @@ class Timer {
         return gameDelta;
     };
 };
+
+// function Timer() {
+//     this.gameTime = 0;
+//     this.maxStep = 0.05;
+//     this.wallLastTimestamp = 0;
+//     this.ticks = [];
+// };
+
+// Timer.prototype.tick = function () {
+//     var wallCurrent = performance.now();
+//     var wallDelta = (wallCurrent - this.wallLastTimestamp) / 1000;
+//     this.wallLastTimestamp = wallCurrent;
+
+//     var gameDelta = Math.min(wallDelta, this.maxStep);
+//     this.gameTime += gameDelta;
+
+//     this.ticks.push(wallDelta);
+
+//     let index = this.ticks.length - 1;
+//     let sum = 0;
+//     while(sum <= 1 && index >= 0) {
+//         sum += this.ticks[index--];
+//     }
+//     index++;
+
+//     this.ticks.splice(0,index);
+
+//     return gameDelta;
+// };

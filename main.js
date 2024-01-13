@@ -4,11 +4,12 @@ const ASSET_MANAGER = new AssetManager();
 
 
 function reset() {
-    // Load parameters or call a method to load them
+	destroy();
+	// Load parameters or call a method to load them
     loadParameters();
 
     // Destroy and rebuild the world
-    destroy();
+   
     buildWorld();
 }
 
