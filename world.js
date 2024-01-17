@@ -22,11 +22,13 @@ class World {
     draw(ctx){
         ctx.fillStyle = "#cc9966";
         ctx.fillRect(0,0,ctx.canvas.height,ctx.canvas.height);
-        
+
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             for(let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.world[i][j].draw(ctx);
             }
         }
+
+      
     };
 };
