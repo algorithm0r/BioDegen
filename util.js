@@ -17,7 +17,10 @@ const PARAMETERS = {
     mutationRate: 0.05,
     learningRate: 0.01,
     deathRate: 0.005,
-    socialLearningRate: 0.1
+    socialLearningRate: 0.1,
+
+    //data gathering
+    reportingPeriod: 100
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
