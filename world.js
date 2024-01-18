@@ -11,13 +11,23 @@ class World {
     };
 
     updateData() {
-        // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-        //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-        //        this.world[i].push(new Village(this, i, j));
-        //        humanPop = this.world.Village.population;
-        //     }
-        // }
-    }
+        let humanPop = 0;
+        for (let i = 0; i < PARAMETERS.worldDimension; i++) {
+            for (let j = 0; j < PARAMETERS.worldDimension; j++) {
+                let cell = this.world[i][j];
+                // seedPop += cell.seeds.length;
+                humanPop += cell.humans.length;
+            }
+        }
+    
+
+        for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+            for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+               this.world[i].push(new Village(this, i, j));
+               humanPop = this.world.Village.population.length;
+            }
+        }
+    };
 
     update() {
         document.getElementById("day").innerHTML = `Day: ${++this.day}`;
@@ -30,6 +40,10 @@ class World {
         //     this.updateData();
         // }
     
+    };
+
+    buildGraphs() {
+
     };
   
     draw(ctx){
