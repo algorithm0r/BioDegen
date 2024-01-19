@@ -16,6 +16,8 @@ class World {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 let cell = this.world[i][j];
                 // seedPop += cell.seeds.length;
+                
+                //change this to cell.population.length.
                 humanPop += cell.humans.length;
             }
         }
@@ -36,15 +38,13 @@ class World {
                 this.world[i][j].update();
             }
         }
-        // if (this.day % PARAMETERS.reportingPeriod === 0) {
-        //     this.updateData();
-        // }
+        if (this.day % PARAMETERS.reportingPeriod === 0) {
+            this.updateData();
+        }
     
     };
 
-    buildGraphs() {
 
-    };
   
     draw(ctx){
         ctx.fillStyle = "#cc9966";
