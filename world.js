@@ -1,6 +1,8 @@
 class World {
     constructor() {
         this.world = [];
+        this.popGraph = [];
+
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             this.world.push([]);
             for(let j = 0; j < PARAMETERS.worldDimension; j++) {
@@ -11,24 +13,24 @@ class World {
     };
 
     updateData() {
-        let humanPop = 0;
+        // let humanPop = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 let cell = this.world[i][j];
                 // seedPop += cell.seeds.length;
-                
+                this.popGraph.push(cell.population.length);
                 //change this to cell.population.length.
-                humanPop += cell.humans.length;
+                // humanPop += cell.population.length;
             }
         }
     
 
-        for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-               this.world[i].push(new Village(this, i, j));
-               humanPop = this.world.Village.population.length;
-            }
-        }
+        // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+        //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+        //        this.world[i].push(new Village(this, i, j));
+        //        humanPop = this.world.Village.population.length;
+        //     }
+        // }
     };
 
     update() {
