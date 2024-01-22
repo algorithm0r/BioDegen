@@ -3,8 +3,7 @@ class World {
         this.world = [];
         this.popGraph = [];
         // need to implement this properly in main or world constructor here
-        this.humanGraph = new Graph(gameEngine, 910, 20, this, "Population");
-        gameEngine.addEntity(this.humanGraph);
+       
     
     
 
@@ -15,7 +14,9 @@ class World {
             }
         }
         this.day = 0;
-        
+
+        this.humanGraph = new Graph(gameEngine, 1030, 0, this, "Population");
+        gameEngine.addEntity(this.humanGraph);
     };
 
     updateData() {
