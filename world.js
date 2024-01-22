@@ -25,12 +25,6 @@ class World {
         }
     
 
-        // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-        //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-        //        this.world[i].push(new Village(this, i, j));
-        //        humanPop = this.world.Village.population.length;
-        //     }
-        // }
     };
 
     update() {
