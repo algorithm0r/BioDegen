@@ -28,8 +28,12 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.init(ctx);
 
-	gameEngine.addEntity(new World())
+	gameEngine.addEntity(new World(gameEngine))
+	
+	// this.popGraph = new Graph(this.gameEngine, 810, 0, this, "Population");
+	// gameEngine.addEntity(this.popGraph);
 
 	gameEngine.start();
+	
 	// reset();
 });

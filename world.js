@@ -1,7 +1,12 @@
 class World {
-    constructor() {
+    constructor(gameEngine) {
         this.world = [];
         this.popGraph = [];
+        // need to implement this properly in main or world constructor here
+        this.humanGraph = new Graph(gameEngine, 910, 20, this, "Population");
+        gameEngine.addEntity(this.humanGraph);
+    
+    
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             this.world.push([]);
@@ -10,6 +15,7 @@ class World {
             }
         }
         this.day = 0;
+        
     };
 
     updateData() {
@@ -39,6 +45,7 @@ class World {
         }
     
     };
+
 
 
   
