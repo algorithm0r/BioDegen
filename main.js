@@ -18,7 +18,9 @@ function destroy() {
 }
 
 function buildWorld() {
-	gameEngine.addEntity(new World());
+	gameEngine.addEntity(new World(gameEngine));
+	// this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
+	// gameEngine.addEntity(this.humanGraph);
 }
 
 

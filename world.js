@@ -15,7 +15,8 @@ class World {
         }
         this.day = 0;
 
-        this.humanGraph = new Graph(gameEngine, 1030, 0, this, "Population");
+        //added in the graph for population here
+        this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
         gameEngine.addEntity(this.humanGraph);
     };
 
