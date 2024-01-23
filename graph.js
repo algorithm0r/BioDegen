@@ -15,8 +15,8 @@ function Graph(game, x, y, world, label) {
 
 Graph.prototype.update = function () {
     this.data = [];
-    this.data.push(this.world.village.population.length);
-    console.log(this.world.Village.population.length);
+    this.data.push(this.world.popGraph);
+    // console.log(this.world.Village.population.length);
     // this.data.push(this.automata.wildPop);
     // this.data.push(this.automata.domePop);
     // this.data.push(this.automata.humanPop);

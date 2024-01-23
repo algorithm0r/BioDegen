@@ -18,7 +18,9 @@ function destroy() {
 }
 
 function buildWorld() {
-	gameEngine.addEntity(new World());
+	gameEngine.addEntity(new World(gameEngine));
+	// this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
+	// gameEngine.addEntity(this.humanGraph);
 }
 
 
@@ -28,8 +30,12 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.init(ctx);
 
-	gameEngine.addEntity(new World())
+	gameEngine.addEntity(new World(gameEngine))
+	
+	// this.popGraph = new Graph(this.gameEngine, 810, 0, this, "Population");
+	// gameEngine.addEntity(this.popGraph);
 
 	gameEngine.start();
+	
 	// reset();
 });

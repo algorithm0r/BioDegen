@@ -1,6 +1,12 @@
 class World {
-    constructor() {
+    constructor(gameEngine) {
         this.world = [];
+        this.popGraph = [];
+        // need to implement this properly in main or world constructor here
+       
+    
+    
+
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             this.world.push([]);
             for(let j = 0; j < PARAMETERS.worldDimension; j++) {
@@ -8,27 +14,31 @@ class World {
             }
         }
         this.day = 0;
+
+        //added in the graph for population here
+        this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
+        gameEngine.addEntity(this.humanGraph);
     };
 
     updateData() {
         let humanPop = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
-                let cell = this.world[i][j];
-                // seedPop += cell.seeds.length;
-
-                //change this to cell.population.length.
-                humanPop += cell.population.length;
+                // let cell = this.world[i][j];
+                humanPop += this.world[i][j].population.length;
+                // make population length sum up together then add in that summed variable into popgraph
+                // let humans = this.world[i][j].population.length; maybe something like this 
+                // this.popGraph.push(this.world[i][j].population.length);
+               
+                this.popGraph.push(humanPop);
+               
             }
+           
         }
+    //    this.humanPop.push(humanPop);
+      
     
 
-        for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-               this.world[i].push(new Village(this, i, j));
-               humanPop = this.world.Village.population.length;
-            }
-        }
     };
 
     update() {
@@ -43,6 +53,7 @@ class World {
         }
     
     };
+
 
 
   

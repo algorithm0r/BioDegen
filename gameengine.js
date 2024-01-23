@@ -96,7 +96,7 @@ class GameEngine {
     drawFps() {
         this.fps = this.timer.calculateFPS();
         this.ctx.fillStyle = "black";
-        this.ctx.fillText(`FPS: ${this.fps.toFixed(2)}`, 1010, 310);
+        this.ctx.fillText(`FPS: ${this.fps.toFixed(2)}`, 1100, 310);
     }
 
     update() {
