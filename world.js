@@ -24,11 +24,10 @@ class World {
         // let humanPop = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
-                let cell = this.world[i][j];
+                // let cell = this.world[i][j];
                 // seedPop += cell.seeds.length;
-                this.popGraph.push(cell.population.length);
-                //change this to cell.population.length.
-                // humanPop += cell.population.length;
+                this.popGraph.push(this.world[i][j].population.length);
+               
             }
         }
     

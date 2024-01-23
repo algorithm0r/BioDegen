@@ -20,7 +20,7 @@ const PARAMETERS = {
     socialLearningRate: 0.1,
 
     //data gathering
-    reportingPeriod: 100
+    reportingPeriod: 300
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
