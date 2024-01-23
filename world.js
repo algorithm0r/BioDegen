@@ -16,9 +16,9 @@ class World {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 let cell = this.world[i][j];
                 // seedPop += cell.seeds.length;
-                
+
                 //change this to cell.population.length.
-                humanPop += cell.humans.length;
+                humanPop += cell.population.length;
             }
         }
     
