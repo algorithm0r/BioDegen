@@ -25,7 +25,8 @@ class World {
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 // let cell = this.world[i][j];
-                // seedPop += cell.seeds.length;
+                // make population length sum up together then add in that summed variable into popgraph
+                // let humans = this.world[i][j].population.length; maybe something like this 
                 this.popGraph.push(this.world[i][j].population.length);
                
             }
