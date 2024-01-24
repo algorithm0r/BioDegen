@@ -3,7 +3,7 @@ class World {
         this.world = [];
         this.popGraph = [];
         // need to implement this properly in main or world constructor here
-       
+        this.humanPop = 0;
     
     
 
@@ -21,13 +21,14 @@ class World {
     };
 
     updateData() {
-        // let humanPop = 0;
+        
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 // let cell = this.world[i][j];
                 // make population length sum up together then add in that summed variable into popgraph
                 // let humans = this.world[i][j].population.length; maybe something like this 
-                this.popGraph.push(this.world[i][j].population.length);
+                this.humanPop += this.world[i][j].population.length;
+                this.popGraph.push(this.humanPop);
                
             }
         }
