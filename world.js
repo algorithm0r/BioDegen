@@ -1,10 +1,13 @@
 class World {
     constructor(gameEngine) {
         this.world = [];
+        
+        // Graphs
         this.popGraph = [];
+        this.geneGraph = [];
         // need to implement this properly in main or world constructor here
         this.humanPop = 0;
-    
+        this.genePop = 0;
     
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
@@ -18,6 +21,9 @@ class World {
         //added in the graph for population here
         this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
         gameEngine.addEntity(this.humanGraph);
+
+        // this.geneGraph = new Graph(gameEngine, 1040, 500, this, "Gene");
+        // gameEngine.addEntity(this.geneGraph);
     };
 
     updateData() {
@@ -29,6 +35,9 @@ class World {
                 // let humans = this.world[i][j].population.length; maybe something like this 
                 this.humanPop += this.world[i][j].population.length;
                 this.popGraph.push(this.humanPop);
+               
+                // this.genePop = this.world[i][j].genes.length
+                // this.geneGraph.push(genePop)
                
             }
            
