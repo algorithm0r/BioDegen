@@ -22,8 +22,8 @@ class World {
         this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
         gameEngine.addEntity(this.humanGraph);
 
-        // this.geneGraph = new Graph(gameEngine, 1040, 500, this, "Gene");
-        // gameEngine.addEntity(this.geneGraph);
+        this.geneGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
+        gameEngine.addEntity(this.geneGraph);
     };
 
     updateData() {
@@ -36,7 +36,7 @@ class World {
                 this.humanPop += this.world[i][j].population.length;
                 this.popGraph.push(this.humanPop);
                
-                // this.genePop = this.world[i][j].genes.length
+                // this.genePop = this.world[i][j].population.genes.length
                 // this.geneGraph.push(genePop)
                
             }

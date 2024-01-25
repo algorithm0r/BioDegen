@@ -41,7 +41,6 @@ class Timer {
     }
 
     displayFps() {
-    // Assuming you have an element with id 'fpsCounter' to display the FPS
     document.getElementById('fpsCounter').textContent = `FPS: ${this.fps.toFixed(2)}`;
     };
 
