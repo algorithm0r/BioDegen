@@ -35,7 +35,9 @@ class World {
                 // let humans = this.world[i][j].population.length; maybe something like this 
                 this.humanPop += this.world[i][j].population.length;
                 this.popGraph.push(this.humanPop);
-               
+               for (let k = 0 ; k < this.world[i][j].population.length; k++) {
+
+               }
                 // this.genePop = this.world[i][j].population.genes.length
                 // this.geneGraph.push(genePop)
                
