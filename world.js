@@ -27,22 +27,23 @@ class World {
     };
 
     updateData() {
-        
+        this.humanPop = 0;
+        let learningTicket = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
-                // let cell = this.world[i][j];
-                // make population length sum up together then add in that summed variable into popgraph
-                // let humans = this.world[i][j].population.length; maybe something like this 
+                // let cell = this.world[i][j]; 
                 this.humanPop += this.world[i][j].population.length;
-                this.popGraph.push(this.humanPop);
-               
-                // this.genePop = this.world[i][j].population.genes.length
-                // this.geneGraph.push(genePop)
-               
+                
+               // add in other loop here for genes for the index of n - 2 and n-1 for social and learning tickets
+               // for each agent average the tickets
+               for(let k = 0; k < this.world[i][j].population.length; k++) {
+                    // learningTicket = this.world[i][j].population[k].genes[k-2]
+               }
             }
            
         }
-    //    this.humanPop.push(humanPop);
+        this.popGraph.push(this.humanPop);
+        // this.geneGraph.push(genePop)
       
     
 
