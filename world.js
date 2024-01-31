@@ -28,7 +28,6 @@ class World {
 
     updateData() {
         this.humanPop = 0;
-        let learningTicket = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 // let cell = this.world[i][j]; 
