@@ -28,6 +28,7 @@ class World {
 
     updateData() {
         this.humanPop = 0;
+        let learningTicket = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 // let cell = this.world[i][j]; 
@@ -36,7 +37,7 @@ class World {
                // add in other loop here for genes for the index of n - 2 and n-1 for social and learning tickets
                // for each agent average the tickets
                for(let k = 0; k < this.world[i][j].population.length; k++) {
-                    // learningTicket = this.world[i][j].population[k].genes[k-2]
+                    learningTicket = this.world[i][j].population[k].genes[k-2]
                }
             }
            
