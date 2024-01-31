@@ -22,8 +22,9 @@ class World {
         this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
         gameEngine.addEntity(this.humanGraph);
 
-        this.geneGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
-        gameEngine.addEntity(this.geneGraph);
+        // tickets graph
+        this.ticketsGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
+        gameEngine.addEntity(this.ticketsGraph);
     };
 
     updateData() {
@@ -42,9 +43,9 @@ class World {
                 for (let k = 0; k < this.world[i][j].population.length; k++) {
                     let agent = this.world[i][j].population[k];
                     let genesLength = agent.genes.length;
-                    if (genesLength >= 2) {
+                    // if (genesLength >= 2) {
                         this.genePop += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
-                    }
+                    // }
                 
                 }
            
@@ -52,7 +53,7 @@ class World {
        
         }
         this.popGraph.push(this.humanPop);
-        // this.geneGraph.push(genePop)
+        this.geneGraph.push(this.genePop);
     };
 
     update() {
