@@ -22,6 +22,8 @@ Graph.prototype.update = function () {
     this.data = [];
     this.data.push(this.world.popGraph);
     this.data.push(this.world.geneGraph);
+    // loops thru the world list to get all the data intsead of data.push
+    // allowing us to plot different graphs with different tickets
 
     // console.log(this.world.Village.population.length);
     // this.data.push(this.automata.wildPop);
