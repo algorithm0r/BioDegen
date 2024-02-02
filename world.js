@@ -5,9 +5,10 @@ class World {
         // Graphs
         this.popGraph = [];
         this.geneGraph = [];
+        
         // need to implement this properly in main or world constructor here
-        this.humanPop = 0;
-        this.genePop = 0;
+        // this.humanPop = 0;
+        this.geneTickets = 0;
     
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
@@ -29,7 +30,7 @@ class World {
 
     updateData() {
         this.humanPop = 0;
-        this.genePop = 0;
+        this.geneTickets = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 // let cell = this.world[i][j]; 
@@ -41,7 +42,7 @@ class World {
                     let agent = this.world[i][j].population[k];
                     let genesLength = agent.genes.length;
                     if (genesLength >= 2) {
-                        this.genePop += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
+                        this.geneTickets += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
                     }
                 
                 }
@@ -50,7 +51,7 @@ class World {
        
         }
         this.popGraph.push(this.humanPop);
-        this.geneGraph.push(this.genePop);
+        this.geneGraph.push(this.geneTickets);
     };
 
     update() {
