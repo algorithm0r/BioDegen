@@ -38,6 +38,9 @@ class World {
                 
                // add in other loop here for genes for the index of n - 2 and n-1 for social and learning tickets
                // for each agent average the tickets
+               // seperate tickets into indvidual variables -2 is learning and -1 is social
+               // group up the original n (which are 10 right now) and average them
+
                 for (let k = 0; k < this.world[i][j].population.length; k++) {
                     let agent = this.world[i][j].population[k];
                     let genesLength = agent.genes.length;

@@ -3,6 +3,9 @@ function Graph(game, x, y, world, label) {
     this.x = x;
     this.y = y;
     this.world = world;
+    // add in a list of data in here from world to separate
+    // this.world.popGraph; , this.world.geneGraph, etc etc
+    // pass world in as a list
     this.label = label;
 
     this.xSize = 600;
@@ -12,6 +15,8 @@ function Graph(game, x, y, world, label) {
     this.colors = ["#00BB00", "#BB0000", "#00BBBB", "#CCCCCC"];
     this.maxVal = 0;
 }
+
+// want to upgrade to hold different graphs
 
 Graph.prototype.update = function () {
     this.data = [];
