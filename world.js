@@ -5,10 +5,10 @@ class World {
         // Graphs
         this.popGraph = [];
         this.geneGraph = [];
-        
+
         // need to implement this properly in main or world constructor here
         // this.humanPop = 0;
-        this.geneTickets = 0;
+        // this.geneTickets = 0;
     
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
