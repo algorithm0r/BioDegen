@@ -35,6 +35,8 @@ class World {
         this.geneTickets = 0;
         this.learningT = 0;
         this.socialT = 0;
+        this.traits = 0;
+        
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.humanPop += this.world[i][j].population.length;
@@ -51,6 +53,7 @@ class World {
                     if (genesLength >= 2) {
                         this.learningT += agent.genes[genesLength - 1];
                         this.socialT += agent.genes[genesLength - 2];
+                        // this.traits += agent.genes
                         this.geneTickets += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
                     }
                 
