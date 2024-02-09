@@ -24,7 +24,7 @@ Graph.prototype.update = function () {
     this.data.push(this.world.geneGraph);
     this.data.push(this.world.learningGraph);
     this.data.push(this.world.socialGraph);
-    this.data.push(this.world.geneAverageTest);
+    // this.data.push(this.world.geneAverageTest);
 
     let dataList = this.world.getData();
     
