@@ -5,7 +5,9 @@ class World {
         // Graphs
         this.popGraph = [];
         this.geneGraph = [];
-
+        this.socialGraph = [];
+        this.learningGraph = [];
+        this.geneAverageTest = [];
         // need to implement this properly in main or world constructor here
         // this.humanPop = 0;
         // this.geneTickets = 0;
@@ -31,6 +33,8 @@ class World {
     updateData() {
         this.humanPop = 0;
         this.geneTickets = 0;
+        this.learningT = 0;
+        this.socialT = 0;
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.humanPop += this.world[i][j].population.length;
@@ -39,21 +43,29 @@ class World {
                // for each agent average the tickets
                // seperate tickets into indvidual variables -2 is learning and -1 is social
                // group up the original n (which are 10 right now) and average them
-               // keep this but then average the tickets through the amount of agents
+               // keep this geneTickets but then average the tickets through the amount of agents
 
                 for (let k = 0; k < this.world[i][j].population.length; k++) {
                     let agent = this.world[i][j].population[k];
                     let genesLength = agent.genes.length;
                     if (genesLength >= 2) {
+                        this.learningT += agent.genes[genesLength - 1];
+                        this.socialT += agent.genes[genesLength - 2];
                         this.geneTickets += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
                     }
                 
                 }
            
             }
-       
+            
         }
+        // this.geneAverage = this.geneTickets/agent;
+
+
+        // this.geneAverageTest.push(this.geneAverage);
         this.popGraph.push(this.humanPop);
+        this.learningGraph.push(this.learningT);
+        this.socialGraph.push(this.socialT);
         this.geneGraph.push(this.geneTickets);
     };
 

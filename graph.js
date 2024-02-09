@@ -22,17 +22,21 @@ Graph.prototype.update = function () {
     this.data = [];
     this.data.push(this.world.popGraph);
     this.data.push(this.world.geneGraph);
+    this.data.push(this.world.learningGraph);
+    this.data.push(this.world.socialGraph);
+    this.data.push(this.world.geneAverageTest);
 
-    let dataList = this.world.getDataList();
-    dataList.forEach(dataItem => {
-        // dataItem.name gives the name of the dataset (e.g., 'Population')
-        // dataItem.data gives the actual data array
+    let dataList = this.world.getData();
     
-        // Here you would call your plotting function or library
-        // For example, using a hypothetical plotGraph function:
-        plotGraph(dataItem.name, dataItem.data);
-    });
+    // dataList.forEach(dataItem => {
+    //     // dataItem.name gives the name of the dataset (e.g., 'Population')
+    //     // dataItem.data gives the actual data array
     
+    //     // Here you would call your plotting function or library
+    //     // For example, using a hypothetical plotGraph function:
+    //     plotGraph(dataItem.name, dataItem.data);
+    // });
+
     // loops thru the world list to get all the data intsead of data.push
     // allowing us to plot different graphs with different tickets
 
