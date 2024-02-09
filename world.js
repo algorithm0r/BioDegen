@@ -57,6 +57,14 @@ class World {
         this.geneGraph.push(this.geneTickets);
     };
 
+    getData() {
+        return [
+            { name: 'popGraph', data: this.popGraph },
+            { name: 'geneGraph', data: this.geneGraph },
+            // Add other data as needed
+        ];
+    };
+
     update() {
         document.getElementById("day").innerHTML = `Day: ${++this.day}`;
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
