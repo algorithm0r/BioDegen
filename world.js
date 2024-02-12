@@ -28,6 +28,12 @@ class World {
         // tickets graph
         this.ticketsGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
         gameEngine.addEntity(this.ticketsGraph);
+
+        this.learnTGraph = new Graph(gameEngine, 1040, 400, this, "Learn ticket");
+        gameEngine.addEntity(this.learnTGraph);
+
+        this.socialTGraph = new Graph(gameEngine, 1040, 600, this, "social ticket");
+        gameEngine.addEntity(this.socialTGraph);
     };
 
     updateData() {
@@ -73,11 +79,12 @@ class World {
     };
 
     getData() {
-        return [
-            { name: 'popGraph', data: this.popGraph },
-            { name: 'geneGraph', data: this.geneGraph },
-            // Add other data as needed
-        ];
+        return {
+            popGraph: this.popGraph, // Population graph data
+            geneGraph: this.geneGraph, // Gene graph data
+            learningGraph: this.learningGraph, // Learning graph data
+            socialGraph: this.socialGraph // Social graph data
+        };
     };
 
     update() {
