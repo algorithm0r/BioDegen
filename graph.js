@@ -3,7 +3,7 @@ function Graph(game, x, y, world, label) {
     this.x = x;
     this.y = y;
     this.world = world;
-    let graphData = world.getData();
+    let graphData = this.world.getData();
     this.popGraph = graphData.popGraph;
     this.geneGraph = graphData.geneGraph;
     this.learningGraph = graphData.learningGraph;

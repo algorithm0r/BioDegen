@@ -8,9 +8,6 @@ class World {
         this.socialGraph = [];
         this.learningGraph = [];
         this.geneAverageTest = [];
-        // need to implement this properly in main or world constructor here
-        // this.humanPop = 0;
-        // this.geneTickets = 0;
     
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
@@ -79,12 +76,12 @@ class World {
     };
 
     getData() {
-        return {
-            popGraph: this.popGraph, // Population graph data
-            geneGraph: this.geneGraph, // Gene graph data
-            learningGraph: this.learningGraph, // Learning graph data
-            socialGraph: this.socialGraph // Social graph data
-        };
+        return [
+            this.popGraph, 
+            this.geneGraph, 
+            this.learningGraph, 
+            this.socialGraph
+        ];
     };
 
     update() {
