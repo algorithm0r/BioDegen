@@ -33,22 +33,6 @@ Graph.prototype.update = function () {
 
     let dataList = this.world.getData();
     
-    // dataList.forEach(dataItem => {
-    //     // dataItem.name gives the name of the dataset (e.g., 'Population')
-    //     // dataItem.data gives the actual data array
-    
-    //     // Here you would call your plotting function or library
-    //     // For example, using a hypothetical plotGraph function:
-    //     plotGraph(dataItem.name, dataItem.data);
-    // });
-
-    // loops thru the world list to get all the data intsead of data.push
-    // allowing us to plot different graphs with different tickets
-
-    // console.log(this.world.Village.population.length);
-    // this.data.push(this.automata.wildPop);
-    // this.data.push(this.automata.domePop);
-    // this.data.push(this.automata.humanPop);
     this.updateMax();
 }
 
