@@ -40,6 +40,10 @@ class World {
         this.socialT = 0;
         this.traits = 0;
         
+        this.agentC = 0;
+        this.learningTAverage = 1;
+        this.socialTAverage = 1;
+
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.humanPop += this.world[i][j].population.length;
@@ -56,8 +60,16 @@ class World {
                     if (genesLength >= 2) {
                         this.learningT += agent.genes[genesLength - 1];
                         this.socialT += agent.genes[genesLength - 2];
+                        this.agentC++;
+
+                        // this.learningT += agent.genes[genesLength - 1] / this.agentC;
+                        // this.socialT += agent.genes[genesLength - 2] / this.agentC;
                         // this.traits += agent.genes
                         this.geneTickets += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
+
+                        // this.learningTAverage += this.learningT / this.agentC;
+                        // this.socialTAverage += this.socialT / this.agentC;
+                        
                     }
                 
                 }
@@ -65,14 +77,17 @@ class World {
             }
             
         }
-        // this.geneAverage = this.geneTickets/agent;
 
-
-        // this.geneAverageTest.push(this.geneAverage);
+  
         this.popGraph.push(this.humanPop);
+        this.geneGraph.push(this.geneTickets);
+
         this.learningGraph.push(this.learningT);
         this.socialGraph.push(this.socialT);
-        this.geneGraph.push(this.geneTickets);
+
+        // this.learningGraph.push(this.learningTAverage);
+        // this.socialGraph.push(this.socialTAverage);
+  
     };
 
     getData() {
