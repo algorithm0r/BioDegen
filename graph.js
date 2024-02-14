@@ -3,6 +3,11 @@ function Graph(game, x, y, world, label) {
     this.x = x;
     this.y = y;
     this.world = world;
+  
+    this.humanGraph = this.world.popGraph;
+    this.learnSocialGraph = this.world.geneGraph;
+    this.learnGraph = this.world.learningGraph;
+    this.socialTGraph = this.world.socialGraph;
     // add in a list of data in here from world to separate
     // this.world.popGraph; , this.world.geneGraph, etc etc
     // pass world in as a list
@@ -20,27 +25,14 @@ function Graph(game, x, y, world, label) {
 
 Graph.prototype.update = function () {
     this.data = [];
-    this.data.push(this.world.popGraph);
-    this.data.push(this.world.geneGraph);
-    this.data.push(this.world.learningGraph);
-    this.data.push(this.world.socialGraph);
+    this.data.push(this.humanGraph);
+    this.data.push(this.learnSocialGraph);
+    this.data.push(this.learnGraph);
+    this.data.push(this.socialTGraph);
     // this.data.push(this.world.geneAverageTest);
 
     let dataList = this.world.getData();
-    // do this type of stuff in constructor
-    // dataList.forEach(dataItem => {
-    //     // dataItem.name gives the name of the dataset (e.g., 'Population')
-    //     // dataItem.data gives the actual data array
-    //    
-    // });
-
-    // loops thru the world list to get all the data intsead of data.push
-    // allowing us to plot different graphs with different tickets
-
-    // console.log(this.world.Village.population.length);
-    // this.data.push(this.automata.wildPop);
-    // this.data.push(this.automata.domePop);
-    // this.data.push(this.automata.humanPop);
+    
     this.updateMax();
 }
 

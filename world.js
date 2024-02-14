@@ -8,9 +8,6 @@ class World {
         this.socialGraph = [];
         this.learningGraph = [];
         this.geneAverageTest = [];
-        // need to implement this properly in main or world constructor here
-        // this.humanPop = 0;
-        // this.geneTickets = 0;
     
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
@@ -28,6 +25,12 @@ class World {
         // tickets graph
         this.ticketsGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
         gameEngine.addEntity(this.ticketsGraph);
+
+        this.learnTGraph = new Graph(gameEngine, 1040, 400, this, "Learn ticket");
+        gameEngine.addEntity(this.learnTGraph);
+
+        this.socialTGraph = new Graph(gameEngine, 1040, 600, this, "social ticket");
+        gameEngine.addEntity(this.socialTGraph);
     };
 
     updateData() {
@@ -74,9 +77,10 @@ class World {
 
     getData() {
         return [
-            { name: 'popGraph', data: this.popGraph },
-            { name: 'geneGraph', data: this.geneGraph },
-            // Add other data as needed
+            this.popGraph, 
+            this.geneGraph, 
+            this.learningGraph, 
+            this.socialGraph
         ];
     };
 
