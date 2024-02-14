@@ -27,14 +27,11 @@ Graph.prototype.update = function () {
     // this.data.push(this.world.geneAverageTest);
 
     let dataList = this.world.getData();
-    
+    // do this type of stuff in constructor
     // dataList.forEach(dataItem => {
     //     // dataItem.name gives the name of the dataset (e.g., 'Population')
     //     // dataItem.data gives the actual data array
-    
-    //     // Here you would call your plotting function or library
-    //     // For example, using a hypothetical plotGraph function:
-    //     plotGraph(dataItem.name, dataItem.data);
+    //    
     // });
 
     // loops thru the world list to get all the data intsead of data.push
