@@ -22,13 +22,20 @@ function Graph(game, x, y, world, label) {
     //  // Use graphName and graphData to create or update your graphs
     // });
 
-
+  
     this.label = label;
 
     this.xSize = 600;
     this.ySize = 175;
     this.ctx = game.ctx;
     this.data= [];
+    this.data.push(this.humanGraph);
+    this.data.push(this.learnSocialGraph);
+    this.data.push(this.learnGraph);
+    this.data.push(this.socialTGraph);
+    this.data.push(this.world.geneAverageTest);
+    
+
     this.colors = ["#00BB00", "#BB0000", "#00BBBB", "#CCCCCC"];
     this.maxVal = 0;
 }
@@ -36,12 +43,8 @@ function Graph(game, x, y, world, label) {
 // want to upgrade to hold different graphs
 
 Graph.prototype.update = function () {
-    this.data = [];
-    this.data.push(this.humanGraph);
-    this.data.push(this.learnSocialGraph);
-    this.data.push(this.learnGraph);
-    this.data.push(this.socialTGraph);
-    this.data.push(this.world.geneAverageTest);
+    // this.data = [];
+   
 
     //tester logic for now 
     // let graphDataList = this.world.getData();
