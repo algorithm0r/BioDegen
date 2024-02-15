@@ -8,9 +8,21 @@ function Graph(game, x, y, world, label) {
     this.learnSocialGraph = this.world.geneGraph;
     this.learnGraph = this.world.learningGraph;
     this.socialTGraph = this.world.socialGraph;
+
     // add in a list of data in here from world to separate
     // this.world.popGraph; , this.world.geneGraph, etc etc
     // pass world in as a list
+
+    // this is the tester logic for now
+    // this.world.getData();
+    // let graphDataList = world.getData();
+    // graphDataList.forEach(item => {
+    //     let graphName = item.name; // e.g., 'popGraph'
+    //     let graphData = item.data; // the actual data array
+    //  // Use graphName and graphData to create or update your graphs
+    // });
+
+
     this.label = label;
 
     this.xSize = 600;
@@ -29,9 +41,18 @@ Graph.prototype.update = function () {
     this.data.push(this.learnSocialGraph);
     this.data.push(this.learnGraph);
     this.data.push(this.socialTGraph);
-    // this.data.push(this.world.geneAverageTest);
+    this.data.push(this.world.geneAverageTest);
 
-    let dataList = this.world.getData();
+    //tester logic for now 
+    // let graphDataList = this.world.getData();
+    // let currentGraphData = graphDataList.find(item => item.name === this.label); // 'this.label' identifies the graph type
+
+    // if (currentGraphData) {
+    //     this.data = currentGraphData.data; // Update the graph's data
+    //     this.maxVal = Math.max(...this.data); // Recalculate maxVal for scaling
+    // }
+
+    // let dataList = this.world.getData();
     
     this.updateMax();
 }

@@ -8,7 +8,7 @@ class World {
         this.socialGraph = [];
         this.learningGraph = [];
         this.geneAverageTest = [];
-    
+        // this.agentCounter = 0;
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             this.world.push([]);
@@ -39,11 +39,13 @@ class World {
         this.learningT = 0;
         this.socialT = 0;
         this.traits = 0;
-        
-        this.agentC = 0;
-        this.learningTAverage = 1;
-        this.socialTAverage = 1;
+    
+        // this.agentCounter = 0;
+       
+        // this.learningTAverage = 1;
+        // this.socialTAverage = 1;
 
+       
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.humanPop += this.world[i][j].population.length;
@@ -57,11 +59,12 @@ class World {
                 for (let k = 0; k < this.world[i][j].population.length; k++) {
                     let agent = this.world[i][j].population[k];
                     let genesLength = agent.genes.length;
+                    // this.agentCounter++;
                     if (genesLength >= 2) {
                         this.learningT += agent.genes[genesLength - 1];
                         this.socialT += agent.genes[genesLength - 2];
-                        this.agentC++;
-
+                       
+                       
                         // this.learningT += agent.genes[genesLength - 1] / this.agentC;
                         // this.socialT += agent.genes[genesLength - 2] / this.agentC;
                         // this.traits += agent.genes
@@ -71,12 +74,14 @@ class World {
                         // this.socialTAverage += this.socialT / this.agentC;
                         
                     }
-                
+                  
                 }
            
             }
             
         }
+        // this.learningT /= this.agentC;
+        // this.socialT /= this.agentC;
 
   
         this.popGraph.push(this.humanPop);
@@ -92,10 +97,10 @@ class World {
 
     getData() {
         return [
-            this.popGraph, 
-            this.geneGraph, 
-            this.learningGraph, 
-            this.socialGraph
+            {name: 'popGraph', data: this.popGraph},
+            {name: 'geneGraph', data: this.geneGraph},
+            {name: 'learningGraph', data: this.learningGraph},
+            {name: 'socialGraph', data: this.socialGraph}
         ];
     };
 
