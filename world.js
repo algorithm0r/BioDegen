@@ -18,19 +18,23 @@ class World {
         }
         this.day = 0;
 
-        //added in the graph for population here
-        this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
+        //added in the graphs here with the last graph being just all the of the information at once
+        this.humanGraph = new Graph(gameEngine, 1040, 10, this, [this.popGraph], "Population");
         gameEngine.addEntity(this.humanGraph);
 
-        // tickets graph
-        this.ticketsGraph = new Graph(gameEngine, 1040, 200, this, "Gene");
+        this.ticketsGraph = new Graph(gameEngine, 1040, 210, this, [this.geneGraph], "genes");
         gameEngine.addEntity(this.ticketsGraph);
 
-        this.learnTGraph = new Graph(gameEngine, 1040, 400, this, "Learn ticket");
+        this.learnTGraph = new Graph(gameEngine, 1040, 410, this, [this.learningGraph], "Learning Tickets");
         gameEngine.addEntity(this.learnTGraph);
 
-        this.socialTGraph = new Graph(gameEngine, 1040, 600, this, "social ticket");
+        this.socialTGraph = new Graph(gameEngine, 1040, 610, this, [this.socialGraph], "Social Tickets");
         gameEngine.addEntity(this.socialTGraph);
+
+
+        this.graph = new Graph(gameEngine, 1040, 810, this, [this.popGraph, this.geneGraph, this.socialGraph, this.learningGraph], "Population");
+        gameEngine.addEntity(this.graph);
+    
     };
 
     updateData() {

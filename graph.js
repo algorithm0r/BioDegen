@@ -1,39 +1,29 @@
-function Graph(game, x, y, world, label) {
+function Graph(game, x, y, world, data, label) {
     this.game = game;
     this.x = x;
     this.y = y;
     this.world = world;
-  
-    this.humanGraph = this.world.popGraph;
-    this.learnSocialGraph = this.world.geneGraph;
-    this.learnGraph = this.world.learningGraph;
-    this.socialTGraph = this.world.socialGraph;
+    this.data = data;
+    // this.humanGraph = this.world.popGraph;
+    // this.learnSocialGraph = this.world.geneGraph;
+    // this.learnGraph = this.world.learningGraph;
+    // this.socialTGraph = this.world.socialGraph;
 
     // add in a list of data in here from world to separate
     // this.world.popGraph; , this.world.geneGraph, etc etc
     // pass world in as a list
-
-    // this is the tester logic for now
-    // this.world.getData();
-    // let graphDataList = world.getData();
-    // graphDataList.forEach(item => {
-    //     let graphName = item.name; // e.g., 'popGraph'
-    //     let graphData = item.data; // the actual data array
-    //  // Use graphName and graphData to create or update your graphs
-    // });
-
   
     this.label = label;
 
     this.xSize = 600;
     this.ySize = 175;
     this.ctx = game.ctx;
-    this.data= [];
-    this.data.push(this.humanGraph);
-    this.data.push(this.learnSocialGraph);
-    this.data.push(this.learnGraph);
-    this.data.push(this.socialTGraph);
-    this.data.push(this.world.geneAverageTest);
+    // this.data = [];
+    // this.data.push(this.data.popGraph);
+    // this.data.push(this.data.geneGraph);
+    // this.data.push(this.data.socialGraph);
+    // this.data.push(this.data.learningGraph);
+
     
 
     this.colors = ["#00BB00", "#BB0000", "#00BBBB", "#CCCCCC"];
