@@ -68,7 +68,7 @@ class World {
                         this.learningT += agent.genes[genesLength - 1];
                         this.socialT += agent.genes[genesLength - 2];
                        
-                       
+                      
                         // this.learningT += agent.genes[genesLength - 1] / this.agentC;
                         // this.socialT += agent.genes[genesLength - 2] / this.agentC;
                         // this.traits += agent.genes
@@ -77,6 +77,8 @@ class World {
                         // this.learningTAverage += this.learningT / this.agentC;
                         // this.socialTAverage += this.socialT / this.agentC;
                         
+                         // populate a list and at each tick go through each individual ticket and divide by the population.
+                       // create average list on top of the middle through sum lists
                     }
                   
                 }

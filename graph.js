@@ -18,14 +18,7 @@ function Graph(game, x, y, world, data, label) {
     this.xSize = 600;
     this.ySize = 175;
     this.ctx = game.ctx;
-    // this.data = [];
-    // this.data.push(this.data.popGraph);
-    // this.data.push(this.data.geneGraph);
-    // this.data.push(this.data.socialGraph);
-    // this.data.push(this.data.learningGraph);
-
     
-
     this.colors = ["#00BB00", "#BB0000", "#00BBBB", "#CCCCCC"];
     this.maxVal = 0;
 }
