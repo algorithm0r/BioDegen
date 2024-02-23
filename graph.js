@@ -76,6 +76,11 @@ Graph.prototype.draw = function (ctx) {
             this.ctx.fillSytle = "#000000";
             this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 5, yPos + 10);
     
+            // Drawing the label underneath the graph
+            this.ctx.fillStyle = "#000000"; // Set the text color
+            this.ctx.textAlign = "center"; // Center the text below the graph
+            // Position the label below the graph. Adjust the y value as needed to place it correctly
+            this.ctx.fillText(this.label, this.x + this.xSize / 2, this.y + this.ySize + 20);
         }
 
 

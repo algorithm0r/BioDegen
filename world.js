@@ -25,14 +25,14 @@ class World {
         this.ticketsGraph = new Graph(gameEngine, 1040, 210, this, [this.geneGraph], "genes");
         gameEngine.addEntity(this.ticketsGraph);
 
-        this.learnTGraph = new Graph(gameEngine, 1040, 410, this, [this.learningGraph], "Learning Tickets");
+        this.learnTGraph = new Graph(gameEngine, 1040, 408, this, [this.learningGraph], "Learning Tickets");
         gameEngine.addEntity(this.learnTGraph);
 
-        this.socialTGraph = new Graph(gameEngine, 1040, 610, this, [this.socialGraph], "Social Tickets");
+        this.socialTGraph = new Graph(gameEngine, 1040, 604, this, [this.socialGraph], "Social Tickets");
         gameEngine.addEntity(this.socialTGraph);
 
 
-        this.graph = new Graph(gameEngine, 1040, 810, this, [this.popGraph, this.geneGraph, this.socialGraph, this.learningGraph], "Population");
+        this.graph = new Graph(gameEngine, 1040, 803, this, [this.popGraph, this.geneGraph, this.socialGraph, this.learningGraph], "Everything");
         gameEngine.addEntity(this.graph);
     
     };
@@ -55,6 +55,7 @@ class World {
                 this.humanPop += this.world[i][j].population.length;
                 
                // add in other loop here for genes for the index of n - 2 and n-1 for social and learning tickets
+               // n - 2 is learning and n - 1 is social tickets
                // for each agent average the tickets
                // seperate tickets into indvidual variables -2 is learning and -1 is social
                // group up the original n (which are 10 right now) and average them
