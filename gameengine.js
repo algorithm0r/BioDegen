@@ -25,6 +25,7 @@ class GameEngine {
         this.ctx = ctx;
         this.startInput();
         this.timer = new Timer();
+        this.fps = 0;
     };
 
     start() {
@@ -88,7 +89,15 @@ class GameEngine {
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
+
+        this.drawFps();
     };
+
+    drawFps() {
+        this.fps = this.timer.calculateFPS();
+        this.ctx.fillStyle = "black";
+        this.ctx.fillText(`FPS: ${this.fps.toFixed(2)}`, 1100, 400);
+    }
 
     update() {
         let entitiesCount = this.entities.length;
@@ -108,10 +117,15 @@ class GameEngine {
         }
     };
 
+
+
     loop() {
         this.clockTick = this.timer.tick();
+       
+       
         this.update();
         this.draw();
+       
     };
 
 };

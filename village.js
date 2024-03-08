@@ -80,6 +80,7 @@ class Village {
         ctx.fillRect(x, y, cellWidth, cellHeight);
         ctx.globalAlpha = 1;
         ctx.strokeRect(x, y, cellWidth, cellHeight);
+       
 
         // draws a human at a random point in the village
         function getRandomPoint() {
@@ -142,6 +143,8 @@ class Village {
         // write population total
         ctx.font = "12px Times New Roman";
         ctx.fillStyle = "black";
-        ctx.fillText(`Pop: ${this.population.length}`, x + 2, y + 12);
+        ctx.fillText(`Pop: ${this.population.length}`, x + 40, y + 12);
+
+     
     };
 };
