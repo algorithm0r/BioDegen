@@ -17,7 +17,10 @@ const PARAMETERS = {
     mutationRate: 0.05,
     learningRate: 0.01,
     deathRate: 0.005,
-    socialLearningRate: 0.1
+    socialLearningRate: 0.1,
+
+    //data gathering
+    reportingPeriod: 100
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
@@ -76,4 +79,45 @@ window.requestAnimFrame = (() => {
  */
 const getDistance = (p1, p2) => {
     return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+};
+
+function loadParameters() {
+    // params.size = parseInt(document.getElementById("cell_size").value);
+    // params.dimension = parseInt(document.getElementById("dimension").value);
+    // params.riverWidth = parseInt(document.getElementById("river_width").value);
+    // params.dry = 1 - parseInt(document.getElementById("bank_size").value);
+
+    // params.randomSeeds = document.getElementById("random_seeds").checked;
+    // params.germThreshold = parseInt(document.getElementById("germ_threshold").value);
+    // params.fullGrown = parseInt(document.getElementById("full_growth").value);
+    // params.seedDeathChance = parseFloat(document.getElementById("seed_death_chance").value);
+    // params.growthPenalty = parseInt(document.getElementById("growth_penalty").value);
+
+    PARAMETERS.populationSoftCap = parseFloat(document.getElementById("population_soft_cap").value);
+    PARAMETERS.randomEnvironmentalBonuses = document.getElementById("randEnvBonus").checked;
+    PARAMETERS.maxEnvironmentalBonus = parseFloat(document.getElementById("maxEnvBonus").value);
+    PARAMETERS.numTraits = parseFloat(document.getElementById("numTraits").value);
+    PARAMETERS.traitThreshold = parseFloat(document.getElementById("traitThreshold").value);
+    PARAMETERS.reproductionThresholdStep = parseFloat(document.getElementById("ReproThresholdStep").value);
+    PARAMETERS.reproductionThresholdBase = parseFloat(document.getElementById("ReproThresholdBase").value);
+    PARAMETERS.migrationRate = parseFloat(document.getElementById("migrationRate").value);
+    PARAMETERS.mutationRate = parseFloat(document.getElementById("mutationRate").value);
+    PARAMETERS.learningRate = parseFloat(document.getElementById("learnRate").value);
+    PARAMETERS.deathRate = parseFloat(document.getElementById("deathRate").value);
+    PARAMETERS.socialLearningRate = parseFloat(document.getElementById("socialRate").value);
+
+    // params.sharedPlantingSeeds = document.getElementById("sharedPlantingSeeds").checked;
+    // params.plantSelectionChance = parseFloat(document.getElementById("plantSelectionChance").value);
+    // params.plantSelectionStrength = parseFloat(document.getElementById("plantSelectionStrength").value);
+    // params.humanAddRate = parseFloat(document.getElementById("human_add_rate").value);
+    // params.seedsDiffMetabolism = document.getElementById("seeds_metabolism").checked;
+    // params.metabolicThreshold = parseInt(document.getElementById("metabolic_threshold").value);
+    // params.metabolicUnit = parseInt(document.getElementById("metabolic_unit").value);
+    // params.skinSize = parseInt(document.getElementById("skin_size").value);
+    // params.scoopSize = parseInt(document.getElementById("scoop_size").value);
+    // params.basketSize = parseInt(document.getElementById("basket_size").value);
+    // params.seedStrategy = document.getElementById("seed_selection").value;
+    // params.plantStrategy = document.getElementById("plant_selection").value;
+
+    console.log(PARAMETERS);
 };
