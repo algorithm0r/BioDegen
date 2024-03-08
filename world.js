@@ -31,11 +31,11 @@ class World {
         // this.socialTGraph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph], "Social Tickets");
         // gameEngine.addEntity(this.socialTGraph);
 
-        this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
-        gameEngine.addEntity(this.geneTGraph);
+        // this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
+        // gameEngine.addEntity(this.geneTGraph);
 
 
-        this.graph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
+        this.graph = new Graph(gameEngine, 1040, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
         gameEngine.addEntity(this.graph);
     
     };
@@ -80,83 +80,6 @@ class World {
         this.popGraph.push(this.humanPop); // Total population
     };
     
-    // updateData() {
-    //     this.humanPop = 0;
-    //     this.geneTickets = 0;
-    //     this.learningT = 0;
-    //     this.socialT = 0;
-    //     this.traits = 0;
-    
-    //     // this.agentCounter = 0;
-       
-    //     // this.learningTAverage = 1;
-    //     // this.socialTAverage = 1;
-
-       
-    //     for (let i = 0; i < PARAMETERS.worldDimension; i++) {
-    //         for (let j = 0; j < PARAMETERS.worldDimension; j++) {
-    //             this.humanPop += this.world[i][j].population.length;
-                
-    //            // add in other loop here for genes for the index of n - 2 and n-1 for social and learning tickets
-    //            // n - 2 is learning and n - 1 is social tickets
-    //            // for each agent average the tickets
-    //            // seperate tickets into indvidual variables -2 is learning and -1 is social
-    //            // group up the original n (which are 10 right now) and average them
-    //            // keep this geneTickets but then average the tickets through the amount of agents
-
-    //             for (let k = 0; k < this.world[i][j].population.length; k++) {
-    //                 let agent = this.world[i][j].population[k];
-    //                 let genesLength = agent.genes.length;
-    //                 // this.agentCounter++;
-    //                 if (genesLength >= 2) {
-    //                     this.learningT += agent.genes[genesLength - 2];
-    //                     this.socialT += agent.genes[genesLength - 1];
-                       
-                      
-    //                     // this.learningT += agent.genes[genesLength - 1] / this.agentC;
-    //                     // this.socialT += agent.genes[genesLength - 2] / this.agentC;
-    //                     // this.traits += agent.genes
-    //                     this.geneTickets += agent.genes[genesLength - 2] + agent.genes[genesLength - 1];
-
-    //                     // this.learningTAverage += this.learningT / this.agentC;
-    //                     // this.socialTAverage += this.socialT / this.agentC;
-                        
-    //                      // populate a list and at each tick go through each individual ticket and divide by the population.
-    //                    // create average list on top of the middle through sum lists
-    //                 }
-                  
-    //             }
-           
-    //         }
-
-            
-    //     }
-    //     // this.learningT /= this.agentC;
-    //     // this.socialT /= this.agentC;
-    //     // At the end of the nested loops:
-    //     if (this.humanPop > 0) { // Ensure there are agents to avoid division by zero
-    //         let learningTAverage = this.learningT / this.humanPop;
-    //         let socialTAverage = this.socialT / this.humanPop;
-
-    //         // Push averages instead of totals
-    //         this.learningGraph.push(learningTAverage);
-    //         this.socialGraph.push(socialTAverage);
-    //     } else {
-    //         // Optionally handle the case where there are no agents
-    //         this.learningGraph.push(0);
-    //         this.socialGraph.push(0);
-    //     }
-
-    //     this.popGraph.push(this.humanPop);
-    //     // this.geneGraph.push(this.geneTickets);
-
-    //     // old code where I pushed the totals
-    //     // this.learningGraph.push(this.learningT);
-    //     // this.socialGraph.push(this.socialT);
-
-  
-    // };
-
 
     update() {
         document.getElementById("day").innerHTML = `Day: ${++this.day}`;
