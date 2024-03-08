@@ -31,11 +31,11 @@ class World {
         // this.socialTGraph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph], "Social Tickets");
         // gameEngine.addEntity(this.socialTGraph);
 
-        // this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
-        // gameEngine.addEntity(this.geneTGraph);
+        this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
+        gameEngine.addEntity(this.geneTGraph);
 
 
-        this.graph = new Graph(gameEngine, 1040, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
+        this.graph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
         gameEngine.addEntity(this.graph);
     
     };
