@@ -68,6 +68,11 @@ class Human {
         this.energy += this.villageState;
         // this.energy += this.successes- this.village.penalty;
 
+        // prototype unknown if this is correct
+        if(this.villageState == 0) {
+            this.village.migrate();
+        }
+
         if (this.energy >= this.reproductionThreshold) {
            this.reproduce();
         }
