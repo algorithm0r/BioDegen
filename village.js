@@ -36,6 +36,7 @@ class Village {
         this.population.push(human);
     };
 
+    // u should probably check here if the surrounding tiles aka villages can be migrated to.
     migrate() {
         if(Math.random() < PARAMETERS.migrationRate) {
             let newX = this.x;
