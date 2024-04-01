@@ -64,7 +64,10 @@ class Human {
     update() {
         this.performTasks();
         
-        this.energy += this.successes - this.village.penalty;
+        this.villageState = this.successes - this.village.penalty;
+        this.energy += this.villageState;
+        // this.energy += this.successes- this.village.penalty;
+
         if (this.energy >= this.reproductionThreshold) {
            this.reproduce();
         }
