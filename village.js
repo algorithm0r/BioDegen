@@ -71,7 +71,7 @@ class Village {
                     let newY = this.y + dy;
                     // Check if the new coordinates are within the bounds of the world
                     if (newX >= 0 && newX < this.world.width && newY >= 0 && newY < this.world.height) {
-                        neighboringVillages.push(this.world.world[newX][newY]);
+                        neighboringVillages.push(this.world.village[newX][newY]);
                     }
                 }
             }
