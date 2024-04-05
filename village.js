@@ -51,11 +51,11 @@ class Village {
     };
 
     split() {
-        let options = this.getNeighboringCells().filter(village => village.population < this.population.length);
+        let options = this.getNeighboringCells().filter(village => village.population.length < this.population.length);
         if (options.length > 0) {
             let newVillageCell = options[Math.floor(Math.random() * options.length)];
-            let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population / 2));
-            this.population -= newVillage.population;
+            let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population.length / 2));
+            this.population.length -= newVillage.population;
             return newVillage;
         }
         return null;
