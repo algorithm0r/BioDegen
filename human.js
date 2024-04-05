@@ -68,10 +68,10 @@ class Human {
         this.energy += this.villageState;
     
         if(this.energy == 0) {
-            let newVillage = this.village.split();
-            if (newVillage) {
-                this.village = newVillage;
-            }
+            // let newVillage = this.village.split();
+            // if (newVillage) {
+            //     this.village = newVillage;
+            // }
         }
 
         if (this.energy >= this.reproductionThreshold) {

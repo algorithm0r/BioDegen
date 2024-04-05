@@ -55,7 +55,7 @@ class Village {
         if (options.length > 0) {
             let newVillageCell = options[Math.floor(Math.random() * options.length)];
             let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population.length / 2));
-            this.population.length -= newVillage.population;
+            this.population.length -= newVillage.population.length;
             return newVillage;
         }
         return null;
@@ -70,8 +70,8 @@ class Village {
                     let newX = this.x + dx;
                     let newY = this.y + dy;
                     // Check if the new coordinates are within the bounds of the world
-                    if (newX >= 0 && newX < this.world.width && newY >= 0 && newY < this.world.height) {
-                        neighboringVillages.push(this.world.village[newX][newY]);
+                    if (newX >= 0 && newX < PARAMETERS.worldDimension && newY >= 0 && newY < PARAMETERS.worldDimension) {
+                        neighboringVillages.push(this.world.world[wrap(newX)][wrap(newY)]);
                     }
                 }
             }
