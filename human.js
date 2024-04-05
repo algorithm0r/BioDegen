@@ -39,7 +39,8 @@ class Human {
     };
 
     reproduce() {
-        const newVillage = this.village.migrate();
+        // const newVillage = this.village.migrate();
+        const newVillage = this.village;
         const otherParent = newVillage.population[randomInt(newVillage.population.length)];
         const newHuman = new Human(newVillage, this);
         if(otherParent) newHuman.crossover(otherParent);
@@ -67,11 +68,9 @@ class Human {
         this.villageState = this.successes - this.village.penalty;
         this.energy += this.villageState;
     
-        if(this.energy == 0) {
+        if(this.villageState <= 0) {
             // let newVillage = this.village.split();
-            // if (newVillage) {
-            //     this.village = newVillage;
-            // }
+            this.village.migrate();
         }
 
         if (this.energy >= this.reproductionThreshold) {

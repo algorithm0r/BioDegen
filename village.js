@@ -38,7 +38,7 @@ class Village {
 
     // u should probably check here if the surrounding tiles aka villages can be migrated to.
     migrate() {
-        if(Math.random() < PARAMETERS.migrationRate) {
+        // if(Math.random() < PARAMETERS.migrationRate) {
             let newX = this.x;
             let newY = this.y;
             while(newX === this.x && newY === this.y) {
@@ -46,40 +46,42 @@ class Village {
                 newY = this.y + randomInt(2) - 1;
             }
             return this.world.world[wrap(newX)][wrap(newY)];
-        }
+        // }
         return this;
     };
 
-    split() {
-        let options = this.getNeighboringCells().filter(village => village.population.length < this.population.length);
-        if (options.length > 0) {
-            let newVillageCell = options[Math.floor(Math.random() * options.length)];
-            let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population.length / 2));
-            this.population.length -= newVillage.population.length;
-            return newVillage;
-        }
-        return null;
-    }
+    // split() {
+    //     let options = this.getNeighboringCells().filter(village => village.population.length < this.population.length);
+    //     if (options.length > 0) {
+    //         let newVillageCell = options[Math.floor(Math.random() * options.length)];
+    //         let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population.length / 2));
+    //         this.population.length -= newVillage.population.length;
+    //         return newVillage;
+    //     }
+    //     return null;
+    // }
 
-    getNeighboringCells() {
-        let neighboringVillages = [];
-        for (let dx = -1; dx <= 1; dx++) {
-            for (let dy = -1; dy <= 1; dy++) {
-                // Exclude the current village
-                if (dx !== 0 || dy !== 0) {
-                    let newX = this.x + dx;
-                    let newY = this.y + dy;
-                    // Check if the new coordinates are within the bounds of the world
-                    if (newX >= 0 && newX < PARAMETERS.worldDimension && newY >= 0 && newY < PARAMETERS.worldDimension) {
-                        neighboringVillages.push(this.world.world[wrap(newX)][wrap(newY)]);
-                    }
-                }
-            }
-        }
-        return neighboringVillages;
-    }
+    // getNeighboringCells() {
+    //     let neighboringVillages = [];
+    //     for (let dx = -1; dx <= 1; dx++) {
+    //         for (let dy = -1; dy <= 1; dy++) {
+    //             // Exclude the current village
+    //             if (dx !== 0 || dy !== 0) {
+    //                 let newX = this.x + dx;
+    //                 let newY = this.y + dy;
+    //                 // Check if the new coordinates are within the bounds of the world
+    //                 if (newX >= 0 && newX < PARAMETERS.worldDimension && newY >= 0 && newY < PARAMETERS.worldDimension) {
+    //                     neighboringVillages.push(this.world.world[wrap(newX)][wrap(newY)]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return neighboringVillages;
+    // }
 
     update() {
+        // here randomly call migrate and each cell will choose to choose the same square and every day we update again
+
         this.penalty = this.population.length/PARAMETERS.populationSoftCap;
 
         this.population.map(human => human.update());
