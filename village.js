@@ -78,33 +78,6 @@ class Village {
         }
         return neighboringVillages;
     }
-    // migrate() {
-    //     // Check for migration chance
-    //     if (Math.random() < PARAMETERS.migrationRate) {
-    //         // Find neighboring cells
-    //         let options = [];
-    //         for (let dx = -1; dx <= 1; dx++) {
-    //             for (let dy = -1; dy <= 1; dy++) {
-    //                 if (dx !== 0 || dy !== 0) { // Exclude current cell
-    //                     let newX = wrap(this.x + dx);
-    //                     let newY = wrap(this.y + dy);
-    //                     options.push({x: newX, y: newY, population: this.world.world[newX][newY].population.length});
-    //                 }
-    //             }
-    //         }
-    
-    //         // Sort options by population, lowest first
-    //         options.sort((a, b) => a.population - b.population);
-    
-    //         // Select the cell with the lowest population
-    //         if (options.length > 0) {
-    //             let selectedOption = options[0];
-    //             return this.world.world[selectedOption.x][selectedOption.y];
-    //         }
-    //     }
-    //     return this;
-    // }
-    
 
     update() {
         this.penalty = this.population.length/PARAMETERS.populationSoftCap;
