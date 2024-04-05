@@ -64,6 +64,8 @@ class Human {
     update() {
         this.performTasks();
         
+        //split into two lines first successes - this.village.penalty
+        // then do a second line where this boost if 0 migrate
         this.energy += this.successes - this.village.penalty;
         if (this.energy >= this.reproductionThreshold) {
            this.reproduce();
