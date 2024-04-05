@@ -37,45 +37,73 @@ class Village {
     };
 
     // u should probably check here if the surrounding tiles aka villages can be migrated to.
-    // migrate() {
-    //     if(Math.random() < PARAMETERS.migrationRate) {
-    //         let newX = this.x;
-    //         let newY = this.y;
-    //         while(newX === this.x && newY === this.y) {
-    //             newX = this.x + randomInt(2) - 1;
-    //             newY = this.y + randomInt(2) - 1;
-    //         }
-    //         return this.world.world[wrap(newX)][wrap(newY)];
-    //     }
-    //     return this;
-    // };
-
     migrate() {
-        // Check for migration chance
-        if (Math.random() < PARAMETERS.migrationRate) {
-            // Find neighboring cells
-            let options = [];
-            for (let dx = -1; dx <= 1; dx++) {
-                for (let dy = -1; dy <= 1; dy++) {
-                    if (dx !== 0 || dy !== 0) { // Exclude current cell
-                        let newX = wrap(this.x + dx);
-                        let newY = wrap(this.y + dy);
-                        options.push({x: newX, y: newY, population: this.world.world[newX][newY].population.length});
+        if(Math.random() < PARAMETERS.migrationRate) {
+            let newX = this.x;
+            let newY = this.y;
+            while(newX === this.x && newY === this.y) {
+                newX = this.x + randomInt(2) - 1;
+                newY = this.y + randomInt(2) - 1;
+            }
+            return this.world.world[wrap(newX)][wrap(newY)];
+        }
+        return this;
+    };
+
+    split() {
+        let options = this.getNeighboringCells().filter(village => village.population < this.population.length);
+        if (options.length > 0) {
+            let newVillageCell = options[Math.floor(Math.random() * options.length)];
+            let newVillage = new Village(newVillageCell.x, newVillageCell.y, Math.floor(this.population / 2));
+            this.population -= newVillage.population;
+            return newVillage;
+        }
+        return null;
+    }
+
+    getNeighboringCells() {
+        let neighboringVillages = [];
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                // Exclude the current village
+                if (dx !== 0 || dy !== 0) {
+                    let newX = this.x + dx;
+                    let newY = this.y + dy;
+                    // Check if the new coordinates are within the bounds of the world
+                    if (newX >= 0 && newX < this.world.width && newY >= 0 && newY < this.world.height) {
+                        neighboringVillages.push(this.world.world[newX][newY]);
                     }
                 }
             }
-    
-            // Sort options by population, lowest first
-            options.sort((a, b) => a.population - b.population);
-    
-            // Select the cell with the lowest population
-            if (options.length > 0) {
-                let selectedOption = options[0];
-                return this.world.world[selectedOption.x][selectedOption.y];
-            }
         }
-        return this;
+        return neighboringVillages;
     }
+    // migrate() {
+    //     // Check for migration chance
+    //     if (Math.random() < PARAMETERS.migrationRate) {
+    //         // Find neighboring cells
+    //         let options = [];
+    //         for (let dx = -1; dx <= 1; dx++) {
+    //             for (let dy = -1; dy <= 1; dy++) {
+    //                 if (dx !== 0 || dy !== 0) { // Exclude current cell
+    //                     let newX = wrap(this.x + dx);
+    //                     let newY = wrap(this.y + dy);
+    //                     options.push({x: newX, y: newY, population: this.world.world[newX][newY].population.length});
+    //                 }
+    //             }
+    //         }
+    
+    //         // Sort options by population, lowest first
+    //         options.sort((a, b) => a.population - b.population);
+    
+    //         // Select the cell with the lowest population
+    //         if (options.length > 0) {
+    //             let selectedOption = options[0];
+    //             return this.world.world[selectedOption.x][selectedOption.y];
+    //         }
+    //     }
+    //     return this;
+    // }
     
 
     update() {
