@@ -37,19 +37,42 @@ class Village {
     };
 
     // u should probably check here if the surrounding tiles aka villages can be migrated to.
-    migrate() {
-        // if(Math.random() < PARAMETERS.migrationRate) {
-            let newX = this.x;
-            let newY = this.y;
-            while(newX === this.x && newY === this.y) {
-                newX = this.x + randomInt(2) - 1;
-                newY = this.y + randomInt(2) - 1;
-            }
-            return this.world.world[wrap(newX)][wrap(newY)];
-        // }
-        // return this;
-    };
+    // migrate() {
+    //     // if(Math.random() < PARAMETERS.migrationRate) {
+    //         let newX = this.x;
+    //         let newY = this.y;
+    //         while(newX === this.x && newY === this.y) {
+    //             newX = this.x + randomInt(2) - 1;
+    //             newY = this.y + randomInt(2) - 1;
+    //         }
+    //         return this.world.world[wrap(newX)][wrap(newY)];
+    //     // }
+    //     // return this;
+    // };
 
+    migrate(human) {
+        let newX = this.x;
+        let newY = this.y;
+        while(newX === this.x && newY === this.y) {
+            newX = this.x + randomInt(2) - 1;
+            newY = this.y + randomInt(2) - 1;
+        }
+        // Get the new village
+        let newVillage = this.world.world[wrap(newX)][wrap(newY)];
+        // Remove the human from the current village's population
+        let index = this.population.indexOf(human);
+        if (index !== -1) {
+            this.population.splice(index, 1);
+        }
+        // Add the human to the new village's population
+        newVillage.population.push(human);
+        
+        // Update the human's village
+        human.village = newVillage;
+        // console.log(`Human migrated from (${this.x}, ${this.y}) to (${newX}, ${newY})`);
+        return newVillage;
+    }
+    
     // split() {
     //     let options = this.getNeighboringCells().filter(village => village.population.length < this.population.length);
     //     if (options.length > 0) {
