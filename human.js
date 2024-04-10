@@ -70,7 +70,7 @@ class Human {
     
         if(this.villageState <= 0) {
             // let newVillage = this.village.split();
-            this.village.migrate();
+            this.village.migrate(this);
         }
 
         if (this.energy >= this.reproductionThreshold) {

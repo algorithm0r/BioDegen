@@ -47,7 +47,7 @@ class Village {
             }
             return this.world.world[wrap(newX)][wrap(newY)];
         // }
-        return this;
+        // return this;
     };
 
     // split() {
@@ -175,7 +175,7 @@ class Village {
         // write population total
         ctx.font = "12px Times New Roman";
         ctx.fillStyle = "black";
-        ctx.fillText(`Pop: ${this.population.length}`, x + 40, y + 12);
+        ctx.fillText(`Pop: ${this.population.length}`, x + 50, y + 12);
 
      
     };
