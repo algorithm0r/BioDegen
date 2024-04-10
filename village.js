@@ -69,7 +69,9 @@ class Village {
         
         // Update the human's village
         human.village = newVillage;
-        // console.log(`Human migrated from (${this.x}, ${this.y}) to (${newX}, ${newY})`);
+        // if(this.world.day % PARAMETERS.reportingPeriod === 0) {
+        //     console.log(`Human migrated from (${this.x}, ${this.y}) to (${newX}, ${newY})`);
+        // }
         return newVillage;
     }
     
