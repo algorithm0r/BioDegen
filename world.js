@@ -19,7 +19,7 @@ class World {
         this.day = 0;
 
         //added in the graphs here with the last graph being just all the of the information at once
-        this.humanGraph = new Graph(gameEngine, 1040, 10, this, [this.popGraph], "Population");
+        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.popGraph], "Population");
         gameEngine.addEntity(this.humanGraph);
 
         // this.ticketsGraph = new Graph(gameEngine, 1040, 210, this, [this.geneGraph], "genes");
@@ -35,7 +35,7 @@ class World {
         // gameEngine.addEntity(this.geneTGraph);
 
 
-        this.graph = new Graph(gameEngine, 1040, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
+        this.graph = new Graph(gameEngine, 1020, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets");
         gameEngine.addEntity(this.graph);
     
     };
