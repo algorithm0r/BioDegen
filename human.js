@@ -69,7 +69,6 @@ class Human {
         this.energy += this.villageState;
     
         if(this.villageState <= 0) {
-            // let newVillage = this.village.split();
             this.village.migrate(this);
         }
 
