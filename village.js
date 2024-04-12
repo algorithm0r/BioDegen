@@ -59,19 +59,19 @@ class Village {
         }
         // Get the new village
         let newVillage = this.world.world[wrap(newX)][wrap(newY)];
-        // Remove the human from the current village's population
+
+        // this logic will later be updated to fetch the new village
+        // Remove the agent from the current village's population
         let index = this.population.indexOf(human);
         if (index !== -1) {
             this.population.splice(index, 1);
         }
-        // Add the human to the new village's population
+        // Add the agent to the new village's population
         newVillage.population.push(human);
         
         // Update the human's village
         human.village = newVillage;
-        // if(this.world.day % PARAMETERS.reportingPeriod === 0) {
-        //     console.log(`Human migrated from (${this.x}, ${this.y}) to (${newX}, ${newY})`);
-        // }
+        
         return newVillage;
     }
     
