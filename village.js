@@ -41,7 +41,10 @@ class Village {
 
         let newVillage = this.migrateLocation();
 
-        // Remove the agent from the current village's population
+        return this.move(human, newVillage);
+    }
+
+    move(human, newVillage) {
         let index = this.population.indexOf(human);
         if (index !== -1) {
             this.population.splice(index, 1);
@@ -67,31 +70,32 @@ class Village {
     }
 
     // a migrate method to move groups of individuals from one village to another
-    migrateGroup(groupSize) {
-        // Ensure the group size is not larger than the population
-        groupSize = Math.min(groupSize, this.population.length);
+    // migrateGroup(groupSize) {
+    //     // Ensure the group size is not larger than the population
+    //     groupSize = Math.min(groupSize, this.population.length);
 
-        // Randomly select a group of humans
-        let group = [];
-        for (let i = 0; i < groupSize; i++) {
-            let randomIndex = Math.floor(Math.random() * this.population.length);
-            let human = this.population.splice(randomIndex, 1)[0];
-            group.push(human);
-        }
-        let newVillage = this.migrateLocation();
+    //     // Randomly select a group of humans
+    //     let group = [];
+    //     for (let i = 0; i < groupSize; i++) {
+    //         let randomIndex = Math.floor(Math.random() * this.population.length);
+    //         let human = this.population.splice(randomIndex, 1)[0];
+    //         group.push(human);
+    //     }
+    //     let newVillage = this.migrateLocation();
 
-        // Migrate each human in the group to the new village
-        for (let human of group) {
-            newVillage.population.push(human);
-            human.village = newVillage;
-        }
+    //     // Migrate each human in the group to the new village
+    //     for (let human of group) {
+    //         newVillage.population.push(human);
+    //         human.village = newVillage;
+    //     }
 
-        return newVillage;
-    }
+    //     return newVillage;
+    // }
 
     update() {
         // here randomly call migrate and each cell will choose to choose the same square and every day we update again
-        // this.migrateGroup(this.population.length);
+        // this.migrateGroup(5);
+        this.migrationVillage = this.migrateLocation();
 
         this.penalty = this.population.length/PARAMETERS.populationSoftCap;
 

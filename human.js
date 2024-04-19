@@ -69,7 +69,13 @@ class Human {
         this.energy += this.villageState;
     
         if(this.villageState <= 0) {
-            this.village.migrate(this);
+            // human checks migration based on village;
+            // village.migrationVilage or something to call here since its gonna be set in village already.
+
+            // some if statement here with individual migrate with a checkbox clicked from html
+            // this.village.migrate(this);
+            // this is the group migration
+             this.village.move(this, this.village.migrationVillage); 
         }
 
         if (this.energy >= this.reproductionThreshold) {
