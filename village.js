@@ -36,31 +36,11 @@ class Village {
         this.population.push(human);
     };
 
-    // u should probably check here if the surrounding tiles aka villages can be migrated to.
-    // migrate() {
-    //     // if(Math.random() < PARAMETERS.migrationRate) {
-    //         let newX = this.x;
-    //         let newY = this.y;
-    //         while(newX === this.x && newY === this.y) {
-    //             newX = this.x + randomInt(2) - 1;
-    //             newY = this.y + randomInt(2) - 1;
-    //         }
-    //         return this.world.world[wrap(newX)][wrap(newY)];
-    //     // }
-    //     // return this;
-    // };
-
+    // migrating individuals from one village to another
     migrate(human) {
-        let newX = this.x;
-        let newY = this.y;
-        while(newX === this.x && newY === this.y) {
-            newX = this.x + randomInt(2) - 1;
-            newY = this.y + randomInt(2) - 1;
-        }
-        // Get the new village
-        let newVillage = this.world.world[wrap(newX)][wrap(newY)];
 
-        // this logic will later be updated to fetch the new village
+        let newVillage = this.migrateLocation();
+
         // Remove the agent from the current village's population
         let index = this.population.indexOf(human);
         if (index !== -1) {
@@ -75,9 +55,43 @@ class Village {
         return newVillage;
     }
     
+    // the village migrate method where the village that it ends up choosing will be variable for migrate
+    migrateLocation() {
+        let newX = this.x;
+        let newY = this.y;
+        while(newX === this.x && newY === this.y) {
+            newX = this.x + randomInt(2) - 1;
+            newY = this.y + randomInt(2) - 1;
+        }
+        return this.world.world[wrap(newX)][wrap(newY)];
+    }
+
+    // a migrate method to move groups of individuals from one village to another
+    migrateGroup(groupSize) {
+        // Ensure the group size is not larger than the population
+        groupSize = Math.min(groupSize, this.population.length);
+
+        // Randomly select a group of humans
+        let group = [];
+        for (let i = 0; i < groupSize; i++) {
+            let randomIndex = Math.floor(Math.random() * this.population.length);
+            let human = this.population.splice(randomIndex, 1)[0];
+            group.push(human);
+        }
+        let newVillage = this.migrateLocation();
+
+        // Migrate each human in the group to the new village
+        for (let human of group) {
+            newVillage.population.push(human);
+            human.village = newVillage;
+        }
+
+        return newVillage;
+    }
 
     update() {
         // here randomly call migrate and each cell will choose to choose the same square and every day we update again
+        // this.migrateGroup(this.population.length);
 
         this.penalty = this.population.length/PARAMETERS.populationSoftCap;
 
