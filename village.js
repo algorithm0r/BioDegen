@@ -38,9 +38,7 @@ class Village {
 
     // migrating individuals from one village to another
     migrate(human) {
-
         let newVillage = this.migrateLocation();
-
         return this.move(human, newVillage);
     }
 
@@ -69,28 +67,6 @@ class Village {
         return this.world.world[wrap(newX)][wrap(newY)];
     }
 
-    // a migrate method to move groups of individuals from one village to another
-    // migrateGroup(groupSize) {
-    //     // Ensure the group size is not larger than the population
-    //     groupSize = Math.min(groupSize, this.population.length);
-
-    //     // Randomly select a group of humans
-    //     let group = [];
-    //     for (let i = 0; i < groupSize; i++) {
-    //         let randomIndex = Math.floor(Math.random() * this.population.length);
-    //         let human = this.population.splice(randomIndex, 1)[0];
-    //         group.push(human);
-    //     }
-    //     let newVillage = this.migrateLocation();
-
-    //     // Migrate each human in the group to the new village
-    //     for (let human of group) {
-    //         newVillage.population.push(human);
-    //         human.village = newVillage;
-    //     }
-
-    //     return newVillage;
-    // }
 
     update() {
         // here randomly call migrate and each cell will choose to choose the same square and every day we update again

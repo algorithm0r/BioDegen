@@ -74,8 +74,14 @@ class Human {
 
             // some if statement here with individual migrate with a checkbox clicked from html
             // this.village.migrate(this);
-            // this is the group migration
-             this.village.move(this, this.village.migrationVillage); 
+            if(document.getElementById("individualMigrate").checked) {
+                this.village.migrate(this);
+            } else {
+                // this is the group migration
+                this.village.move(this, this.village.migrationVillage); 
+            }
+            
+            
         }
 
         if (this.energy >= this.reproductionThreshold) {
