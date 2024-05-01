@@ -18,11 +18,12 @@ const PARAMETERS = {
     learningRate: 0.01,
     deathRate: 0.005,
     socialLearningRate: 0.1,
-
+    migratePeriod: 10,
+    
     //data gathering
     reportingPeriod: 100,
     day: 0
-
+    
     // speed of social learn
 
 };
