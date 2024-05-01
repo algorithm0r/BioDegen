@@ -69,19 +69,20 @@ class Human {
         this.energy += this.villageState;
     
         if(this.villageState <= 0) {
-            // human checks migration based on village;
-            // village.migrationVilage or something to call here since its gonna be set in village already.
+            if(PARAMETERS.day % 5 === 0) {
+                // human checks migration based on village;
+                // village.migrationVilage or something to call here since its gonna be set in village already.
 
-            // some if statement here with individual migrate with a checkbox clicked from html
-            // this.village.migrate(this);
-            if(document.getElementById("individualMigrate").checked) {
-                this.village.migrate(this);
-            } else {
-                // this is the group migration
-                this.village.move(this, this.village.migrationVillage); 
+                // some if statement here with individual migrate with a checkbox clicked from html
+                // this.village.migrate(this);
+                if(document.getElementById("individualMigrate").checked) {
+                    this.village.migrate(this);
+                } else {
+                    // this is the group migration
+                    this.village.move(this, this.village.migrationVillage); 
+                }
+                
             }
-            
-            
         }
 
         if (this.energy >= this.reproductionThreshold) {

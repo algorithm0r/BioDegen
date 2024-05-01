@@ -16,7 +16,7 @@ class World {
                 this.world[i].push(new Village(this, i, j));
             }
         }
-        this.day = 0;
+        // PARAMETERS.day = 0;
 
         //added in the graphs here with the last graph being just all the of the information at once
         this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.popGraph], "Population");
@@ -82,13 +82,13 @@ class World {
     
 
     update() {
-        document.getElementById("day").innerHTML = `Day: ${++this.day}`;
+        document.getElementById("day").innerHTML = `Day: ${++PARAMETERS.day}`;
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             for(let j = 0; j < PARAMETERS.worldDimension; j++) {
                 this.world[i][j].update();
             }
         }
-        if (this.day % PARAMETERS.reportingPeriod === 0) {
+        if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
         }
     
