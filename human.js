@@ -78,7 +78,7 @@ class Human {
         this.energy += this.villageState;
     
         if (this.villageState <= 0) {
-            if (PARAMETERS.day % 100 === 0) {
+            if (PARAMETERS.day % PARAMETERS.migratePeriod === 0) {
                 // human checks migration based on village;
                 // village.migrationVilage or something to call here since its gonna be set in village already.
 
