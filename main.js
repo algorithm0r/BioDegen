@@ -15,6 +15,7 @@ function reset() {
 
 function destroy() {
 	gameEngine.entities = [];
+	PARAMETERS.day = 0;
 }
 
 function buildWorld() {

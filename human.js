@@ -1,5 +1,5 @@
 class Human {
-    constructor(village, other) {
+    constructor (village, other) {
         Object.assign(this, {village});
 
         this.genes = [];
@@ -19,12 +19,13 @@ class Human {
     };
 
     normalize(gene) {
-        if(gene < 0) gene = 0;
+        if (gene < 0) gene = 0;
         return gene;
     };
 
     mutate() {
-        this.genes = this.genes.map(gene => Math.random() < PARAMETERS.mutationRate ? Math.random() < 0.5 ? gene + 1 : this.normalize(gene - 1) : gene);
+        this.genes = this.genes.map(gene => 
+            Math.random() < PARAMETERS.mutationRate ? Math.random() < 0.5 ? gene + 1 : this.normalize(gene - 1) : gene);
     };
 
     crossover(other) {
@@ -33,7 +34,7 @@ class Human {
 
     performTasks() {
         this.successes = 0;
-        for(let i = 0; i < PARAMETERS.numTraits; i++) {
+        for (let i = 0; i < PARAMETERS.numTraits; i++) {
             if(this.genes[i] + this.memes[i] + this.village.environmentalBonuses[i] >= PARAMETERS.traitThreshold) this.successes++;
         }
     };
@@ -43,22 +44,30 @@ class Human {
         const newVillage = this.village;
         const otherParent = newVillage.population[randomInt(newVillage.population.length)];
         const newHuman = new Human(newVillage, this);
-        if(otherParent) newHuman.crossover(otherParent);
+        if (otherParent) newHuman.crossover(otherParent);
         newVillage.addHuman(newHuman);
         this.energy -= PARAMETERS.reproductionThresholdStep;
     };
 
     learn() {
-        if(Math.random() < PARAMETERS.learningRate) {
+        if (Math.random() < PARAMETERS.learningRate) {
             this.memes[randomInt(this.memes.length)]++;
         }
     };
 
     socialLearn() {
-        if(Math.random() < PARAMETERS.socialLearningRate) {
+        if (Math.random() < PARAMETERS.socialLearningRate) {
             const other = this.village.population[randomInt(this.village.population.length)];
             const memeIndex = randomInt(PARAMETERS.numTraits);
-            if(this.memes[memeIndex] < other.memes[memeIndex]) this.memes[memeIndex] = other.memes[memeIndex];
+            if (this.memes[memeIndex] < other.memes[memeIndex]) {
+                if (document.getElementById("socialLearnBonus").checked) {
+                    this.memes[memeIndex] = other.memes[memeIndex];
+                } else {
+                    this.memes[memeIndex]++;
+                }
+                
+            }
+            
         }
     };
 
@@ -68,14 +77,14 @@ class Human {
         this.villageState = this.successes - this.village.penalty;
         this.energy += this.villageState;
     
-        if(this.villageState <= 0) {
-            if(PARAMETERS.day % 100 === 0) {
+        if (this.villageState <= 0) {
+            if (PARAMETERS.day % 100 === 0) {
                 // human checks migration based on village;
                 // village.migrationVilage or something to call here since its gonna be set in village already.
 
                 // some if statement here with individual migrate with a checkbox clicked from html
                 // this.village.migrate(this);
-                if(document.getElementById("individualMigrate").checked) {
+                if (document.getElementById("individualMigrate").checked) {
                     this.village.migrate(this);
                 } else {
                     // this is the group migration
@@ -92,15 +101,15 @@ class Human {
         let learningTickets = this.genes[this.genes.length-2];
         let socialTickets = this.genes[this.genes.length-1];
 
-        while(learningTickets-- > 0) {
+        while (learningTickets-- > 0) {
             this.learn();
         }
 
-        while(socialTickets-- > 0) {
+        while (socialTickets-- > 0) {
             this.socialLearn();
         }
     };
 
-    draw(){
+    draw() {
     };
 };
