@@ -95,7 +95,37 @@ class World {
     };
 
 
-
+    logData() {
+        var data = {
+            db: params.db,
+            collection: params.collection,
+            data: {
+                run: "X1",
+                params: params,
+                // seedPop: this.seedPop,
+                // humanPop: this.humanPop,
+                // wildPop: this.wildPop,
+                // domePop: this.domePop,
+                // weightData: this.weightData,
+                // rootData: this.rootData,
+                // seedData: this.seedData,
+                // energyData: this.energyData,
+                // dispersalData: this.dispersalData,
+                // weightDataWild: this.weightDataWild,
+                // rootDataWild: this.rootDataWild,
+                // seedDataWild: this.seedDataWild,
+                // energyDataWild: this.energyDataWild,
+                // dispersalDataWild: this.dispersalDataWild,
+                // weightDataDomesticated: this.weightDataDomesticated,
+                // rootDataDomesticated: this.rootsDataDomesticated,
+                // seedDataDomesticated: this.seedDataDomesticated,
+                // energyDataDomesticated: this.energyDataDomesticated,
+                // dispersalDataDomesticated: this.dispersalDataDomesticated
+            }
+        };
+    
+        if (socket) socket.emit("insert", data);
+    };
   
     draw(ctx){
         ctx.fillStyle = "#cc9966";
