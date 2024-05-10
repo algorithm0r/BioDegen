@@ -86,19 +86,19 @@ Graph.prototype.draw = function (ctx) {
     this.ctx.fillText(this.world.day - 1, this.x + this.xSize - 5, this.y + this.ySize + 10);
 
 
-      // Draw the legend
-      var legendX = (this.x + this.xSize) - 300; // Adjust as needed
-      var legendY = this.y + 155;
+    // Draw the legend
+    var legendX = (this.x + this.xSize) - 300; // Adjust as needed
+    var legendY = this.y + 155;
       
-      for (var j = 0; j < this.data.length; j++) {
-          // Draw the colored line or square
-          this.ctx.fillStyle = this.colors[j];
-          this.ctx.fillRect(legendX + j * 100, legendY, 60, 20); // Adjust as needed
+    for (var j = 0; j < this.data.length; j++) {
+        // Draw the colored line or square
+        this.ctx.fillStyle = this.colors[j];
+        this.ctx.fillRect(legendX + j * 100, legendY, 60, 20); // Adjust as needed
       
-          // Draw the label
-          this.ctx.fillStyle = "#000000"; // Set the text color to black
-          this.ctx.fillText(this.labels[j], legendX + j * 100 + 55, legendY + 15); // Adjust as needed
-      }
+        // Draw the label
+        this.ctx.fillStyle = "#000000"; // Set the text color to black
+        this.ctx.fillText(this.labels[j], legendX + j * 100 + 55, legendY + 15); // Adjust as needed
+    }
 
 
     this.ctx.strokeStyle = "#000000";

@@ -35,10 +35,11 @@ const PARAMETERS = {
     
     //data gathering
     reportingPeriod: 100,
-    day: 0
+    day: 0,
     
-    // speed of social learn
-
+    // database parameters
+    db: "BioDegenDB",
+    collection: "exp2024v1"
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;

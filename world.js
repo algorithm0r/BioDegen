@@ -16,7 +16,7 @@ class World {
                 this.world[i].push(new Village(this, i, j));
             }
         }
-        // PARAMETERS.day = 0;
+        
 
         //added in the graphs here with the last graph being just all the of the information at once
         this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.popGraph], "Population", ["population"]);
@@ -97,11 +97,11 @@ class World {
 
     logData() {
         var data = {
-            db: params.db,
-            collection: params.collection,
+            db: PARAMETERS.db,
+            collection: PARAMETERS.collection,
             data: {
                 run: "X1",
-                params: params,
+                params: PARAMETERS,
                 // seedPop: this.seedPop,
                 // humanPop: this.humanPop,
                 // wildPop: this.wildPop,
