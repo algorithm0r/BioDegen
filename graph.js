@@ -68,7 +68,7 @@ Graph.prototype.draw = function (ctx) {
     
             this.ctx.strokeStyle = "#000000";
             this.ctx.fillSytle = "#000000";
-            this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 5, yPos + 10);
+            this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 15, yPos + 10);
     
             // Drawing the label underneath the graph
             this.ctx.fillStyle = "#000000"; // Set the text color

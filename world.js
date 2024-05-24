@@ -3,8 +3,9 @@ class World {
         this.game = gameEngine;
         this.world = [];
         this.currentVillage = null;
-        this.villageData = [];
-
+       
+        this.Trow = 0;
+        this.Tcol = 0;
       
         // Graphs
         this.popGraph = [];
@@ -12,6 +13,11 @@ class World {
         this.socialGraph = [];
         this.learningGraph = [];
         this.geneTraits = [];
+
+        //Village graphs
+        this.villageLearning = [];
+        this.villageSocial = [];
+
         // this.agentCounter = 0;
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
@@ -79,7 +85,15 @@ class World {
         }
 
         if (this.currentVillage != null) {
-            this.villageData.push(this.currentVillage.population.length);
+            let vLearning = 0;
+            let vSocial = 0;
+            for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
+                let genesLength = this.currentVillage.population[vPop].genes.length;
+                vLearning += this.currentVillage.population[vPop].genes[genesLength - 2];   
+                vSocial += this.currentVillage.population[vPop].genes[genesLength - 1];             
+            }
+            this.villageLearning.push(vLearning);
+            this.villageSocial.push(vSocial);
             this.updateGraph(this.game.ctx, this.currentVillage);
         }
     
@@ -106,7 +120,7 @@ class World {
             this.handleClickOnVillage(this.game.ctx);
             setTimeout(() => {
                 this.game.click = false; // Reset the click state
-            }, 1000); 
+            }, 10); 
         }
     
     };
@@ -153,19 +167,18 @@ class World {
         
         const col = Math.floor(clickX / cellWidth);
         const row = Math.floor(clickY / cellHeight);
-        
+        this.Trow = row;
+        this.Tcol = col;
+
         // Make sure boundaries are correctly checked
         if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
-            console.log(`Village at ${col}, ${row} was clicked.`);
-            // console.log(this.world[col][row].population.length);        
+            console.log(`Village at ${col}, ${row} was clicked.`);      
             this.currentVillage = this.world[col][row];
-
-            // this.updateGraph(ctx, this.world[col][row]);
         }
         
     }
 
-    updateGraph(ctx, village) {
+    updateGraph(village) {
         // Remove the old graph if it exists
         if (this.villageGraph) {
             const index = this.game.entities.indexOf(this.villageGraph);
@@ -174,9 +187,9 @@ class World {
             }
         }
         // // Create a new graph and add it to the entities array
-        // need a way to get data updating for village now
 
-        this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageData], "Population", ["population"]);
+        this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageLearning, this.villageSocial], 
+                                      `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T" , "social T"]);
         this.game.entities.push(this.villageGraph);
     }
 
