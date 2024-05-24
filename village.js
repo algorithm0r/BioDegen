@@ -67,6 +67,11 @@ class Village {
         return this.world.world[wrap(newX)][wrap(newY)];
     }
 
+    displayData() {
+        // Implement what happens when a village is clicked
+        // Maybe update some UI elements, show details, etc.
+        console.log(`Displaying data for village at position (${this.x}, ${this.y})`);
+    }
 
     update() {
         // here randomly call migrate and each cell will choose to choose the same square and every day we update again

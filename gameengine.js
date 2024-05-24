@@ -11,6 +11,7 @@ class GameEngine {
 
         // Information on the input
         this.click = null;
+        this.clickCoords = { x: 0, y: 0 };;
         this.mouse = null;
         this.wheel = null;
         this.keys = {};
@@ -51,10 +52,11 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("click", e => {
-            if (this.options.debugging) {
-                console.log("CLICK", getXandY(e));
-            }
             this.click = getXandY(e);
+            this.clickCoords = this.click;
+            if (this.options.debugging) {
+                console.log("CLICK", clickCoords);
+            }
         });
 
         this.ctx.canvas.addEventListener("wheel", e => {
@@ -76,6 +78,8 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
     };
+
+
 
     addEntity(entity) {
         this.entities.push(entity);

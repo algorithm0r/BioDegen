@@ -1,7 +1,11 @@
 class World {
     constructor(gameEngine) {
+        this.game = gameEngine;
         this.world = [];
-        
+        this.currentVillage = null;
+        this.villageData = [];
+
+      
         // Graphs
         this.popGraph = [];
         this.geneGraph = [];
@@ -37,7 +41,8 @@ class World {
 
         this.graph = new Graph(gameEngine, 1020, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
-    
+        
+
     };
 
     updateData() {
@@ -72,6 +77,11 @@ class World {
                 }
             }
         }
+
+        if (this.currentVillage != null) {
+            this.villageData.push(this.currentVillage.population.length);
+            this.updateGraph(this.game.ctx, this.currentVillage);
+        }
     
         // Overall average across villages
         this.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
@@ -90,6 +100,13 @@ class World {
         }
         if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
+        }
+        
+        if(this.game.click) {
+            this.handleClickOnVillage(this.game.ctx);
+            setTimeout(() => {
+                this.game.click = false; // Reset the click state
+            }, 1000); 
         }
     
     };
@@ -127,6 +144,42 @@ class World {
         if (socket) socket.emit("insert", data);
     };
   
+
+    handleClickOnVillage(ctx) {
+        const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension; 
+        const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension; // Assuming a square grid
+        const clickX = this.game.clickCoords.x; // Ensure this is updated somewhere in your GameEngine on click
+        const clickY = this.game.clickCoords.y;
+        
+        const col = Math.floor(clickX / cellWidth);
+        const row = Math.floor(clickY / cellHeight);
+        
+        // Make sure boundaries are correctly checked
+        if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
+            console.log(`Village at ${col}, ${row} was clicked.`);
+            // console.log(this.world[col][row].population.length);        
+            this.currentVillage = this.world[col][row];
+
+            // this.updateGraph(ctx, this.world[col][row]);
+        }
+        
+    }
+
+    updateGraph(ctx, village) {
+        // Remove the old graph if it exists
+        if (this.villageGraph) {
+            const index = this.game.entities.indexOf(this.villageGraph);
+            if (index > -1) {
+                this.game.entities.splice(index, 1);
+            }
+        }
+        // // Create a new graph and add it to the entities array
+        // need a way to get data updating for village now
+
+        this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageData], "Population", ["population"]);
+        this.game.entities.push(this.villageGraph);
+    }
+
     draw(ctx){
         ctx.fillStyle = "#cc9966";
         ctx.fillRect(0,0,ctx.canvas.height,ctx.canvas.height);
