@@ -83,7 +83,7 @@ class World {
                 }
             }
         }
-
+        
         if (this.currentVillage != null) {
             let vLearning = 0;
             let vSocial = 0;
