@@ -95,6 +95,8 @@ class World {
 
             for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
                 genesLength = this.currentVillage.population[vPop].genes.length;
+
+                // change to averages
                 vLearning += this.currentVillage.population[vPop].genes[genesLength - 2];   
                 vSocial += this.currentVillage.population[vPop].genes[genesLength - 1];
                 
@@ -200,8 +202,8 @@ class World {
             if (index > -1) {
                 this.game.entities.splice(index, 1);
             }
-            // Wipe out the old graph
-             this.villageGraph = null; 
+            // // Wipe out the old graph might be a better way to do this
+            //  this.villageGraph = null; 
         }
         // // Create a new graph and add it to the entities array
 
