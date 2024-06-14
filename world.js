@@ -58,7 +58,7 @@ class World {
         let totalSocialTAverage = 0;
         let totalAvgTraits = 0;
         let villageCount = 0;
-    
+        
         for (let i = 0; i < PARAMETERS.worldDimension; i++) {
             for (let j = 0; j < PARAMETERS.worldDimension; j++) {
                 let villagePop = this.world[i][j].population.length;
@@ -108,8 +108,11 @@ class World {
             }
 
             let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
-            this.villageLearning.push(vLearning);
-            this.villageSocial.push(vSocial);
+            let VLA = vLearning / populationSize;
+            let VSA = vSocial / populationSize;
+
+            this.villageLearning.push(VLA);
+            this.villageSocial.push(VSA);
             this.villageAverageGenes.push(averageGeneTraits);
             this.updateGraph(this.game.ctx, this.currentVillage);
         }
