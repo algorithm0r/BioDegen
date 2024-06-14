@@ -93,6 +93,11 @@ class World {
             let populationSize = this.currentVillage.population.length;
             let genesLength = 0;
 
+            if (populationSize === 0) {
+                this.currentVillage = null;
+                return;
+            }
+
             for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
                 genesLength = this.currentVillage.population[vPop].genes.length;
 
@@ -194,6 +199,9 @@ class World {
         if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
             console.log(`Village at ${col}, ${row} was clicked.`);      
             this.currentVillage = this.world[col][row];
+            if (this.villageGraph) {
+                this.villageGraph.clearGraphData(); // Clear the existing graph data
+            }
         }
         
     }

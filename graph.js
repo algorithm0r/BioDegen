@@ -110,23 +110,7 @@ Graph.prototype.updateMax = function () {
     this.maxVal = Math.max(...[].concat(...this.data));
 }
 
-
-// Graph.prototype.draw = function (ctx) {
-//     if (this.data[0].length > 1) {
-//         for(var j = 0; j < this.data.length; j++) {
-//             var data = this.data[j];
-
-//             // ...
-
-//             this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 5, yPos + 10);
-
-//             // Draw the label for this line
-//             this.ctx.fillStyle = this.colors[j]; // Set the text color to the line color
-//             this.ctx.fillText(this.labels[j], this.x + this.xSize + 5, yPos + 20); // Adjust the y value as needed
-
-//             // ...
-//         }
-//     }
-
-//     // ...
-// }
+Graph.prototype.clearGraphData = function() {
+    this.data = this.data.map(() => []); // Reset each dataset in the graph
+    this.maxVal = 0; // Reset the maximum value for scaling the graph
+}
