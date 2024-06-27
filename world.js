@@ -119,7 +119,7 @@ class World {
             this.villageLearning.push(VLA);
             this.villageSocial.push(VSA);
             this.villageAverageGenes.push(averageGeneTraits);
-            this.updateGraph(this.game.ctx, this.currentVillage);
+            this.updateGraph(this.currentVillage);
         }
     
         // Overall average across villages
@@ -199,9 +199,18 @@ class World {
         if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
             console.log(`Village at ${col}, ${row} was clicked.`);      
             this.currentVillage = this.world[col][row];
+            
+            // Continue working here =========================================================================
             if (this.villageGraph) {
                 this.villageGraph.clearGraphData(); // Clear the existing graph data
+                
+                // !!!!!!!!!!!!!!!!!!!! could be a solution but look closer here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                this.villageLearning = [];
+                this.villageSocial = [];
+                this.villageAverageGenes = [];
             }
+
+            // this.updateGraph(this.currentVillage);
         }
         
     }
@@ -213,8 +222,7 @@ class World {
             if (index > -1) {
                 this.game.entities.splice(index, 1);
             }
-            // // Wipe out the old graph might be a better way to do this
-            //  this.villageGraph = null; 
+          
         }
         // // Create a new graph and add it to the entities array
 

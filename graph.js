@@ -38,6 +38,9 @@ Graph.prototype.update = function () {
 }
 
 Graph.prototype.draw = function (ctx) {
+
+    // this.clear();
+
     if (this.data[0].length > 1) {
         for(var j = 0; j < this.data.length; j++) {
             var data = this.data[j];
@@ -110,7 +113,16 @@ Graph.prototype.updateMax = function () {
     this.maxVal = Math.max(...[].concat(...this.data));
 }
 
+// keep testing this clear method
 Graph.prototype.clearGraphData = function() {
-    this.data = this.data.map(() => []); // Reset each dataset in the graph
-    this.maxVal = 0; // Reset the maximum value for scaling the graph
-}
+    this.ctx.clearRect(this.x, this.y, this.xSize, this.ySize);
+
+    console.log("Clearing graph data before reset:", JSON.stringify(this.data));
+    this.data = this.data.map(() => []);
+    this.updateMax();
+    console.log("Graph data after reset:", JSON.stringify(this.data));
+};
+
+Graph.prototype.clear = function () {
+    this.ctx.clearRect(this.x, this.y, this.xSize, this.ySize);
+};
