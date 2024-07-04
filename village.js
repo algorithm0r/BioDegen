@@ -79,60 +79,6 @@ class Village {
         console.log(`Displaying data for village at position (${this.x}, ${this.y})`);
     }
 
-    // updateGraph(village) {
-    //     // Remove the old graph if it exists
-    //     if (this.villageGraph) {
-    //         const index = this.game.entities.indexOf(this.villageGraph);
-    //         if (index > -1) {
-    //             this.game.entities.splice(index, 1);
-    //         }
-          
-    //     }
-    //     // // Create a new graph and add it to the entities array
-
-    //     this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageLearning, this.villageSocial, this.villageAverageGenes], 
-    //                                   `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T" , "social T", "gene traits"]);
-    //     this.game.entities.push(this.villageGraph);
-    // }
-
-    // updateVillageData() {
-    //     // Current village graph data 
-    //     if (this.world.currentVillage != null) {
-    //         let vLearning = 0;
-    //         let vSocial = 0;
-    //         let totalGeneTraits = 0;
-    //         let populationSize = this.world.currentVillage.population.length;
-    //         let genesLength = 0;
-
-    //         if (populationSize === 0) {
-    //             this.world.currentVillage = null;
-    //             return;
-    //         }
-
-    //         for (let vPop = 0;  vPop< this.world.currentVillage.population.length; vPop++) {
-    //             genesLength = this.world.currentVillage.population[vPop].genes.length;
-
-    //             // change to averages
-    //             vLearning += this.world.currentVillage.population[vPop].genes[genesLength - 2];   
-    //             vSocial += this.world.currentVillage.population[vPop].genes[genesLength - 1];
-                
-                
-    //             // Sum up all gene traits for each individual
-    //             for (let i = 0; i < genesLength - 2; i++) {
-    //                 totalGeneTraits += this.world.currentVillage.population[vPop].genes[i];
-    //             }    
-    //         }
-
-    //         let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
-    //         let VLA = vLearning / populationSize;
-    //         let VSA = vSocial / populationSize;
-
-    //         this.villageLearning.push(VLA);
-    //         this.villageSocial.push(VSA);
-    //         this.villageAverageGenes.push(averageGeneTraits);
-    //         this.world.updateGraph(this);
-    //     }
-    // }
 
     updateVillageData() {
         let vLearning = 0;
