@@ -15,9 +15,9 @@ class World {
         this.geneTraits = [];
 
         //Village graphs
-        this.villageLearning = [];
-        this.villageSocial = [];
-        this.villageAverageGenes = [];
+        // this.villageLearning = [];
+        // this.villageSocial = [];
+        // this.villageAverageGenes = [];
 
         // this.agentCounter = 0;
 
@@ -86,47 +86,49 @@ class World {
         }
         
         // Current village graph data 
-        if (this.currentVillage != null) {
-            let vLearning = 0;
-            let vSocial = 0;
-            let totalGeneTraits = 0;
-            let populationSize = this.currentVillage.population.length;
-            let genesLength = 0;
+        // if (this.currentVillage != null) {
+        //     let vLearning = 0;
+        //     let vSocial = 0;
+        //     let totalGeneTraits = 0;
+        //     let populationSize = this.currentVillage.population.length;
+        //     let genesLength = 0;
 
-            if (populationSize === 0) {
-                this.currentVillage = null;
-                return;
-            }
+        //     if (populationSize === 0) {
+        //         this.currentVillage = null;
+        //         return;
+        //     }
 
-            for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
-                genesLength = this.currentVillage.population[vPop].genes.length;
+        //     for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
+        //         genesLength = this.currentVillage.population[vPop].genes.length;
 
-                // change to averages
-                vLearning += this.currentVillage.population[vPop].genes[genesLength - 2];   
-                vSocial += this.currentVillage.population[vPop].genes[genesLength - 1];
+        //         // change to averages
+        //         vLearning += this.currentVillage.population[vPop].genes[genesLength - 2];   
+        //         vSocial += this.currentVillage.population[vPop].genes[genesLength - 1];
                 
                 
-                // Sum up all gene traits for each individual
-                for (let i = 0; i < genesLength - 2; i++) {
-                    totalGeneTraits += this.currentVillage.population[vPop].genes[i];
-                }    
-            }
+        //         // Sum up all gene traits for each individual
+        //         for (let i = 0; i < genesLength - 2; i++) {
+        //             totalGeneTraits += this.currentVillage.population[vPop].genes[i];
+        //         }    
+        //     }
 
-            let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
-            let VLA = vLearning / populationSize;
-            let VSA = vSocial / populationSize;
+        //     let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
+        //     let VLA = vLearning / populationSize;
+        //     let VSA = vSocial / populationSize;
 
-            this.villageLearning.push(VLA);
-            this.villageSocial.push(VSA);
-            this.villageAverageGenes.push(averageGeneTraits);
-            this.updateGraph(this.currentVillage);
-        }
+        //     this.villageLearning.push(VLA);
+        //     this.villageSocial.push(VSA);
+        //     this.villageAverageGenes.push(averageGeneTraits);
+        //     this.updateGraph(this.currentVillage);
+        // }
     
         // Overall average across villages
         this.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
         this.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
         this.geneTraits.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
         this.popGraph.push(this.humanPop); // Total population
+
+        this.updateGraph();
     };
     
 
@@ -185,50 +187,44 @@ class World {
   
 
     handleClickOnVillage(ctx) {
-        const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension; 
-        const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension; // Assuming a square grid
-        const clickX = this.game.clickCoords.x; // Ensure this is updated somewhere in your GameEngine on click
+        const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
+        const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension;
+        const clickX = this.game.clickCoords.x;
         const clickY = this.game.clickCoords.y;
-        
+
         const col = Math.floor(clickX / cellWidth);
         const row = Math.floor(clickY / cellHeight);
-        this.Trow = row;
+
         this.Tcol = col;
+        this.Trow = row;    
 
-        // Make sure boundaries are correctly checked
         if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
+            const clickedVillage = this.world[col][row];
             console.log(`Village at ${col}, ${row} was clicked.`);      
-            this.currentVillage = this.world[col][row];
-            
-            // Continue working here =========================================================================
-            if (this.villageGraph) {
-                this.villageGraph.clearGraphData(); // Clear the existing graph data
-                
-                // !!!!!!!!!!!!!!!!!!!! could be a solution but look closer here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                this.villageLearning = [];
-                this.villageSocial = [];
-                this.villageAverageGenes = [];
+            if (this.currentVillage !== clickedVillage) {
+                this.currentVillage = clickedVillage;
+                this.currentVillage.updateVillageData(); // Make sure this method updates the data and graph
             }
-
-            // this.updateGraph(this.currentVillage);
         }
-        
     }
 
-    updateGraph(village) {
-        // Remove the old graph if it exists
+
+    updateGraph() {
+        // Clear existing graph if any
         if (this.villageGraph) {
             const index = this.game.entities.indexOf(this.villageGraph);
             if (index > -1) {
                 this.game.entities.splice(index, 1);
             }
-          
         }
-        // // Create a new graph and add it to the entities array
 
-        this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageLearning, this.villageSocial, this.villageAverageGenes], 
-                                      `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T" , "social T", "gene traits"]);
-        this.game.entities.push(this.villageGraph);
+        // Assuming villageGraph is a method of the village
+        if (this.currentVillage) {
+            this.villageGraph = new Graph(this.game, 1020, 500, this.currentVillage,
+                [this.currentVillage.villageLearning, this.currentVillage.villageSocial, this.currentVillage.villageAverageGenes],
+                `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T", "social T", "gene traits"]);
+            this.game.entities.push(this.villageGraph);
+        }
     }
 
     draw(ctx){

@@ -15,7 +15,13 @@ class Village {
         this.population = [];
         this.penalty = 0;
 
+        // Village data
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
+
         this.addHuman(new Human(this));
+
     };
 
     averageGenes() {
@@ -73,6 +79,91 @@ class Village {
         console.log(`Displaying data for village at position (${this.x}, ${this.y})`);
     }
 
+    // updateGraph(village) {
+    //     // Remove the old graph if it exists
+    //     if (this.villageGraph) {
+    //         const index = this.game.entities.indexOf(this.villageGraph);
+    //         if (index > -1) {
+    //             this.game.entities.splice(index, 1);
+    //         }
+          
+    //     }
+    //     // // Create a new graph and add it to the entities array
+
+    //     this.villageGraph = new Graph(this.game, 1020, 500, village, [this.villageLearning, this.villageSocial, this.villageAverageGenes], 
+    //                                   `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T" , "social T", "gene traits"]);
+    //     this.game.entities.push(this.villageGraph);
+    // }
+
+    // updateVillageData() {
+    //     // Current village graph data 
+    //     if (this.world.currentVillage != null) {
+    //         let vLearning = 0;
+    //         let vSocial = 0;
+    //         let totalGeneTraits = 0;
+    //         let populationSize = this.world.currentVillage.population.length;
+    //         let genesLength = 0;
+
+    //         if (populationSize === 0) {
+    //             this.world.currentVillage = null;
+    //             return;
+    //         }
+
+    //         for (let vPop = 0;  vPop< this.world.currentVillage.population.length; vPop++) {
+    //             genesLength = this.world.currentVillage.population[vPop].genes.length;
+
+    //             // change to averages
+    //             vLearning += this.world.currentVillage.population[vPop].genes[genesLength - 2];   
+    //             vSocial += this.world.currentVillage.population[vPop].genes[genesLength - 1];
+                
+                
+    //             // Sum up all gene traits for each individual
+    //             for (let i = 0; i < genesLength - 2; i++) {
+    //                 totalGeneTraits += this.world.currentVillage.population[vPop].genes[i];
+    //             }    
+    //         }
+
+    //         let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
+    //         let VLA = vLearning / populationSize;
+    //         let VSA = vSocial / populationSize;
+
+    //         this.villageLearning.push(VLA);
+    //         this.villageSocial.push(VSA);
+    //         this.villageAverageGenes.push(averageGeneTraits);
+    //         this.world.updateGraph(this);
+    //     }
+    // }
+
+    updateVillageData() {
+        let vLearning = 0;
+        let vSocial = 0;
+        let totalGeneTraits = 0;
+        let populationSize = this.population.length;
+        
+        if (populationSize === 0) {
+            return; // No data to process if population is zero
+        }
+    
+        let genesLength = this.population[0].genes.length;
+    
+        for (let i = 0; i < populationSize; i++) {
+            let individual = this.population[i];
+            vLearning += individual.genes[genesLength - 2];
+            vSocial += individual.genes[genesLength - 1];
+        
+            // Summing up all traits for average calculation
+            for (let j = 0; j < genesLength - 2; j++) {
+                totalGeneTraits += individual.genes[j];
+            }
+        }
+    
+        // Calculate averages and push to graph data arrays
+        this.villageLearning.push(vLearning / populationSize);
+        this.villageSocial.push(vSocial / populationSize);
+        this.villageAverageGenes.push(totalGeneTraits / (populationSize * (genesLength - 2)));
+    }
+
+
     update() {
         // here randomly call migrate and each cell will choose to choose the same square and every day we update again
         // this.migrateGroup(5);
@@ -86,6 +177,11 @@ class Village {
 
         this.geneAverages = this.averageGenes();
         this.memeAverages = this.averageMemes();
+
+        if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
+            this.updateVillageData();
+        }
+       
     };
 
     draw(ctx) {
