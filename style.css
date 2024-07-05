@@ -69,6 +69,7 @@ div input {
     color: green;
     background-color: lightgreen;
     text-align:left;
+    margin-left: 30px;
 }
 
 #agent div {
@@ -87,14 +88,25 @@ div input {
     border: 1px solid #000;
     background-color: darkgrey;
     text-align:center;
+    margin-left: 30px;
 }
 
 /* Connected state (green background) */
 .db-connected {
     background-color: lightgreen;
+    
 }
 
 /* Disconnected state (red background) */
 .db-disconnected {
     background-color: lightcoral;
+}
+
+#reset {
+    margin-top: 5px;
+    margin-left: 30px;
+}
+
+#day {
+    margin-left: 30px;
 }

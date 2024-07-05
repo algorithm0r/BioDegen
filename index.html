@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Biological Degeneration</title>
     <link rel="stylesheet" type="text/css" href="./style.css"></link>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script>
 
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
@@ -24,11 +25,14 @@
     <div id="db" class="db-status">Database</div><br />
     <div id="agent">
     <!-- <div id="run">wild type 1 - no humans</div><br /> -->
-        <input type="text" id="population_soft_cap" value="30" />Population Soft Cap<br />
+
         <input type="checkbox" id="randEnvBonus" />Random Environmental Bonuses<br />
+        <input type="checkbox" id="individualMigrate" />Migrate Alone<br />
+        <input type="checkbox" id="socialLearnBonus" />Social Learn copy<br />
+
+        <input type="text" id="population_soft_cap" value="30" />Population Soft Cap<br />
         <input type="text" id="maxEnvBonus" value="5" />Max Environmental Bonus<br />
         <input type="text" id="numTraits" value="10" />Trait Number<br />
-        <!-- <input type="checkbox" id="sharedPlantingSeeds" checked/>Share Planting Seeds<br /> -->
         <input type="text" id="traitThreshold" value="5" />Trait Threshold<br />
         <input type="text" id="ReproThresholdStep" value="30" />Reproduction Threshold Step<br />
         <input type="text" id="ReproThresholdBase" value="50" />Reproduction Threshold Base<br />
@@ -37,6 +41,8 @@
         <input type="text" id="learnRate" value="0.01" />Learning Rate<br />
         <input type="text" id="deathRate" value="0.005" />Death Rate<br />
         <input type="text" id="socialRate" value="0.1" />Social Learning Rate<br />
+       
+
         <!-- <label for="seed_selection">Harvesting strategy:</label>
         <select id="seed_selection">
             <option value="none">No Harvest</option>
@@ -72,9 +78,12 @@
         </select><br /> -->
     </div>
 	<br>
-    <button type="button" onclick=reset()>Reset</button>
 </body>
+<div id = "reset">
+<button type="button" onclick=reset()>Reset</button>
+</div>
 <div id = "day">
+    
     Day: 0
 
 </div>

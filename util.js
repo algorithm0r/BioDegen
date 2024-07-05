@@ -1,3 +1,16 @@
+function databaseConnected() {
+    const dbDiv = document.getElementById("db");
+    dbDiv.classList.remove("db-disconnected");
+    dbDiv.classList.add("db-connected");
+};
+
+function databaseDisconnected() {
+    const dbDiv = document.getElementById("db");
+    dbDiv.classList.remove("db-connected");
+    dbDiv.classList.add("db-disconnected");
+};
+
+
 /** Global Parameters Object */
 const PARAMETERS = { 
     // environment parameters
@@ -18,9 +31,15 @@ const PARAMETERS = {
     learningRate: 0.01,
     deathRate: 0.005,
     socialLearningRate: 0.1,
-
+    migratePeriod: 10,
+    
     //data gathering
-    reportingPeriod: 100
+    reportingPeriod: 100,
+    day: 0,
+    
+    // database parameters
+    db: "BioDegenDB",
+    collection: "exp2024v1"
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
