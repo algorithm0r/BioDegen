@@ -2,6 +2,23 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 
+var socket = null;
+if (window.io !== undefined) {
+	console.log("Database connected!");
+
+	socket = io.connect('http://73.225.31.4:8888');
+
+	socket.on("connect", function () {
+		databaseConnected();
+	});
+	
+	socket.on("disconnect", function () {
+		databaseDisconnected();
+	});
+
+	socket.addEventListener("log", console.log);
+}
+
 
 function reset() {
 	destroy();
@@ -15,6 +32,7 @@ function reset() {
 
 function destroy() {
 	gameEngine.entities = [];
+	PARAMETERS.day = 0;
 }
 
 function buildWorld() {
@@ -32,10 +50,5 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.addEntity(new World(gameEngine))
 	
-	// this.popGraph = new Graph(this.gameEngine, 810, 0, this, "Population");
-	// gameEngine.addEntity(this.popGraph);
-
 	gameEngine.start();
-	
-	// reset();
 });

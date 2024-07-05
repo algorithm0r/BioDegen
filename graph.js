@@ -1,19 +1,13 @@
-function Graph(game, x, y, world, data, label) {
+function Graph(game, x, y, world, data, label, labels) {
     this.game = game;
     this.x = x;
     this.y = y;
     this.world = world;
     this.data = data;
-    // this.humanGraph = this.world.popGraph;
-    // this.learnSocialGraph = this.world.geneGraph;
-    // this.learnGraph = this.world.learningGraph;
-    // this.socialTGraph = this.world.socialGraph;
 
-    // add in a list of data in here from world to separate
-    // this.world.popGraph; , this.world.geneGraph, etc etc
-    // pass world in as a list
   
     this.label = label;
+    this.labels = labels;
 
     this.xSize = 600;
     this.ySize = 175;
@@ -23,7 +17,7 @@ function Graph(game, x, y, world, data, label) {
     this.maxVal = 0;
 }
 
-// want to upgrade to hold different graphs
+
 
 Graph.prototype.update = function () {
     // this.data = [];
@@ -44,6 +38,9 @@ Graph.prototype.update = function () {
 }
 
 Graph.prototype.draw = function (ctx) {
+
+    // this.clear();
+
     if (this.data[0].length > 1) {
         for(var j = 0; j < this.data.length; j++) {
             var data = this.data[j];
@@ -74,7 +71,7 @@ Graph.prototype.draw = function (ctx) {
     
             this.ctx.strokeStyle = "#000000";
             this.ctx.fillSytle = "#000000";
-            this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 5, yPos + 10);
+            this.ctx.fillText(data[data.length - 1], this.x + this.xSize + 15, yPos + 10);
     
             // Drawing the label underneath the graph
             this.ctx.fillStyle = "#000000"; // Set the text color
@@ -84,39 +81,28 @@ Graph.prototype.draw = function (ctx) {
         }
 
 
-        // // humans
-        // this.ctx.strokeStyle = "#CCCCCC";
-        // this.ctx.beginPath();
-        // var xPos = this.x;
-        // var yPos = this.humanData.length > this.xSize ? this.y + this.ySize - Math.floor(this.humanData[this.humanData.length - this.xSize] / this.maxVal * this.ySize)
-		// 								: this.y + this.ySize - Math.floor(this.humanData[0] / this.maxVal * this.ySize);
-        // this.ctx.moveTo(xPos, yPos);
-        // var length = this.humanData.length > this.xSize ?
-        //     this.xSize : this.humanData.length;
-        // for (var i = 1; i < length; i++) {
-        //     var index = this.humanData.length > this.xSize ?
-		// 				this.humanData.length - this.xSize - 1 + i : i;
-        //     xPos++;
-        //     yPos = this.y + this.ySize - Math.floor(this.humanData[index] / this.maxVal * this.ySize);
-        //     if (yPos <= 0) {
-        //         yPos = 0;
-        //     }
-
-        //     this.ctx.lineTo(xPos, yPos);
-        // }
-        // this.ctx.stroke();
-        // this.ctx.closePath();
-
-        // this.ctx.strokeStyle = "#000000";
-        // this.ctx.fillSytle = "#000000";
-        // this.ctx.fillText(this.humanData[this.humanData.length - 1], this.x + this.xSize + 5, yPos + 10);
-
     }
     var firstTick = 0;
     firstTick = this.data[0].length > this.xSize ? this.data[0].length - this.xSize : 0;
     this.ctx.fillText(firstTick * PARAMETERS.reportingPeriod, this.x, this.y + this.ySize + 10);
     this.ctx.textAlign = "right";
     this.ctx.fillText(this.world.day - 1, this.x + this.xSize - 5, this.y + this.ySize + 10);
+
+
+    // Draw the legend
+    var legendX = (this.x + this.xSize) - 300; // Adjust as needed
+    var legendY = this.y + 155;
+      
+    for (var j = 0; j < this.data.length; j++) {
+        // Draw the colored line or square
+        this.ctx.fillStyle = this.colors[j];
+        this.ctx.fillRect(legendX + j * 100, legendY, 60, 20); // Adjust as needed
+      
+        // Draw the label
+        this.ctx.fillStyle = "#000000"; // Set the text color to black
+        this.ctx.fillText(this.labels[j], legendX + j * 100 + 55, legendY + 15); // Adjust as needed
+    }
+
 
     this.ctx.strokeStyle = "#000000";
     this.ctx.lineWidth = 1;
@@ -126,3 +112,17 @@ Graph.prototype.draw = function (ctx) {
 Graph.prototype.updateMax = function () {
     this.maxVal = Math.max(...[].concat(...this.data));
 }
+
+// keep testing this clear method
+Graph.prototype.clearGraphData = function() {
+    this.ctx.clearRect(this.x, this.y, this.xSize, this.ySize);
+
+    console.log("Clearing graph data before reset:", JSON.stringify(this.data));
+    this.data = this.data.map(() => []);
+    this.updateMax();
+    console.log("Graph data after reset:", JSON.stringify(this.data));
+};
+
+Graph.prototype.clear = function () {
+    this.ctx.clearRect(this.x, this.y, this.xSize, this.ySize);
+};

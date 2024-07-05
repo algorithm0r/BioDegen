@@ -15,7 +15,13 @@ class Village {
         this.population = [];
         this.penalty = 0;
 
+        // Village data
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
+
         this.addHuman(new Human(this));
+
     };
 
     averageGenes() {
@@ -36,20 +42,79 @@ class Village {
         this.population.push(human);
     };
 
-    migrate() {
-        if(Math.random() < PARAMETERS.migrationRate) {
-            let newX = this.x;
-            let newY = this.y;
-            while(newX === this.x && newY === this.y) {
-                newX = this.x + randomInt(2) - 1;
-                newY = this.y + randomInt(2) - 1;
-            }
-            return this.world.world[wrap(newX)][wrap(newY)];
+    // migrating individuals from one village to another
+    migrate(human) {
+        let newVillage = this.migrateLocation();
+        return this.move(human, newVillage);
+    }
+
+    move(human, newVillage) {
+        let index = this.population.indexOf(human);
+        if (index !== -1) {
+            this.population.splice(index, 1);
         }
-        return this;
-    };
+        // Add the agent to the new village's population
+        newVillage.population.push(human);
+        
+        // Update the human's village
+        human.village = newVillage;
+        
+        return newVillage;
+    }
+    
+    // the village migrate method where the village that it ends up choosing will be variable for migrate
+    migrateLocation() {
+        let newX = this.x;
+        let newY = this.y;
+        while(newX === this.x && newY === this.y) {
+            newX = this.x + randomInt(2) - 1;
+            newY = this.y + randomInt(2) - 1;
+        }
+        return this.world.world[wrap(newX)][wrap(newY)];
+    }
+
+    displayData() {
+        // Implement what happens when a village is clicked
+        // Maybe update some UI elements, show details, etc.
+        console.log(`Displaying data for village at position (${this.x}, ${this.y})`);
+    }
+
+
+    updateVillageData() {
+        let vLearning = 0;
+        let vSocial = 0;
+        let totalGeneTraits = 0;
+        let populationSize = this.population.length;
+        
+        if (populationSize === 0) {
+            return; // No data to process if population is zero
+        }
+    
+        let genesLength = this.population[0].genes.length;
+    
+        for (let i = 0; i < populationSize; i++) {
+            let individual = this.population[i];
+            vLearning += individual.genes[genesLength - 2];
+            vSocial += individual.genes[genesLength - 1];
+        
+            // Summing up all traits for average calculation
+            for (let j = 0; j < genesLength - 2; j++) {
+                totalGeneTraits += individual.genes[j];
+            }
+        }
+    
+        // Calculate averages and push to graph data arrays
+        this.villageLearning.push(vLearning / populationSize);
+        this.villageSocial.push(vSocial / populationSize);
+        this.villageAverageGenes.push(totalGeneTraits / (populationSize * (genesLength - 2)));
+    }
+
 
     update() {
+        // here randomly call migrate and each cell will choose to choose the same square and every day we update again
+        // this.migrateGroup(5);
+        this.migrationVillage = this.migrateLocation();
+
         this.penalty = this.population.length/PARAMETERS.populationSoftCap;
 
         this.population.map(human => human.update());
@@ -58,6 +123,11 @@ class Village {
 
         this.geneAverages = this.averageGenes();
         this.memeAverages = this.averageMemes();
+
+        if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
+            this.updateVillageData();
+        }
+       
     };
 
     draw(ctx) {
@@ -143,7 +213,7 @@ class Village {
         // write population total
         ctx.font = "12px Times New Roman";
         ctx.fillStyle = "black";
-        ctx.fillText(`Pop: ${this.population.length}`, x + 40, y + 12);
+        ctx.fillText(`Pop: ${this.population.length}`, x + 50, y + 12);
 
      
     };
