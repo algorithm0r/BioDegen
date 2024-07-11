@@ -20,6 +20,8 @@ class Village {
         this.villageSocial = [];
         this.villageAverageGenes = [];
 
+        this.isSelected = false;
+
         this.addHuman(new Human(this));
 
     };
@@ -142,10 +144,21 @@ class Village {
         const x = this.x*cellWidth;
         const y = this.y*cellWidth;
 
+        // highlights the selected village with a red border
+        if (this.isSelected) {
+            ctx.strokeStyle = 'red'; 
+            ctx.lineWidth = 5; 
+        } else {
+            ctx.strokeStyle = 'black'; 
+            ctx.lineWidth = 1; 
+        }
+        ctx.strokeRect(x, y, cellWidth, cellHeight);
+       
+
+
         // draw transparent green squares for each village representing the total bonus
         ctx.fillStyle = "green";
-        ctx.strokeStyle = "black";
-
+     
         ctx.globalAlpha = this.totalBonus/(PARAMETERS.numTraits*PARAMETERS.maxEnvironmentalBonus);
         ctx.fillRect(x, y, cellWidth, cellHeight);
         ctx.globalAlpha = 1;
