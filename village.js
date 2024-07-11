@@ -155,7 +155,7 @@ class Village {
         ctx.strokeRect(x, y, cellWidth, cellHeight);
        
 
-
+        ctx.lineWidth = 1; 
         // draw transparent green squares for each village representing the total bonus
         ctx.fillStyle = "green";
      
