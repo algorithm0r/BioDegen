@@ -112,41 +112,31 @@ class World {
                 this.game.click = false; // Reset the click state
             }, 10); 
         }
-    
+        if(PARAMETERS.day > PARAMETERS.epoch) {
+            this.logData();
+        }
     };
 
 
     logData() {
-        var data = {
+        let data = {
             db: PARAMETERS.db,
             collection: PARAMETERS.collection,
             data: {
                 run: "X1",
                 params: PARAMETERS,
-                // seedPop: this.seedPop,
-                // humanPop: this.humanPop,
-                // wildPop: this.wildPop,
-                // domePop: this.domePop,
-                // weightData: this.weightData,
-                // rootData: this.rootData,
-                // seedData: this.seedData,
-                // energyData: this.energyData,
-                // dispersalData: this.dispersalData,
-                // weightDataWild: this.weightDataWild,
-                // rootDataWild: this.rootDataWild,
-                // seedDataWild: this.seedDataWild,
-                // energyDataWild: this.energyDataWild,
-                // dispersalDataWild: this.dispersalDataWild,
-                // weightDataDomesticated: this.weightDataDomesticated,
-                // rootDataDomesticated: this.rootsDataDomesticated,
-                // seedDataDomesticated: this.seedDataDomesticated,
-                // energyDataDomesticated: this.energyDataDomesticated,
-                // dispersalDataDomesticated: this.dispersalDataDomesticated
+                population: this.popGraph,
+                geneTickets: this.geneGraph,
+                learningTickets: this.learningGraph,
+                socialTickets: this.socialGraph
             }
-        };
     
-        if (socket) socket.emit("insert", data);
+         }
+    // Each list like popGraph, geneGraph, learningGraph, socialGraph should already be updated regularly in the world updates
+         if (socket) socket.emit("insert", data);
     };
+
+
   
 
     handleClickOnVillage(ctx) {
