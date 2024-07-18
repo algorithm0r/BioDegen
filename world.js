@@ -77,7 +77,7 @@ class World {
         // Overall average across villages
         this.data.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
         this.data.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
-        this.data.geneTraits.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
+        this.data.geneGraph.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
         this.data.popGraph.push(this.humanPop); // Total population
 
         this.updateGraph();

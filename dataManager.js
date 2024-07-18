@@ -21,6 +21,7 @@ class DataManager {
         let data = {
             db: PARAMETERS.db,
             collection: PARAMETERS.collection,
+            //maybe change this to query?
             data: {
                 run: "X1",
                 params: PARAMETERS,
