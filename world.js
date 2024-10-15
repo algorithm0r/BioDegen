@@ -102,7 +102,7 @@ class World {
             }, 10); 
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
-            this.data.logData();
+            this.data.logData(this.currentVillage);
         }
     };
 
@@ -126,6 +126,10 @@ class World {
             this.currentVillage = this.world[col][row];
             this.currentVillage.isSelected = true; // Select the new village
             this.currentVillage.updateVillageData(); // Update data for the new village
+            
+            // data manager update
+            // this.data.logData(this.currentVillage);
+
             this.updateGraph(); // Update the graph to reflect new data
             console.log(`Village at ${col}, ${row} was clicked.`);      
            
