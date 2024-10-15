@@ -7,12 +7,13 @@ class World {
         this.Trow = 0;
         this.Tcol = 0;
       
+        this.data = new DataManager(this);
         // Graphs
-        this.popGraph = [];
-        this.geneGraph = [];
-        this.socialGraph = [];
-        this.learningGraph = [];
-        this.geneTraits = [];
+        // this.popGraph = [];
+        // this.geneGraph = [];
+        // this.socialGraph = [];
+        // this.learningGraph = [];
+        // this.geneTraits = [];
 
         //Village graphs
         // this.villageLearning = [];
@@ -30,23 +31,11 @@ class World {
         
 
         //added in the graphs here with the last graph being just all the of the information at once
-        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.popGraph], "Population", ["population"]);
+        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.data.popGraph], "Population", ["population"]);
         gameEngine.addEntity(this.humanGraph);
 
-        // this.ticketsGraph = new Graph(gameEngine, 1040, 210, this, [this.geneGraph], "genes");
-        // gameEngine.addEntity(this.ticketsGraph);
 
-        // this.learnTGraph = new Graph(gameEngine, 1040, 250, this, [this.learningGraph], "Learning Tickets");
-        // gameEngine.addEntity(this.learnTGraph);
-
-        // this.socialTGraph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph], "Social Tickets");
-        // gameEngine.addEntity(this.socialTGraph);
-
-        // this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
-        // gameEngine.addEntity(this.geneTGraph);
-
-
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
+        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
         
 
@@ -86,10 +75,10 @@ class World {
         }
     
         // Overall average across villages
-        this.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
-        this.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
-        this.geneTraits.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
-        this.popGraph.push(this.humanPop); // Total population
+        this.data.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
+        this.data.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
+        this.data.geneGraph.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
+        this.data.popGraph.push(this.humanPop); // Total population
 
         this.updateGraph();
     };
@@ -112,32 +101,10 @@ class World {
                 this.game.click = false; // Reset the click state
             }, 10); 
         }
-        if(PARAMETERS.day > PARAMETERS.epoch) {
-            this.logData();
+        if(PARAMETERS.day % PARAMETERS.epoch === 0) {
+            this.data.logData();
         }
     };
-
-
-    logData() {
-        let data = {
-            db: PARAMETERS.db,
-            collection: PARAMETERS.collection,
-            data: {
-                run: "X1",
-                params: PARAMETERS,
-                population: this.popGraph,
-                geneTickets: this.geneGraph,
-                learningTickets: this.learningGraph,
-                socialTickets: this.socialGraph
-            }
-    
-         }
-    // Each list like popGraph, geneGraph, learningGraph, socialGraph should already be updated regularly in the world updates
-         if (socket) socket.emit("insert", data);
-    };
-
-
-  
 
     handleClickOnVillage(ctx) {
         const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
@@ -178,7 +145,7 @@ class World {
         // Assuming villageGraph is a method of the village
         if (this.currentVillage) {
             this.villageGraph = new Graph(this.game, 1020, 500, this.currentVillage,
-                [this.currentVillage.villageLearning, this.currentVillage.villageSocial, this.currentVillage.villageAverageGenes],
+                [this.currentVillage.data.villageLearning, this.currentVillage.data.villageSocial, this.currentVillage.data.villageAverageGenes],
                 `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T", "social T", "gene traits"]);
             this.game.entities.push(this.villageGraph);
         }
