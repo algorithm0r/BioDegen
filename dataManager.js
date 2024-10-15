@@ -9,15 +9,46 @@ class DataManager {
         this.socialGraph = [];
         this.geneTraits = [];
             
-            // village
+            // village 2 dimensional
         this.villageLearning = [];
         this.villageSocial = [];
         this.villageAverageGenes = [];
+
+        this.logVillageData();
     };
 
 
+    logVillageData() {
+        // resets the village data and pulls from the individual villages and initializes each village double forloop
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
+
+        for (let i = 0; i < this.world.worldDimension; i++) {
+            this.villageLearning[i] = [];
+            this.villageSocial[i] = [];
+            this.villageAverageGenes[i] = [];
+            for (let j = 0; j < this.world.worldDimension; j++) {
+                this.villageLearning[i][j] = [];
+                this.villageSocial[i][j] = [];
+                this.villageAverageGenes[i][j] = [];
+            }
+        }
+    }
+
 
     logData() {
+            //  actually logs the village data
+        for (let i = 0; i < this.world.worldDimension; i++) {
+            for (let j = 0; j < this.world.worldDimension; j++) {
+                let village = this.world.world[i][j];
+                // Aggregate current data for each village
+                this.villageLearning[i][j].push(...village.villageLearning);
+                this.villageSocial[i][j].push(...village.villageSocial);
+                this.villageAverageGenes[i][j].push(...village.villageAverageGenes);
+            }
+        }
+
         let data = {
             db: PARAMETERS.db,
             collection: PARAMETERS.collection,
@@ -40,39 +71,4 @@ class DataManager {
          if (socket) socket.emit("insert", data);
     };
 
-    // logData() {
-    //     let villageLearning = [];
-    //     let villageSocial = [];
-    //     let villageGeneTraits = [];
-    
-    //     // Aggregate data from each village
-    //     for (let i = 0; i < this.world.length; i++) {
-    //         for (let j = 0; j < this.world[i].length; j++) {
-    //             let village = this.world[i][j];
-    //             villageLearning.push(village.villageLearning);
-    //             villageSocial.push(village.villageSocial);
-    //             villageGeneTraits.push(village.villageAverageGenes);
-    //         }
-    //     }
-    
-    //     let data = {
-    //         db: PARAMETERS.db,
-    //         collection: PARAMETERS.collection,
-    //         data: {
-    //             run: "X1",
-    //             params: PARAMETERS,
-    //             population: this.popGraph,
-    //             geneTickets: this.geneGraph,
-    //             learningTickets: this.learningGraph,
-    //             socialTickets: this.socialGraph,
-    //             villageLearning: villageLearning,
-    //             villageSocial: villageSocial,
-    //             villageGeneTraits: villageGeneTraits
-    //         }
-    //     };
-    
-    //     // Send data to the server or database
-    //     if (socket) socket.emit("insert", data);
-    // }
-    
 }

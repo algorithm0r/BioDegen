@@ -145,7 +145,7 @@ class World {
         // Assuming villageGraph is a method of the village
         if (this.currentVillage) {
             this.villageGraph = new Graph(this.game, 1020, 500, this.currentVillage,
-                [this.currentVillage.data.villageLearning, this.currentVillage.data.villageSocial, this.currentVillage.data.villageAverageGenes],
+                [this.currentVillage.villageLearning, this.currentVillage.villageSocial, this.currentVillage.villageAverageGenes],
                 `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T", "social T", "gene traits"]);
             this.game.entities.push(this.villageGraph);
         }

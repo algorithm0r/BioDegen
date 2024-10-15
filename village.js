@@ -16,10 +16,10 @@ class Village {
         this.penalty = 0;
 
         // Village data
-        this.data = new DataManager(this.world);
-        // this.villageLearning = [];
-        // this.villageSocial = [];
-        // this.villageAverageGenes = [];
+        // this.data = new DataManager(this.world);
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
 
         this.isSelected = false;
 
@@ -107,9 +107,9 @@ class Village {
         }
     
         // Calculate averages and push to graph data arrays
-        this.data.villageLearning.push(vLearning / populationSize);
-        this.data.villageSocial.push(vSocial / populationSize);
-        this.data.villageAverageGenes.push(totalGeneTraits / (populationSize * (genesLength - 2)));
+        this.villageLearning.push(vLearning / populationSize);
+        this.villageSocial.push(vSocial / populationSize);
+        this.villageAverageGenes.push(totalGeneTraits / (populationSize * (genesLength - 2)));
     }
 
 
