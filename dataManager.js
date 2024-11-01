@@ -10,10 +10,13 @@ class DataManager {
         this.geneTraits = [];
             
             // village 2 dimensional
-        this.villageLearning = [];
-        this.villageSocial = [];
-        this.villageAverageGenes = [];
+        // this.villageLearning = [];
+        // this.villageSocial = [];
+        // this.villageAverageGenes = [];
 
+        this.villageLearning = Array.from({length: world.worldDimension}, () => []);
+        this.villageSocial = Array.from({length: world.worldDimension}, () => []);
+        this.villageAverageGenes = Array.from({length: world.worldDimension}, () => []);
    
     };
 
@@ -22,9 +25,9 @@ class DataManager {
         // Parse through the data here for all villages
      // Iterate through each village to aggregate their data
         // Resetting village data arrays
-        this.villageLearning = [];
-        this.villageSocial = [];
-        this.villageAverageGenes = [];
+        // this.villageLearning = [];
+        // this.villageSocial = [];
+        // this.villageAverageGenes = [];
 
         // Aggregate data from each village
         for (let i = 0; i < this.world.world.length; i++) {
@@ -51,9 +54,11 @@ class DataManager {
                 //  pulls directly from the current village we have clicked and gets the data from that village 
                 // instead of it just pushing one list of these tickets for one village we want all the villages and for each of these lists to be 
                 //  a list of lists for every village
-                villageLearning: this.villageLearning.flat(),
-                villageSocial: this.villageSocial.flat(),
-                villageGeneTraits: this.villageAverageGenes.flat()
+
+                // was flat previously
+                villageLearning: this.villageLearning,
+                villageSocial: this.villageSocial,
+                villageGeneTraits: this.villageAverageGenes
                 
             }
     

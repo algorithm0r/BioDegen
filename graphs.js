@@ -1,4 +1,4 @@
-var socket = io.connect("http://67.183.114.71:8888");
+var socket = io.connect("http://73.19.38.112:8888");
 
 document.addEventListener("DOMContentLoaded", function () {
         // Emit a socket event with fixed parameters or those derived from other parts of your application
