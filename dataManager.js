@@ -10,13 +10,13 @@ class DataManager {
         this.geneTraits = [];
             
             // village 2 dimensional
-        // this.villageLearning = [];
-        // this.villageSocial = [];
-        // this.villageAverageGenes = [];
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
 
-        this.villageLearning = Array.from({length: world.worldDimension}, () => []);
-        this.villageSocial = Array.from({length: world.worldDimension}, () => []);
-        this.villageAverageGenes = Array.from({length: world.worldDimension}, () => []);
+        // this.villageLearning = Array.from({length: world.worldDimension}, () => []);
+        // this.villageSocial = Array.from({length: world.worldDimension}, () => []);
+        // this.villageAverageGenes = Array.from({length: world.worldDimension}, () => []);
    
     };
 
@@ -25,18 +25,22 @@ class DataManager {
         // Parse through the data here for all villages
      // Iterate through each village to aggregate their data
         // Resetting village data arrays
-        // this.villageLearning = [];
-        // this.villageSocial = [];
-        // this.villageAverageGenes = [];
+        this.villageLearning = [];
+        this.villageSocial = [];
+        this.villageAverageGenes = [];
 
+        // console.log(`Logging data for ${this.world.worldDimension * this.world.worldDimension} villages.`);
         // Aggregate data from each village
         for (let i = 0; i < this.world.world.length; i++) {
             for (let j = 0; j < this.world.world[i].length; j++) {
                 let village = this.world.world[i][j];
-                this.villageLearning.push([...village.villageLearning]);
-                this.villageSocial.push([...village.villageSocial]);
-                this.villageAverageGenes.push([...village.villageAverageGenes]);
-            }
+                
+                // debug here and see what is being pushed a list of time for each village list length should be the same for each should be 
+                //  20 in each
+                this.villageLearning.push(village.villageLearning);
+                this.villageSocial.push(village.villageSocial);
+                this.villageAverageGenes.push(village.villageAverageGenes);
+                console.log(`Village (${i}, ${j}) - Learning: ${village.villageLearning.length}, Social: ${village.villageSocial.length}, Genes: ${village.villageAverageGenes.length}`);            }
         }
         // =============================================
         let data = {
@@ -65,6 +69,8 @@ class DataManager {
          }
     // Each list like popGraph, geneGraph, learningGraph, socialGraph should already be updated regularly in the world updates
          if (socket) socket.emit("insert", data);
+
+         console.log(`Total villages logged: ${this.villageLearning.length}`);
     };
 
 }

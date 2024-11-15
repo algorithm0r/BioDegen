@@ -90,11 +90,16 @@ class Village {
         let populationSize = this.population.length;
         
         if (populationSize === 0) {
+            // main change here
+            this.villageLearning.push(0);
+            this.villageSocial.push(0);
+            this.villageAverageGenes.push(0);
             return; // No data to process if population is zero
         }
     
         let genesLength = this.population[0].genes.length;
     
+        //  the populationSize here is what may cause the issue with inconsistent data sending for village
         for (let i = 0; i < populationSize; i++) {
             let individual = this.population[i];
             vLearning += individual.genes[genesLength - 2];
@@ -110,6 +115,8 @@ class Village {
         this.villageLearning.push(vLearning / populationSize);
         this.villageSocial.push(vSocial / populationSize);
         this.villageAverageGenes.push(totalGeneTraits / (populationSize * (genesLength - 2)));
+
+        // console.log(`Village at (${this.x},${this.y}) Learning Data Length: ${this.villageLearning.length}`);
     }
 
 
@@ -127,9 +134,10 @@ class Village {
         this.geneAverages = this.averageGenes();
         this.memeAverages = this.averageMemes();
 
-        if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
-            this.updateVillageData();
-        }
+        // OG testing
+        // if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
+        //     this.updateVillageData();
+        // }
        
     };
 
