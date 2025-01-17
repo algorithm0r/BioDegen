@@ -29,6 +29,25 @@ socket.on("find", (data) => {
     // Assume db is already connected and collection is accessible
     console.log(data);
 });
+// ============================================================================================================================================================================
+// this is to find the specific run of the data
+document.addEventListener("DOMContentLoaded", function () {
+    // Emit a socket event to fetch specific run data
+    console.log("Requesting data for run X2");
+    socket.emit("find", { 
+        db: PARAMETERS.db, 
+        collection: PARAMETERS.collection, 
+        query: {run: "X2"},
+        // limit: 1, 
+    });
+
+    socket.emit("count", { 
+        db: PARAMETERS.db, 
+        collection: PARAMETERS.collection,
+        query: {run: "X2"} 
+    });
+});
+
 // var socket = io.connect("http://67.183.114.71:8888");
 // var context;
 // var ticks = 600;
