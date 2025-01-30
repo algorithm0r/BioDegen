@@ -34,7 +34,7 @@ const PARAMETERS = {
     migratePeriod: 10,
     
     //data gathering
-    reportingPeriod: 100,
+    reportingPeriod: 20,
     day: 0,
     
     // database parameters
