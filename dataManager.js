@@ -20,7 +20,6 @@ class DataManager {
    
     };
 
-
     logData(village) {
         // Parse through the data here for all villages
      // Iterate through each village to aggregate their data
@@ -72,5 +71,56 @@ class DataManager {
 
          console.log(`Total villages logged: ${this.villageLearning.length}`);
     };
+
+    // ======================================================================================================================================
+    // TESTING LOGGING DATA
+
+
+   // Testing out my averaging in graphs.js to see if it works properly filled with 1000 
+    // logData(village) {
+    //     let data = {
+    //         db: PARAMETERS.db,
+    //         collection: PARAMETERS.collection,
+    //         data: {
+    //             run: "testAVG", // Change to "testAVG2" if overwriting is an issue
+    //             params: PARAMETERS,
+    //             population: new Array(10).fill(1000),
+    //             geneTickets: new Array(10).fill(1000),
+    //             learningTickets: new Array(10).fill(1000),
+    //             socialTickets: new Array(10).fill(1000),
+
+    //             villageLearning: this.villageLearning,
+    //             villageSocial: this.villageSocial,
+    //             villageGeneTraits: this.villageAverageGenes
+    //         }
+    //     };
+
+    //     console.log("Logging Data:", data);  // Verify data before sending
+    //     socket.emit("insert", data);
+    // }
+
+    // testing with putting in 0s here
+    // logData(village) {
+    //     let data = {
+    //         db: PARAMETERS.db,
+    //         collection: PARAMETERS.collection,
+    //         data: {
+    //             run: "testAVG", // Change to "testAVG2" if overwriting is an issue
+    //             params: PARAMETERS,
+    //             population: new Array(10).fill(0),
+    //             geneTickets: new Array(10).fill(0),
+    //             learningTickets: new Array(10).fill(0),
+    //             socialTickets: new Array(10).fill(0),
+
+    //             villageLearning: this.villageLearning,
+    //             villageSocial: this.villageSocial,
+    //             villageGeneTraits: this.villageAverageGenes
+    //         }
+    //     };
+
+    //     console.log("Logging Data:", data);  // Verify data before sending
+    //     socket.emit("insert", data);
+    // }
+    
 
 }
