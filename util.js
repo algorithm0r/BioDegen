@@ -40,7 +40,8 @@ const PARAMETERS = {
     // database parameters
     db: "BioDegenDB",
     collection: "test",
-    epoch: 2000
+    // increased epoch to 20000 to allow for more data to be collected
+    epoch: 20000
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;

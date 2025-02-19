@@ -47,7 +47,7 @@ class DataManager {
             collection: PARAMETERS.collection,
             //maybe change this to query?
             data: {
-                run: "X2",
+                run: "run1",
                 params: PARAMETERS,
                 population: this.popGraph,
                 geneTickets: this.geneGraph,

@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.emit("find", { 
         db: PARAMETERS.db, 
         collection: PARAMETERS.collection, 
-        query: {run: "X2"}, // Fetch all runs
+        // run1, X2, testAVG
+        query: {run: "run1"}, // Fetch all runs
         limit: 20, // modify this number to see how many you want to average for now its 5
     });
 });
