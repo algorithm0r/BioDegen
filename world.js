@@ -7,12 +7,13 @@ class World {
         this.Trow = 0;
         this.Tcol = 0;
       
+        this.data = new DataManager(this);
         // Graphs
-        this.popGraph = [];
-        this.geneGraph = [];
-        this.socialGraph = [];
-        this.learningGraph = [];
-        this.geneTraits = [];
+        // this.popGraph = [];
+        // this.geneGraph = [];
+        // this.socialGraph = [];
+        // this.learningGraph = [];
+        // this.geneTraits = [];
 
         //Village graphs
         // this.villageLearning = [];
@@ -30,23 +31,11 @@ class World {
         
 
         //added in the graphs here with the last graph being just all the of the information at once
-        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.popGraph], "Population", ["population"]);
+        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.data.popGraph], "Population", ["population"]);
         gameEngine.addEntity(this.humanGraph);
 
-        // this.ticketsGraph = new Graph(gameEngine, 1040, 210, this, [this.geneGraph], "genes");
-        // gameEngine.addEntity(this.ticketsGraph);
 
-        // this.learnTGraph = new Graph(gameEngine, 1040, 250, this, [this.learningGraph], "Learning Tickets");
-        // gameEngine.addEntity(this.learnTGraph);
-
-        // this.socialTGraph = new Graph(gameEngine, 1040, 500, this, [this.socialGraph], "Social Tickets");
-        // gameEngine.addEntity(this.socialTGraph);
-
-        // this.geneTGraph = new Graph(gameEngine, 1040, 250, this, [this.geneTraits], "Gene Traits");
-        // gameEngine.addEntity(this.geneTGraph);
-
-
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.socialGraph, this.learningGraph, this.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
+        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
         
 
@@ -82,53 +71,27 @@ class World {
                     totalAvgTraits += geneTraits / villagePop;
                     villageCount++;
                 }
+                 // village data testing
+                this.world[i][j].updateVillageData();
             }
         }
-        
-        // Current village graph data 
-        // if (this.currentVillage != null) {
-        //     let vLearning = 0;
-        //     let vSocial = 0;
-        //     let totalGeneTraits = 0;
-        //     let populationSize = this.currentVillage.population.length;
-        //     let genesLength = 0;
-
-        //     if (populationSize === 0) {
-        //         this.currentVillage = null;
-        //         return;
-        //     }
-
-        //     for (let vPop = 0;  vPop< this.currentVillage.population.length; vPop++) {
-        //         genesLength = this.currentVillage.population[vPop].genes.length;
-
-        //         // change to averages
-        //         vLearning += this.currentVillage.population[vPop].genes[genesLength - 2];   
-        //         vSocial += this.currentVillage.population[vPop].genes[genesLength - 1];
-                
-                
-        //         // Sum up all gene traits for each individual
-        //         for (let i = 0; i < genesLength - 2; i++) {
-        //             totalGeneTraits += this.currentVillage.population[vPop].genes[i];
-        //         }    
-        //     }
-
-        //     let averageGeneTraits = totalGeneTraits / (populationSize * (genesLength - 2));
-        //     let VLA = vLearning / populationSize;
-        //     let VSA = vSocial / populationSize;
-
-        //     this.villageLearning.push(VLA);
-        //     this.villageSocial.push(VSA);
-        //     this.villageAverageGenes.push(averageGeneTraits);
-        //     this.updateGraph(this.currentVillage);
-        // }
     
         // Overall average across villages
-        this.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
-        this.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
-        this.geneTraits.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
-        this.popGraph.push(this.humanPop); // Total population
+        this.data.learningGraph.push(villageCount > 0 ? totalLearningTAverage / villageCount : 0);
+        this.data.socialGraph.push(villageCount > 0 ? totalSocialTAverage / villageCount : 0);
+        this.data.geneGraph.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
+        this.data.popGraph.push(this.humanPop); // Total population
+
+
+        // village data testing
+        // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+        //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+        //         this.world[i][j].updateVillageData();
+        //     }
+        // }
 
         this.updateGraph();
+        
     };
     
 
@@ -141,6 +104,14 @@ class World {
         }
         if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
+           
+            // testing
+            // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+            //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+            //         this.world[i][j].updateVillageData();
+            //     }
+            // }
+            // ===================================================
         }
         
         if(this.game.click) {
@@ -149,42 +120,10 @@ class World {
                 this.game.click = false; // Reset the click state
             }, 10); 
         }
-    
+        if(PARAMETERS.day % PARAMETERS.epoch === 0) {
+            this.data.logData(this.currentVillage);
+        }
     };
-
-
-    logData() {
-        var data = {
-            db: PARAMETERS.db,
-            collection: PARAMETERS.collection,
-            data: {
-                run: "X1",
-                params: PARAMETERS,
-                // seedPop: this.seedPop,
-                // humanPop: this.humanPop,
-                // wildPop: this.wildPop,
-                // domePop: this.domePop,
-                // weightData: this.weightData,
-                // rootData: this.rootData,
-                // seedData: this.seedData,
-                // energyData: this.energyData,
-                // dispersalData: this.dispersalData,
-                // weightDataWild: this.weightDataWild,
-                // rootDataWild: this.rootDataWild,
-                // seedDataWild: this.seedDataWild,
-                // energyDataWild: this.energyDataWild,
-                // dispersalDataWild: this.dispersalDataWild,
-                // weightDataDomesticated: this.weightDataDomesticated,
-                // rootDataDomesticated: this.rootsDataDomesticated,
-                // seedDataDomesticated: this.seedDataDomesticated,
-                // energyDataDomesticated: this.energyDataDomesticated,
-                // dispersalDataDomesticated: this.dispersalDataDomesticated
-            }
-        };
-    
-        if (socket) socket.emit("insert", data);
-    };
-  
 
     handleClickOnVillage(ctx) {
         const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
@@ -199,12 +138,20 @@ class World {
         this.Trow = row;    
 
         if (row >= 0 && row < PARAMETERS.worldDimension && col >= 0 && col < PARAMETERS.worldDimension) {
-            const clickedVillage = this.world[col][row];
-            console.log(`Village at ${col}, ${row} was clicked.`);      
-            if (this.currentVillage !== clickedVillage) {
-                this.currentVillage = clickedVillage;
-                this.currentVillage.updateVillageData(); // Make sure this method updates the data and graph
+            
+            if (this.currentVillage) {
+                this.currentVillage.isSelected = false; // Deselect the previous village
             }
+            this.currentVillage = this.world[col][row];
+            this.currentVillage.isSelected = true; // Select the new village
+           
+            
+            // data manager update
+            // this.data.logData(this.currentVillage);
+
+            this.updateGraph(); // Update the graph to reflect new data
+            console.log(`Village at ${col}, ${row} was clicked.`);      
+           
         }
     }
 

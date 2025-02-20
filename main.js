@@ -6,7 +6,7 @@ var socket = null;
 if (window.io !== undefined) {
 	console.log("Database connected!");
 
-	socket = io.connect('http://73.225.31.4:8888');
+	socket = io.connect('http://73.19.38.112:8888');
 
 	socket.on("connect", function () {
 		databaseConnected();
@@ -16,6 +16,7 @@ if (window.io !== undefined) {
 		databaseDisconnected();
 	});
 
+	socket.addEventListener("error", console.log);
 	socket.addEventListener("log", console.log);
 }
 
