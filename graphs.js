@@ -1,24 +1,36 @@
-var socket = io.connect("http://67.183.114.71:8888");
+// ============================================================================================================================================================================
+// Initial Code 
 
-document.addEventListener("DOMContentLoaded", function () {
-        // Emit a socket event with fixed parameters or those derived from other parts of your application
-        console.log("Sent find message");
-        socket.emit("find", { 
-            db: PARAMETERS.db, 
-            collection: PARAMETERS.collection, 
-            query: {}, 
-            // query: {"params.numTraits": 10}, 
-            // query: {run: "X2"}
-            limit: 100,
-            page: 8
-        });
-        socket.emit("test", "This is a test.");
-        socket.emit("count", { 
-            db: PARAMETERS.db, 
-            collection: PARAMETERS.collection, 
-            query: {}, // Your fixed or dynamic query
-        });
+var socket = io.connect("http://73.19.38.112:8888");
+
+
+socket.on("connect", function () {
+    databaseConnected();
 });
+
+socket.on("disconnect", function () {
+    databaseDisconnected();
+});
+
+// this is just for all of the data that is being sent to the database
+// document.addEventListener("DOMContentLoaded", function () {
+//         // Emit a socket event with fixed parameters or those derived from other parts of your application
+//         console.log("Sent find message");
+//         socket.emit("find", { 
+//             db: PARAMETERS.db, 
+//             collection: PARAMETERS.collection, 
+//             query: {}, 
+//             // query: {"params.numTraits": 10}, 
+//             // query: {run: "X2"}
+//             limit: 1000,
+//         });
+//         socket.emit("test", "This is a test.");
+//         socket.emit("count", { 
+//             db: PARAMETERS.db, 
+//             collection: PARAMETERS.collection, 
+//             query: {}, // Your fixed or dynamic query
+//         });
+// });
 
 socket.on("log", (data) => {
     // Assume db is already connected and collection is accessible
@@ -29,522 +41,272 @@ socket.on("find", (data) => {
     // Assume db is already connected and collection is accessible
     console.log(data);
 });
-// var socket = io.connect("http://67.183.114.71:8888");
-// var context;
-// var ticks = 600;
-// var maxRuns = 100;
-// var height = 40;
-// var xDelta = 1;
-// var width = xDelta * ticks;
-// var numRecords = 0;
-// var page = 0;
-// var data = [];
-// var limit = 20;
 
-// var query;
-// var filter;
-// var obj;
+// ============================================================================================================================================================================
+//  to find the latest couple runs on X2
 
-// socket.on("connect", function () {
-//     databaseConnected();
-// });
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Requesting the latest run...");
 
-// socket.on("disconnect", function () {
-//     databaseDisconnected();
-// });
+    canvas = document.getElementById("chart");
+    context = canvas.getContext("2d");
 
-// document.addEventListener("DOMContentLoaded", function (event) {
-//     context = document.getElementById("gameWorld").getContext("2d");
-//     // socket.emit("find", 
-//     //     { 
-//     //         db: PARAMETERS.db, 
-//     //         collection: PARAMETERS.collection, 
-//     //         query: {"PARAMETERS.seedStrategy": "none", "PARAMETERS.plantStrategy": "none" },
-//     //         limit: 10
-//     //     });
+    // Emit a socket event to fetch the latest run
+    socket.emit("find", { 
+        db: PARAMETERS.db, 
+        collection: PARAMETERS.collection, 
+        // run1, X2, testAVG
+        query: {run: "run1"}, // Fetch all runs
+        limit: 20, // modify this number to see how many you want to average for now its 5
+    });
+});
 
-//     console.log("DOM loaded.");
 
-//     socket.emit("distinct",
-//         {
-//             db: PARAMETERS.db,
-//             collection: PARAMETERS.collection,
-//             key: "PARAMETERS.runName"
-//         });
+// document.addEventListener("DOMContentLoaded", function () {
+//     console.log("Requesting the latest run...");
 
-//     document.getElementById("gameWorld").addEventListener("click", function (e) {
-//         query = document.getElementById("run_selection").value;
-//         document.getElementById("query_info").innerHTML = "Query Sent. Awaiting Reply.";
+//     canvas = document.getElementById("chart");
+//     context = canvas.getContext("2d");
 
-//         filter = null;
-
-//         console.log(query);
-//         console.log(filter);
-
-//         socket.emit("count",
-//             {
-//                 db: PARAMETERS.db,
-//                 collection: PARAMETERS.collection,
-//                 query: { "PARAMETERS.runName": query },
-//             });
-
-//     }, false);
-
-//     // document.getElementById("query_pop").addEventListener("click", function (e) {
-//     //     query = document.getElementById("run_selection").value;
-//     //     document.getElementById("query_info").innerHTML = "Query Sent. Awaiting Reply.";
-
-//     //     filter = { PARAMETERS: 1, humanPop: 1, seedPop: 1, wildPop: 1, domePop: 1 };
-
-//     //     console.log(query);
-//     //     console.log(filter);
-
-//     //     socket.emit("count",
-//     //         {
-//     //             db: PARAMETERS.db,
-//     //             collection: PARAMETERS.collection,
-//     //             query: { "PARAMETERS.runName": query },
-//     //         });
-
-//     // }, false);
-
-//     // document.getElementById("next").addEventListener("click", function (e) {
-//     //     var q = document.getElementById("runToQuery");
-
-//     //     var query = parseInt(q.value);
-//     //     q.value = ++query%16;
-//     //     var drop = parseFloat(document.getElementById("drop").value);
-//     //     socket.emit("loadDom", { run: "testing", "PARAMETERS.seedStrategy": query, "PARAMETERS.seedDropRate": drop });
-//     // }, false);
-
-//     document.getElementById("download").addEventListener("click", function (e) {
-//         console.log("Download clicked.");
-//         console.log(obj);
-//         if (obj.PARAMETERS) {
-//             download("seeds" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeHist(obj.histogramSeeds));
-//             download("roots" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeHist(obj.histogramRoots));
-//             download("weight" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeHist(obj.histogramWeight));
-//             download("disp" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeHist(obj.histogramDisp));
-//             download("energy" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeHist(obj.histogramEnergy));
-//         }
-//     }, false);
-//     document.getElementById("downloadwild").addEventListener("click", function (e) {
-//         console.log("Download clicked.");
-//         console.log(obj);
-//         if (obj.PARAMETERS) {
-//             download("seeds" + obj.PARAMETERS.runName.substring(0, 2) + "wild.txt", serializeHist(obj.histogramSeedsWild));
-//             download("roots" + obj.PARAMETERS.runName.substring(0, 2) + "wild.txt", serializeHist(obj.histogramRootsWild));
-//             download("weight" + obj.PARAMETERS.runName.substring(0, 2) + "wild.txt", serializeHist(obj.histogramWeightWild));
-//             download("disp" + obj.PARAMETERS.runName.substring(0, 2) + "wild.txt", serializeHist(obj.histogramDispWild));
-//             download("energy" + obj.PARAMETERS.runName.substring(0, 2) + "wild.txt", serializeHist(obj.histogramEnergyWild));
-//         }
-//     }, false);
-//     document.getElementById("downloaddome").addEventListener("click", function (e) {
-//         console.log("Download clicked.");
-//         console.log(obj);
-//         if (obj.PARAMETERS) {
-//             download("seeds" + obj.PARAMETERS.runName.substring(0, 2) + "dome.txt", serializeHist(obj.histogramSeedsDomesticated));
-//             download("roots" + obj.PARAMETERS.runName.substring(0, 2) + "dome.txt", serializeHist(obj.histogramRootsDomesticated));
-//             download("weight" + obj.PARAMETERS.runName.substring(0, 2) + "dome.txt", serializeHist(obj.histogramWeightDomesticated));
-//             download("disp" + obj.PARAMETERS.runName.substring(0, 2) + "dome.txt", serializeHist(obj.histogramDispDomesticated));
-//             download("energy" + obj.PARAMETERS.runName.substring(0, 2) + "dome.txt", serializeHist(obj.histogramEnergyDomesticated));
-//         }
-//     }, false);
-//     document.getElementById("downloadpop").addEventListener("click", function (e) {
-//         console.log("Download clicked.");
-//         console.log(obj);
-//         if (obj.PARAMETERS) {
-//             download("population" + obj.PARAMETERS.runName.substring(0, 2) + ".txt", serializeGraph([obj.seeds, obj.wild, obj.dome]));
-//         }
-//     }, false);
-// });
-
-// socket.on("count", function (length) {
-//     numRecords = Math.max(length, maxRuns);
-//     document.getElementById("query_info").innerHTML = `Received 0 of ${numRecords} records.`;
-//     page = 1;
-//     data = [];
-//     // for (var i = 0; i < length/limit; i++) {
-//     socket.emit("find",
-//         {
-//             db: PARAMETERS.db,
-//             collection: PARAMETERS.collection,
-//             query: { "PARAMETERS.runName": query },
-//             filter: filter,
-//             limit: limit,
-//             page: page
-//         });
-//     console.log(`Requesting page ${page} of size ${limit}.`);
-//     // }
-// });
-
-// socket.on("find", function (array) {
-//     if (array.length > 0) {
-//         console.log("Find: data received.")
-
-//         data.push(...array);
-//         document.getElementById("query_info").innerHTML = `Received ${data.length} of ${numRecords} records.`;
-
-//         parseData(data);
-
-//         if(data.length < maxRuns) socket.emit("find",
-//             {
-//                 db: PARAMETERS.db,
-//                 collection: PARAMETERS.collection,
-//                 query: { "PARAMETERS.runName": query },
-//                 filter: filter,
-//                 limit: limit,
-//                 page: ++page
-//             });
-//         console.log(`Requesting page ${page} of size ${limit}.`);
-
-//     }
-//     else console.log("Empty data.");
-// });
-
-// socket.on("distinct", function (array) {
-//     document.getElementById("query_info").innerHTML = "Ready to Query";
-//     console.log(array);
-//     console.log("\n");
-
-//     if (array.length > 0) populateDropDown(array);
-//     else console.log("Empty data.");
-// });
-
-// function populateDropDown(labels) {
-//     const runSelect = document.getElementById("run_selection");
-
-//     // Populate the dropdown with names
-//     labels.forEach((label) => {
-//         const option = document.createElement("option");
-//         option.value = label;
-//         option.textContent = label;
-//         runSelect.appendChild(option);
+//     // Emit a socket event to fetch the latest run
+//     socket.emit("find", { 
+//         db: PARAMETERS.db, 
+//         collection: PARAMETERS.collection, 
+//         query: {run: "testAVG"}, // Fetch all runs
+//         limit: 20, // modify this number to see how many you want to average for now its 5
 //     });
-// }
+// });
 
-// function serializeGraph(timeSeriesList) {
-//         if (timeSeriesList.length === 0) {
-//           return "";
+
+// all averaged data attempt
+socket.on("find", (data) => {
+    if (data && data.length > 0) {
+        console.log(`Found ${data.length} runs. Computing averages...`);
+
+        // Compute Average Data
+        const avgPopulation = averagePopulation(data);
+        const avgGeneTickets = averageGeneTickets(data);
+        const avgSocialTickets = averageSocialTickets(data);
+        const avgLearningTickets = averageLearningTickets(data);
+
+        console.log("Averaged Population:", avgPopulation);
+        console.log("Averaged Gene Tickets:", avgGeneTickets);
+        console.log("Averaged Social Tickets:", avgSocialTickets);
+        console.log("Averaged Learning Tickets:", avgLearningTickets);
+
+        // Simulating a game engine object since Graph requires `game.ctx`
+        const gameEngine = { ctx: context };
+
+        // **Clear previous graphs before redrawing**
+        // context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Graph: Averaged Population
+        humanAvgGraph = new Graph(gameEngine, 50, 50, { day: avgPopulation.length }, 
+                               [avgPopulation], "Averaged Population", ["Population"]);
+
+        // Graph: Averaged Tickets
+        ticketAvgGraph = new Graph(gameEngine, 50, 300, { day: avgGeneTickets.length }, 
+                               [avgGeneTickets, avgSocialTickets, avgLearningTickets], 
+                               "Averaged Tickets", ["Gene Tickets", "Social Tickets", "Learning Tickets"]);
+
+        // Ensure we only draw the averaged data
+        humanAvgGraph.update();
+        humanAvgGraph.draw(context);
+
+        ticketAvgGraph.update();
+        ticketAvgGraph.draw(context);
+    } else {
+        console.error("No runs found.");
+    }
+});
+
+// ============================================================================================================================================================================
+// **Compute Average Population**
+function averagePopulation(data) {
+    if (!data.length) return [];
+
+    let maxTicks = Math.max(...data.map(run => (run.population ? run.population.length : 0)));
+    let avgPop = new Array(maxTicks).fill(0);
+    let counts = new Array(maxTicks).fill(0);
+
+    data.forEach(run => {
+        if (run.population && run.population.length > 0) {
+            run.population.forEach((value, index) => {
+                avgPop[index] += value;
+                counts[index]++;
+            });
+        }
+    });
+
+    return avgPop.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
+}
+
+// **Compute Average Gene Tickets**
+function averageGeneTickets(data) {
+    if (!data.length) return [];
+
+    let maxTicks = Math.max(...data.map(run => (run.geneTickets ? run.geneTickets.length : 0)));
+    let avgGene = new Array(maxTicks).fill(0);
+    let counts = new Array(maxTicks).fill(0);
+
+    data.forEach(run => {
+        if (run.geneTickets && run.geneTickets.length > 0) {
+            run.geneTickets.forEach((value, index) => {
+                avgGene[index] += value;
+                counts[index]++;
+            });
+        }
+    });
+
+    return avgGene.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
+}
+
+// **Compute Average Social Tickets**
+function averageSocialTickets(data) {
+    if (!data.length) return [];
+
+    let maxTicks = Math.max(...data.map(run => (run.socialTickets ? run.socialTickets.length : 0)));
+    let avgSocial = new Array(maxTicks).fill(0);
+    let counts = new Array(maxTicks).fill(0);
+
+    data.forEach(run => {
+        if (run.socialTickets && run.socialTickets.length > 0) {
+            run.socialTickets.forEach((value, index) => {
+                avgSocial[index] += value;
+                counts[index]++;
+            });
+        }
+    });
+
+    return avgSocial.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
+}
+
+// **Compute Average Learning Tickets**
+function averageLearningTickets(data) {
+    if (!data.length) return [];
+
+    let maxTicks = Math.max(...data.map(run => (run.learningTickets ? run.learningTickets.length : 0)));
+    let avgLearning = new Array(maxTicks).fill(0);
+    let counts = new Array(maxTicks).fill(0);
+
+    data.forEach(run => {
+        if (run.learningTickets && run.learningTickets.length > 0) {
+            run.learningTickets.forEach((value, index) => {
+                avgLearning[index] += value;
+                counts[index]++;
+            });
+        }
+    });
+
+    return avgLearning.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
+}
+
+// ============================================================================================================================================================================
+// **Simplified Averaging Function (Only Population)**
+
+// function averagePopulation(data) {
+//     if (!data.length) return [];
+
+//     let maxTicks = Math.max(...data.map(run => (run.population ? run.population.length : 0)));
+//     let avgPop = new Array(maxTicks).fill(0);
+//     let counts = new Array(maxTicks).fill(0);
+
+//     data.forEach(run => {
+//         if (run.population && run.population.length > 0) {
+//             run.population.forEach((value, index) => {
+//                 avgPop[index] += value;
+//                 counts[index]++;
+//             });
 //         }
-      
-//         const numSeries = timeSeriesList.length;
-//         const numDataPoints = timeSeriesList[0].length;
-//         let csvString = "";
-      
-//         for (let dataIndex = 0; dataIndex < numDataPoints; dataIndex++) {
-//           for (let seriesIndex = 0; seriesIndex < numSeries; seriesIndex++) {
-//             csvString += timeSeriesList[seriesIndex][dataIndex];
-//             if (seriesIndex < numSeries - 1) {
-//               csvString += ",";
-//             }
-//           }
-//           csvString += "\n";
-//         }
-      
-//         return csvString;  
+//     });
+
+//     return avgPop.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
 // }
+// ============================================================================================================================================================================
+// Graphing the Latest Averaged Population
 
-// function serializeHist(hist) {
-//     var str = "";
-//     for (var i = 0; i < ticks; i++) {
-//         str += hist[i] + "\n";
+// socket.on("find", (data) => {
+//     if (data && data.length > 0) {
+//         console.log(`Found ${data.length} runs. Computing averages...`);
+
+//         // **Compute Average Population**
+//         const avgPopulation = averagePopulation(data);
+
+//         console.log("Averaged Population:", avgPopulation);
+
+//         const gameEngine = { ctx: context };
+
+//         // **Graph: Averaged Population**
+//         humanAvgGraph = new Graph(gameEngine, 800, 50, { day: avgPopulation.length }, 
+//                                [avgPopulation], "Averaged Population", ["Populations"]);
+
+//         // **Graph: Averaged Tickets **
+
+        
+//         // Update and draw the graph
+//         humanAvgGraph.update();
+//         humanAvgGraph.draw(context);
+//     } else {
+//         console.error("No runs found.");
 //     }
-//     return str;
-// };
+// });
 
-// function combineHistograms(data, totalSeeds, identifier) {
-//     var histogram = [];
+// =======================================================================================================================
+// ============================================================================================================================================================================
+//  Old GRAPHING LOGIC
 
-//     for (var i = 0; i < ticks; i++) {
-//         histogram.push([]);
-//         for (var j = 0; j < 20; j++) {
-//             histogram[i].push(0);
+// Handle the 'find' event to process and graph the latest run
+// socket.on("find", (data) => {
+//     if (data && data.length > 0) {
+//         // Assuming the last element in the array is the latest
+//         const latestRun = data[data.length - 1];
+//         console.log("Latest run found:", latestRun);
+
+//         // Extract relevant data
+//         const popGraphData = latestRun.population || [];
+//         const geneTickets = latestRun.geneTickets || [];
+//         const socialTickets = latestRun.socialTickets || [];
+//         const learningTickets = latestRun.learningTickets || [];
+
+//         if (!popGraphData.length) {
+//             console.error("No population data found in the latest run.");
+//             return;
 //         }
+
+//         // Log the extracted information
+//         console.log("Gene Tickets:", geneTickets);
+//         console.log("Social Tickets:", socialTickets);
+//         console.log("Learning Tickets:", learningTickets);
+
+//         // Simulating a game engine object since Graph requires `game.ctx`
+//         const gameEngine = { ctx: context };
+
+//         // Create the Population Graph
+//         humanGraph = new Graph(gameEngine, 50, 50, { day: popGraphData.length }, [popGraphData], "Population", ["Population"]);
+
+//         // Create the Tickets Graph (combining Gene, Social, and Learning Tickets)
+//         ticketGraph = new Graph(gameEngine, 50, 300, { day: geneTickets.length }, [geneTickets, socialTickets, learningTickets], 
+//                                 "Tickets Distribution", ["Gene Tickets", "Social Tickets", "Learning Tickets"]);
+
+//         // Update and draw the graphs
+//         // humanGraph.update();
+//         humanGraph.draw(context);
+
+//         ticketGraph.update();
+//         ticketGraph.draw(context);
+//     } else {
+//         console.error("No runs found.");
 //     }
-
-//     for (var j = 0; j < ticks; j++) {
-//         for (var k = 0; k < 20; k++) {
-//             for (var i = 0; i < data.length; i++) {
-//                 histogram[j][k] += data[i][identifier][j][k] / totalSeeds[j];
-//             }
-//         }
-//     }
-//     return histogram;
-// };
-
-// function parseData(data) {
-
-//     var avgHumanPop = [];
-//     var avgSeedPop = [];
-//     var avgDomePop = [];
-//     var avgWildPop = [];
-//     var totalSeeds = [];
-
-//     for (var i = 0; i < ticks; i++) {
-//         avgHumanPop.push(0);
-//         avgSeedPop.push(0);
-//         avgDomePop.push(0);
-//         avgWildPop.push(0);
-//         totalSeeds.push(0);
-//     }
-
-//     var maxHuman = 0;
-//     var maxSeed = 0;
-//     var runs = Math.min(maxRuns, data.length);
-//     for (var i = 0; i < runs; i++) {
-//         for (var j = 0; j < data[i].humanPop.length; j++) {
-//             avgHumanPop[j] += data[i].humanPop[j] / data.length;
-//             totalSeeds[j] += data[i].seedPop[j];
-//             avgSeedPop[j] += data[i].seedPop[j] / data.length;
-//             avgDomePop[j] += data[i].domePop[j] / data.length;
-//             avgWildPop[j] += data[i].wildPop[j] / data.length;
-//         }
-//     }
-
-//     for (var i = 0; i < avgHumanPop.length; i++) {
-//         if (avgHumanPop[i] > maxHuman) {
-//             maxHuman = avgHumanPop[i];
-//         }
-//         if (avgSeedPop[i] > maxSeed) {
-//             maxSeed = avgSeedPop[i];
-//         }
-//     }
-
-//     var histogramRoots = combineHistograms(data, totalSeeds, "rootData");
-//     var histogramWeight = combineHistograms(data, totalSeeds, "weightData");
-//     var histogramSeeds = combineHistograms(data, totalSeeds, "seedData");
-//     var histogramEnergy = combineHistograms(data, totalSeeds, "energyData");
-//     var histogramDisp = combineHistograms(data, totalSeeds, "dispersalData");
-
-//     var histogramRootsWild = combineHistograms(data, totalSeeds, "rootDataWild");
-//     var histogramWeightWild = combineHistograms(data, totalSeeds, "weightDataWild");
-//     var histogramSeedsWild = combineHistograms(data, totalSeeds, "seedDataWild");
-//     var histogramEnergyWild = combineHistograms(data, totalSeeds, "energyDataWild");
-//     var histogramDispWild = combineHistograms(data, totalSeeds, "dispersalDataWild");
-
-//     var histogramRootsDomesticated = combineHistograms(data, totalSeeds, "rootDataDomesticated");
-//     var histogramWeightDomesticated = combineHistograms(data, totalSeeds, "weightDataDomesticated");
-//     var histogramSeedsDomesticated = combineHistograms(data, totalSeeds, "seedDataDomesticated");
-//     var histogramEnergyDomesticated = combineHistograms(data, totalSeeds, "energyDataDomesticated");
-//     var histogramDispDomesticated = combineHistograms(data, totalSeeds, "dispersalDataDomesticated");
+// }); 
+// ============================================================================================================================================================================
 
 
-//     //for (var j = 0; j < ticks; j++) {
-//     //    var testsum = 0;
-//     //    for (var k = 0; k < 20; k++) {
-//     //        testsum += histogramRoots[j][k];
-//     //    }
-//     //    console.log(testsum);
-//     //}
-//     obj = {
-//         runName: data[0].PARAMETERS.runName ?? "no runName",
-//         PARAMETERS: data[0].PARAMETERS,
-//         runs: data.length,
-//         query: data[0].PARAMETERS.seedStrategy,
-//         humans: avgHumanPop,
-//         seeds: avgSeedPop,
-//         wild: avgWildPop,
-//         dome: avgDomePop,
-//         maxHuman: maxHuman,
-//         maxSeed: maxSeed,
-//         histogramRoots: histogramRoots,
-//         histogramWeight: histogramWeight,
-//         histogramSeeds: histogramSeeds,
-//         histogramEnergy: histogramEnergy,
-//         histogramDisp: histogramDisp,
-//         histogramRootsWild: histogramRootsWild,
-//         histogramWeightWild: histogramWeightWild,
-//         histogramSeedsWild: histogramSeedsWild,
-//         histogramEnergyWild: histogramEnergyWild,
-//         histogramDispWild: histogramDispWild,
-//         histogramRootsDomesticated: histogramRootsDomesticated,
-//         histogramWeightDomesticated: histogramWeightDomesticated,
-//         histogramSeedsDomesticated: histogramSeedsDomesticated,
-//         histogramEnergyDomesticated: histogramEnergyDomesticated,
-//         histogramDispDomesticated: histogramDispDomesticated,
-//     };
 
-//     //console.log(obj);
-//     //console.log(data);
-//     drawData(runs, context);
-//     labelRun(data[0].PARAMETERS.seedStrategy);
-//     //var str = formatRole(obj);
-//     //download(document.getElementById("runToQuery").value, str);
-//     //str = formatForage(obj);
-//     //download(document.getElementById("runToQuery").value + "-f", str);
-// }
 
-// function labelRun(run) {
-//     var str = "";
-//     switch (run) {
-//         case 0:
-//             str = "Random Seed";
-//             break;
-//         case 1:
-//             str = "Most Seeds";
-//             break;
-//         case 2:
-//             str = "Fewest Seeds";
-//             break;
-//         case 3:
-//             str = "Min Penalty";
-//             break;
-//         case 4:
-//             str = "Max Penalty";
-//             break;
-//         case 5:
-//             str = "Min Roots";
-//             break;
-//         case 6:
-//             str = "Max Roots";
-//             break;
-//         case 7:
-//             str = "Min Seed Weight";
-//             break;
-//         case 8:
-//             str = "Max Seed Weight";
-//             break;
-//         case 9:
-//             str = "Min Dispersal";
-//             break;
-//         case 10:
-//             str = "Max Dispersal";
-//             break;
-//         case 11:
-//             str = "Min Fruit Energy";
-//             break;
-//         case 12:
-//             str = "Max Fruit Energy";
-//             break;
-//         case 13:
-//             str = "Min Energy";
-//             break;
-//         case 14:
-//             str = "Max Energy";
-//             break;
-//         case 15:
-//             str = "No Humans";
-//             break;
-//     }
-//     context.fillText(str, 15, 755);
-// }
 
-// function drawData(runs, ctx) {
-//     ctx.font = "10px Arial";
-//     ctx.clearRect(0, 0, 2400, 1000);
-//     ctx.textAlign = "start";
-//     var maxHuman = obj.maxHuman * 1.05;
-//     var maxSeed = obj.maxSeed * 1.05;
 
-//     ctx.fillStyle = "#eeeeee";
-//     ctx.fillRect(0, 0, width, height);
 
-//     drawGraph(ctx, "Black", 0, obj.humans, maxHuman, false);
-//     drawGraph(ctx, "Green", 0, obj.seeds, maxSeed, true);
-//     drawGraph(ctx, "Blue", 0, obj.dome, maxSeed, true);
-//     drawGraph(ctx, "Red", 0, obj.wild, maxSeed, true);
 
-//     histograms = [];
-//     labels = [];
 
-//     histograms.push(obj.histogramRoots);
-//     labels.push("Deep Roots");
-//     histograms.push(obj.histogramWeight);
-//     labels.push("Seed Weight");
-//     histograms.push(obj.histogramSeeds);
-//     labels.push("Fecundity");
-//     histograms.push(obj.histogramEnergy);
-//     labels.push("Fruit Energy");
-//     histograms.push(obj.histogramDisp);
-//     labels.push("Dispersal");
 
-//     histograms.push(obj.histogramRootsWild);
-//     labels.push("Deep Roots - Wild");
-//     histograms.push(obj.histogramWeightWild);
-//     labels.push("Seed Weight - Wild");
-//     histograms.push(obj.histogramSeedsWild);
-//     labels.push("Fecundity - Wild");
-//     histograms.push(obj.histogramEnergyWild);
-//     labels.push("Fruit Energy - Wild");
-//     histograms.push(obj.histogramDispWild);
-//     labels.push("Dispersal - Wild");
 
-//     histograms.push(obj.histogramRootsDomesticated);
-//     labels.push("Deep Roots - Domesticated");
-//     histograms.push(obj.histogramWeightDomesticated);
-//     labels.push("Seed Weight - Domesticated");
-//     histograms.push(obj.histogramSeedsDomesticated);
-//     labels.push("Fecundity - Domesticated");
-//     histograms.push(obj.histogramEnergyDomesticated);
-//     labels.push("Fruit Energy - Domesticated");
-//     histograms.push(obj.histogramDispDomesticated);
-//     labels.push("Dispersal - Domesticated");
-
-//     for (var i = 0; i < histograms.length; i++) {
-//         drawHistogram(ctx, 0, 55 + 55 * i, histograms[i], labels[i]);
-//     }
-
-//     ctx.strokeStyle = "black";
-//     ctx.strokeRect(0, 0, width, height);
-
-//     ctx.font = "20px Arial";
-//     ctx.fillText(obj.runName, 10, 900);
-//     ctx.fillText("Runs: " + runs, 10, 950);
-// }
-
-// function drawGraph(ctx, color, start, obj, maxVal, labeling) {
-//     ctx.strokeStyle = color;
-//     ctx.beginPath();
-//     var initAnt = height + start - Math.floor(obj[0] / maxVal * height);
-//     ctx.moveTo(0, initAnt);
-//     for (var i = 0; i < ticks; i++) {
-//         var yPos = height + start - Math.floor(obj[i] / maxVal * height);
-//         ctx.lineTo(i * xDelta, yPos);
-//     }
-//     ctx.stroke();
-//     ctx.closePath();
-
-//     if (labeling) {
-//         ctx.fillStyle = "#000000";
-//         ctx.fillText(Math.ceil(maxVal), width + 4, start + 10);
-//         ctx.fillText(10000, width / 2 - 15, start + height + 10);
-//         ctx.fillText(20000, width - 15, start + height + 10);
-//     }
-// }
-
-// function drawHistogram(ctx, xStart, yStart, obj, label) {
-//     ctx.fillRect(xStart * xDelta, yStart, width, height);
-//     ctx.fillStyle = "#eeeeee";
-//     for (var i = 0; i < ticks; i++) {
-//         for (var j = 0; j < 20; j++) {
-//             fill(ctx, obj[i][j], yStart, xStart + i, 19 - j);
-//         }
-//     }
-
-//     ctx.strokeStyle = "black";
-//     ctx.strokeRect(xStart * xDelta, yStart, width, height);
-
-//     ctx.fillStyle = "Black";
-//     ctx.fillText(label, xStart * xDelta + width / 2 - 30, yStart + height + 10);
-// }
-
-// function fill(ctx, color, start, x, y) {
-//     var base = 16;
-//     var c = color * (base - 1) + 1;
-//     c = 511 - Math.floor(Math.log(c) / Math.log(base) * 512);
-//     if (c > 255) {
-//         c = c - 256;
-//         ctx.fillStyle = rgb(c, c, 255);
-//     }
-//     else {
-//         //c = 255 - c;
-//         ctx.fillStyle = rgb(0, 0, c);
-//     }
-
-//     ctx.fillRect(x * xDelta,
-//         start + (y * height / 20),
-//         xDelta,
-//         height / 20);
-
-// }

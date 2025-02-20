@@ -71,6 +71,8 @@ class World {
                     totalAvgTraits += geneTraits / villagePop;
                     villageCount++;
                 }
+                 // village data testing
+                this.world[i][j].updateVillageData();
             }
         }
     
@@ -80,7 +82,16 @@ class World {
         this.data.geneGraph.push(villageCount > 0 ? totalAvgTraits / villageCount : 0);
         this.data.popGraph.push(this.humanPop); // Total population
 
+
+        // village data testing
+        // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+        //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+        //         this.world[i][j].updateVillageData();
+        //     }
+        // }
+
         this.updateGraph();
+        
     };
     
 
@@ -93,6 +104,14 @@ class World {
         }
         if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
+           
+            // testing
+            // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
+            //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
+            //         this.world[i][j].updateVillageData();
+            //     }
+            // }
+            // ===================================================
         }
         
         if(this.game.click) {
@@ -102,7 +121,7 @@ class World {
             }, 10); 
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
-            this.data.logData();
+            this.data.logData(this.currentVillage);
         }
     };
 
@@ -125,7 +144,11 @@ class World {
             }
             this.currentVillage = this.world[col][row];
             this.currentVillage.isSelected = true; // Select the new village
-            this.currentVillage.updateVillageData(); // Update data for the new village
+           
+            
+            // data manager update
+            // this.data.logData(this.currentVillage);
+
             this.updateGraph(); // Update the graph to reflect new data
             console.log(`Village at ${col}, ${row} was clicked.`);      
            
@@ -145,7 +168,7 @@ class World {
         // Assuming villageGraph is a method of the village
         if (this.currentVillage) {
             this.villageGraph = new Graph(this.game, 1020, 500, this.currentVillage,
-                [this.currentVillage.data.villageLearning, this.currentVillage.data.villageSocial, this.currentVillage.data.villageAverageGenes],
+                [this.currentVillage.villageLearning, this.currentVillage.villageSocial, this.currentVillage.villageAverageGenes],
                 `Village (Col: ${this.Tcol}, Row: ${this.Trow})`, ["learning T", "social T", "gene traits"]);
             this.game.entities.push(this.villageGraph);
         }
