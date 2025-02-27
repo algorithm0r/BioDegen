@@ -122,6 +122,8 @@ class World {
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
             this.data.logData(this.currentVillage);
+            reset();
+            // this.data.clearData();
         }
     };
 
