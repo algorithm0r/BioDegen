@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         collection: PARAMETERS.collection, 
         // run2, run1, X2, testAVG
         query: {run: PARAMETERS.run}, // Fetch all runs
-        limit: 10, // modify this number to see how many you want to average for now its 5
+        limit: 100, // modify this number to see how many you want to average for now its 5
     });
 });
 
