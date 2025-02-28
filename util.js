@@ -40,9 +40,9 @@ const PARAMETERS = {
     // database parameters
     db: "BioDegenDB",
     collection: "test",
-    // run2, run1, X2, testAVG
-    run: "run3",
-    // increased epoch to 20000 to allow for more data to be collected
+    // run4, run2, run1, X2, testAVG
+    run: "run4",
+    // increased epoch to 20,000 to allow for more data to be collected
     epoch: 20000
 };
 
