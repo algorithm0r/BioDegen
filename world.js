@@ -158,6 +158,39 @@ class World {
     }
 
 
+    // experimental
+    // handleClickOnVillage(ctx) {
+    //     const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
+    //     const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension;
+    //     const clickX = this.game.clickCoords.x;
+    //     const clickY = this.game.clickCoords.y;
+    
+    //     const col = Math.floor(clickX / cellWidth);
+    //     const row = Math.floor(clickY / cellHeight);
+    
+    //     this.Tcol = col;
+    //     this.Trow = row;
+    
+    //     // Ensure the world and the clicked village exist before proceeding
+    //     if (!this.world || !this.world[col] || !this.world[col][row]) {
+    //         console.warn("Invalid village selection or world not initialized.");
+    //         this.currentVillage = null; // Reset selection
+    //         return;
+    //     }
+    
+    //     if (this.currentVillage) {
+    //         this.currentVillage.isSelected = false; // Deselect the previous village
+    //     }
+    
+    //     this.currentVillage = this.world[col][row];
+    
+    //     if (this.currentVillage) {
+    //         this.currentVillage.isSelected = true;
+    //         this.updateGraph();
+    //         console.log(`Village at ${col}, ${row} was clicked.`);
+    //     }
+    // }
+
     updateGraph() {
         // Clear existing graph if any
         if (this.villageGraph) {
