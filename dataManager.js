@@ -7,7 +7,6 @@ class DataManager {
         this.geneGraph = [];
         this.learningGraph = [];
         this.socialGraph = [];
-        this.geneTraits = [];
             
             // village 2 dimensional
         this.villageLearning = [];

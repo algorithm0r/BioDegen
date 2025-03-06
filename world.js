@@ -13,7 +13,6 @@ class World {
         // this.geneGraph = [];
         // this.socialGraph = [];
         // this.learningGraph = [];
-        // this.geneTraits = [];
 
         //Village graphs
         // this.villageLearning = [];
@@ -35,7 +34,7 @@ class World {
         gameEngine.addEntity(this.humanGraph);
 
 
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
+        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
         
 

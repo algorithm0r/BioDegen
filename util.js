@@ -33,17 +33,17 @@ const PARAMETERS = {
     socialLearningRate: 0.1,
     migratePeriod: 10,
     
-    //data gathering
-    reportingPeriod: 100,
+    //data gathering increased from 100
+    reportingPeriod: 200,
     day: 0,
     
     // database parameters
     db: "BioDegenDB",
     collection: "test",
-    // run4(longer faulty tests), run3(faulty tests), run2, run1, X2, testAVG
-    run: "run4",
-    // increased epoch to 20,000 to allow for more data to be collected
-    epoch: 20000
+    // run6, run5, run4(longer faulty tests), run3(faulty tests), run2, run1, X2, testAVG
+    run: "run6",
+    // increased epoch to 20,000 to allow for more data to be collected (120,000)
+    epoch: 120000
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
