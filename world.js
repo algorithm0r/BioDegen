@@ -13,7 +13,6 @@ class World {
         // this.geneGraph = [];
         // this.socialGraph = [];
         // this.learningGraph = [];
-        // this.geneTraits = [];
 
         //Village graphs
         // this.villageLearning = [];
@@ -35,7 +34,7 @@ class World {
         gameEngine.addEntity(this.humanGraph);
 
 
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneTraits], "Combined tickets", ["social T", "learning T", "gene traits"]);
+        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
         
 
@@ -122,6 +121,8 @@ class World {
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
             this.data.logData(this.currentVillage);
+            reset();
+            // this.data.clearData();
         }
     };
 
@@ -155,6 +156,39 @@ class World {
         }
     }
 
+
+    // experimental
+    // handleClickOnVillage(ctx) {
+    //     const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
+    //     const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension;
+    //     const clickX = this.game.clickCoords.x;
+    //     const clickY = this.game.clickCoords.y;
+    
+    //     const col = Math.floor(clickX / cellWidth);
+    //     const row = Math.floor(clickY / cellHeight);
+    
+    //     this.Tcol = col;
+    //     this.Trow = row;
+    
+    //     // Ensure the world and the clicked village exist before proceeding
+    //     if (!this.world || !this.world[col] || !this.world[col][row]) {
+    //         console.warn("Invalid village selection or world not initialized.");
+    //         this.currentVillage = null; // Reset selection
+    //         return;
+    //     }
+    
+    //     if (this.currentVillage) {
+    //         this.currentVillage.isSelected = false; // Deselect the previous village
+    //     }
+    
+    //     this.currentVillage = this.world[col][row];
+    
+    //     if (this.currentVillage) {
+    //         this.currentVillage.isSelected = true;
+    //         this.updateGraph();
+    //         console.log(`Village at ${col}, ${row} was clicked.`);
+    //     }
+    // }
 
     updateGraph() {
         // Clear existing graph if any

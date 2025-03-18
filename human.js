@@ -46,7 +46,7 @@ class Human {
         const newHuman = new Human(newVillage, this);
         if (otherParent) newHuman.crossover(otherParent);
         newVillage.addHuman(newHuman);
-        this.energy -= PARAMETERS.reproductionThresholdStep;
+        this.energy -= this.reproductionThreshold;
     };
 
     learn() {

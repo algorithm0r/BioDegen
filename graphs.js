@@ -1,7 +1,7 @@
 // ============================================================================================================================================================================
 // Initial Code 
 
-var socket = io.connect("http://73.19.38.112:8888");
+var socket = io.connect("https://73.19.38.112:8888");
 
 
 socket.on("connect", function () {
@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.emit("find", { 
         db: PARAMETERS.db, 
         collection: PARAMETERS.collection, 
-        // run1, X2, testAVG
-        query: {run: "run1"}, // Fetch all runs
-        limit: 20, // modify this number to see how many you want to average for now its 5
+        // run2, run1, X2, testAVG
+        query: {run: PARAMETERS.run}, // Fetch all runs
+        limit: 100, // modify this number to see how many you want to average for now its 5
     });
 });
 
