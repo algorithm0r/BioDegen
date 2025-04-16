@@ -1,5 +1,6 @@
 class World {
     constructor(gameEngine) {
+        gameEngine.world = this;
         this.game = gameEngine;
         this.world = [];
         this.currentVillage = null;
@@ -20,6 +21,7 @@ class World {
         // this.villageAverageGenes = [];
 
         // this.agentCounter = 0;
+        this.run = 0;
 
         for(let i = 0; i < PARAMETERS.worldDimension; i++) {
             this.world.push([]);
@@ -37,7 +39,10 @@ class World {
         this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph], "Combined tickets", ["social T", "learning T", "gene traits"]);
         gameEngine.addEntity(this.graph);
         
-
+        // testing
+        // this.reset();
+        // this.nextRun();
+       
     };
 
     updateData() {
@@ -93,6 +98,7 @@ class World {
         
     };
     
+ 
 
     update() {
         document.getElementById("day").innerHTML = `Day: ${++PARAMETERS.day}`;
@@ -157,39 +163,51 @@ class World {
     }
 
 
+    // =========================
     // experimental
-    // handleClickOnVillage(ctx) {
-    //     const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
-    //     const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension;
-    //     const clickX = this.game.clickCoords.x;
-    //     const clickY = this.game.clickCoords.y;
     
-    //     const col = Math.floor(clickX / cellWidth);
-    //     const row = Math.floor(clickY / cellHeight);
-    
-    //     this.Tcol = col;
-    //     this.Trow = row;
-    
-    //     // Ensure the world and the clicked village exist before proceeding
-    //     if (!this.world || !this.world[col] || !this.world[col][row]) {
-    //         console.warn("Invalid village selection or world not initialized.");
-    //         this.currentVillage = null; // Reset selection
-    //         return;
-    //     }
-    
-    //     if (this.currentVillage) {
-    //         this.currentVillage.isSelected = false; // Deselect the previous village
-    //     }
-    
-    //     this.currentVillage = this.world[col][row];
-    
-    //     if (this.currentVillage) {
-    //         this.currentVillage.isSelected = true;
-    //         this.updateGraph();
-    //         console.log(`Village at ${col}, ${row} was clicked.`);
-    //     }
-    // }
 
+    // nextRun() {
+    //     this.runIndex = (this.runIndex + 1) % runs.length;
+    //     Object.assign(PARAMETERS, runs[this.runIndex]);
+    
+    //     // Update the HTML input field
+    //     const thresHoldStep = document.getElementById("ReproThresholdStep");
+    //     if (thresHoldStep) {
+    //         thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
+    //     }
+    
+    //     console.log(`Switched to run: ${PARAMETERS.run}`);
+    // }
+    
+    nextRun() {
+            const thresHoldStep = document.getElementById("ReproThresholdStep");
+        
+            // const popSoftCap = document.getElementById("population_soft_cap");
+            // const envBonus = document.getElementById("maxEnvBonus");
+            // const run = document.getElementById("run");
+            // const traitNum = document.getElementById("numTraits");
+            // const thresHoldbase = document.getElementById("ReproThresholdBase");
+            // const indiv = document.getElementById("individualSeedSeparation");
+            // const share = document.getElementById("sharedPlantingSeeds");
+        
+        
+            // update params
+            this.run = (this.run + 1) % runs.length;
+            Object.assign(PARAMETERS, runs[this.run]);
+        
+            // update HTML
+            // run.innerHTML = PARAMETERS.runName;
+            thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
+            // popSoftCap.value = PARAMETERS.populationSoftCap;
+            // envBonus.value = PARAMETERS.maxEnvironmentalBonus;
+            // traitNum.value = PARAMETERS.numTraits;
+            // thresHoldbase.value = PARAMETERS.reproductionThresholdBase;
+            // indiv.checked = PARAMETERS.individualSeedSeparation;
+            // share.checked = PARAMETERS.sharedPlantingSeeds;
+    }
+   
+    
     updateGraph() {
         // Clear existing graph if any
         if (this.villageGraph) {

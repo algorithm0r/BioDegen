@@ -40,9 +40,9 @@ const PARAMETERS = {
     // database parameters
     db: "BioDegenDB",
     collection: "test",
-    // new run8(changed human energy and reproduction ThreshHold mechanic), run7(240,000 epoch), run6, run5, run4(longer faulty tests),
+    // run10 (thresholdStep 5), run9 (changing threshHoldStep in HTML decreasing to 10), run8(changed human energy and reproduction ThreshHold mechanic), run7(240,000 epoch), run6, run5, run4(longer faulty tests),
     // run3(faulty tests), run2, run1, X2, testAVG
-    run: "run8",
+    run: "run10",
     // increased epoch to 20,000 to allow for more data to be collected (120,000)(240,000)
     epoch: 240000
 };
@@ -145,3 +145,40 @@ function loadParameters() {
 
     console.log(PARAMETERS);
 };
+
+
+const runs = [
+    { reproductionThresholdStep: 5, run: "run11" },
+    { reproductionThresholdStep: 10, run: "run12" },
+    { reproductionThresholdStep: 15, run: "run13" },
+    { reproductionThresholdStep: 20, run: "run14" },
+    { reproductionThresholdStep: 25, run: "run15" },
+    { reproductionThresholdStep: 30, run: "run16" },
+];
+
+// function nextRun() {
+//     const thresHoldStep = document.getElementById("ReproThresholdStep");
+
+//     // const popSoftCap = document.getElementById("population_soft_cap");
+//     // const envBonus = document.getElementById("maxEnvBonus");
+//     // const run = document.getElementById("run");
+//     // const traitNum = document.getElementById("numTraits");
+//     // const thresHoldbase = document.getElementById("ReproThresholdBase");
+//     // const indiv = document.getElementById("individualSeedSeparation");
+//     // const share = document.getElementById("sharedPlantingSeeds");
+
+
+//     // update params
+//     this.run = (this.run + 1) % runs.length;
+//     Object.assign(PARAMETERS, runs[this.run]);
+
+//     // update HTML
+//     // run.innerHTML = PARAMETERS.runName;
+//     thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
+//     // popSoftCap.value = PARAMETERS.populationSoftCap;
+//     // envBonus.value = PARAMETERS.maxEnvironmentalBonus;
+//     // traitNum.value = PARAMETERS.numTraits;
+//     // thresHoldbase.value = PARAMETERS.reproductionThresholdBase;
+//     // indiv.checked = PARAMETERS.individualSeedSeparation;
+//     // share.checked = PARAMETERS.sharedPlantingSeeds;
+// }

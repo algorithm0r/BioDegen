@@ -23,12 +23,18 @@ if (window.io !== undefined) {
 
 function reset() {
 	destroy();
-	// Load parameters or call a method to load them
-    loadParameters();
 
-    // Destroy and rebuild the world
-   
+	// Load parameters or call a method to load them
+	
+    loadParameters();
+	gameEngine.world.nextRun();
+    // // Destroy and rebuild the world
+    // if (gameEngine.world) {
+    //     gameEngine.world.resetWorld(); // delegate to World class
+    // }
+	
     buildWorld();
+	// gameEngine.world.nextRun();
 }
 
 function destroy() {
