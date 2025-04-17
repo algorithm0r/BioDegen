@@ -1,49 +1,53 @@
 class World {
     constructor(gameEngine) {
-        gameEngine.world = this;
+        gameEngine.World = this;
         this.game = gameEngine;
-        this.world = [];
+        // this.world = [];
         this.currentVillage = null;
        
         this.Trow = 0;
         this.Tcol = 0;
-      
-        this.data = new DataManager(this);
-        // Graphs
-        // this.popGraph = [];
-        // this.geneGraph = [];
-        // this.socialGraph = [];
-        // this.learningGraph = [];
-
-        //Village graphs
-        // this.villageLearning = [];
-        // this.villageSocial = [];
-        // this.villageAverageGenes = [];
-
-        // this.agentCounter = 0;
-        this.run = 0;
-
-        for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            this.world.push([]);
-            for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-                this.world[i].push(new Village(this, i, j));
-            }
-        }
         
-
-        //added in the graphs here with the last graph being just all the of the information at once
-        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.data.popGraph], "Population", ["population"]);
-        gameEngine.addEntity(this.humanGraph);
-
-
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph], "Combined tickets", ["social T", "learning T", "gene traits"]);
-        gameEngine.addEntity(this.graph);
+        // this.data = new DataManager(this);
+    
+        this.run = -1;
         
-        // testing
-        // this.reset();
-        // this.nextRun();
+        this.buildWorld();
        
     };
+
+    buildWorld() {
+        // 1) Clear out the old entities but keep this.World
+        this.game.entities = [];
+        this.game.addEntity(this);
+    
+        // 2) Reset your data manager / graphs
+        this.data = new DataManager(this);
+        // this.game.addEntity(this);  
+    
+        // 3) Reset simulation day
+        PARAMETERS.day = 0;
+        document.getElementById("day").innerText = `Day: 0`;
+    
+        // 4) Recreate your grid of Villages
+        this.world = [];
+        for (let i = 0; i < PARAMETERS.worldDimension; i++) {
+            this.world.push([]);
+          for (let j = 0; j < PARAMETERS.worldDimension; j++) {
+            this.world[i].push(new Village(this, i, j));
+          }
+        }
+    
+        // 5) Re‑add your global graphs
+        this.humanGraph = new Graph(this.game, 1020, 10, this,
+                                    [this.data.popGraph], "Population", ["population"]);
+        this.game.addEntity(this.humanGraph);
+    
+        this.ticketGraph = new Graph(this.game, 1020, 210, this,
+                                     [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph],
+                                     "Combined tickets", ["social T","learning T","gene traits"]);
+        this.game.addEntity(this.ticketGraph);
+      }
 
     updateData() {
         this.humanPop = 0;
@@ -109,17 +113,9 @@ class World {
         }
         if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
-           
-            // testing
-            // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-            //         this.world[i][j].updateVillageData();
-            //     }
-            // }
-            // ===================================================
         }
         
-        if(this.game.click) {
+        if (this.game.click) {
             this.handleClickOnVillage(this.game.ctx);
             setTimeout(() => {
                 this.game.click = false; // Reset the click state
@@ -127,7 +123,7 @@ class World {
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
             this.data.logData(this.currentVillage);
-            reset();
+            this.reset();
             // this.data.clearData();
         }
     };
@@ -162,49 +158,24 @@ class World {
         }
     }
 
-
-    // =========================
-    // experimental
-    
-
-    // nextRun() {
-    //     this.runIndex = (this.runIndex + 1) % runs.length;
-    //     Object.assign(PARAMETERS, runs[this.runIndex]);
-    
-    //     // Update the HTML input field
-    //     const thresHoldStep = document.getElementById("ReproThresholdStep");
-    //     if (thresHoldStep) {
-    //         thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
-    //     }
-    
-    //     console.log(`Switched to run: ${PARAMETERS.run}`);
-    // }
+    reset() {
+        this.nextRun();
+        loadParameters();
+        this.buildWorld();
+    }
     
     nextRun() {
             const thresHoldStep = document.getElementById("ReproThresholdStep");
         
-            // const popSoftCap = document.getElementById("population_soft_cap");
-            // const envBonus = document.getElementById("maxEnvBonus");
-            // const run = document.getElementById("run");
-            // const traitNum = document.getElementById("numTraits");
-            // const thresHoldbase = document.getElementById("ReproThresholdBase");
-            // const indiv = document.getElementById("individualSeedSeparation");
-            // const share = document.getElementById("sharedPlantingSeeds");
-        
-        
+            const runName = document.getElementById("run");
+           
             // update params
             this.run = (this.run + 1) % runs.length;
             Object.assign(PARAMETERS, runs[this.run]);
         
             // update HTML
-            // run.innerHTML = PARAMETERS.runName;
+            runName.innerHTML = PARAMETERS.run;
             thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
-            // popSoftCap.value = PARAMETERS.populationSoftCap;
-            // envBonus.value = PARAMETERS.maxEnvironmentalBonus;
-            // traitNum.value = PARAMETERS.numTraits;
-            // thresHoldbase.value = PARAMETERS.reproductionThresholdBase;
-            // indiv.checked = PARAMETERS.individualSeedSeparation;
-            // share.checked = PARAMETERS.sharedPlantingSeeds;
     }
    
     

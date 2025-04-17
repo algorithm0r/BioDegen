@@ -22,19 +22,27 @@ if (window.io !== undefined) {
 
 
 function reset() {
-	destroy();
 
-	// Load parameters or call a method to load them
+	// testing 
+	if (gameEngine.World) {
+		gameEngine.World.reset();
+	} else {
+		gameEngine.entities = [];
+		new World();
+	}
+
+	// ==================================================================
+
+	// Old way
+	// destroy();
+
+	// // Load parameters or call a method to load them
 	
-    loadParameters();
-	gameEngine.world.nextRun();
-    // // Destroy and rebuild the world
-    // if (gameEngine.world) {
-    //     gameEngine.world.resetWorld(); // delegate to World class
-    // }
+    // loadParameters();
 	
-    buildWorld();
-	// gameEngine.world.nextRun();
+    // buildWorld();
+	// gameEngine.World.nextRun();
+
 }
 
 function destroy() {
@@ -44,8 +52,6 @@ function destroy() {
 
 function buildWorld() {
 	gameEngine.addEntity(new World(gameEngine));
-	// this.humanGraph = new Graph(gameEngine, 1040, 20, this, "Population");
-	// gameEngine.addEntity(this.humanGraph);
 }
 
 
@@ -57,5 +63,6 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.addEntity(new World(gameEngine))
 	
+	reset();
 	gameEngine.start();
 });
