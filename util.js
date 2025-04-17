@@ -41,10 +41,10 @@ const PARAMETERS = {
     db: "BioDegenDB",
     collection: "test",
     // run10 (thresholdStep 5), run9 (changing threshHoldStep in HTML decreasing to 10), run8(changed human energy and reproduction ThreshHold mechanic), run7(240,000 epoch), run6, run5, run4(longer faulty tests),
-    // run3(faulty tests), run2, run1, X2, testAVG
-    run: "run10",
+    // run3(faulty tests), run2, run1, X2, testAVG, run10000000000 (tester)
+    run: "Run11 - Step 5",
     // increased epoch to 20,000 to allow for more data to be collected (120,000)(240,000)
-    epoch: 240000
+    epoch: 240000,
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;
@@ -149,7 +149,7 @@ function loadParameters() {
 
 const runs = [
         {
-          run: "run11",
+          run: "Run11 - Step 5",
           populationSoftCap:          30,
           randomEnvironmentalBonuses: false,
           maxEnvironmentalBonus:      5,
@@ -164,7 +164,7 @@ const runs = [
           socialLearningRate:         0.1,
         },
         {
-          run: "run12",
+          run: "Run12 - Step 10",
           populationSoftCap:          30,
           randomEnvironmentalBonuses: false,
           maxEnvironmentalBonus:      5,
@@ -179,7 +179,7 @@ const runs = [
           socialLearningRate:         0.1,
         },
         {
-            run: "run13",
+            run: "Run13 - Step 15",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
@@ -194,7 +194,7 @@ const runs = [
             socialLearningRate:         0.1,
           },
           {
-            run: "run14",
+            run: "Run14 - Step 20",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
@@ -209,7 +209,7 @@ const runs = [
             socialLearningRate:         0.1,
           },
           {
-            run: "run15",
+            run: "Run15 - Step 25",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
@@ -224,7 +224,7 @@ const runs = [
             socialLearningRate:         0.1,
           },
           {
-            run: "run16",
+            run: "Run16 - Step 30",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
