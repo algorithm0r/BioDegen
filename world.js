@@ -123,8 +123,9 @@ class World {
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
             this.data.logData(this.currentVillage);
+            // Reminder this reset after we logdata to MongoDB is to make sure the world starts over 
+            // and we don't have data accumulating past the amount of epoch(days) we want causing us to not be able to pull later cause of the sheer amount of data.
             this.reset();
-            // this.data.clearData();
         }
     };
 
