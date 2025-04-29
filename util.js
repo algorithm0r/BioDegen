@@ -42,9 +42,14 @@ const PARAMETERS = {
     collection: "test",
     // run10 (thresholdStep 5), run9 (changing threshHoldStep in HTML decreasing to 10), run8(changed human energy and reproduction ThreshHold mechanic), run7(240,000 epoch), run6, run5, run4(longer faulty tests),
     // run3(faulty tests), run2, run1, X2, testAVG, run10000000000 (tester)
-    run: "Run11 - Step 5",
-    // increased epoch to 20,000 to allow for more data to be collected (120,000)(240,000)
-    epoch: 240000,
+    run: "Run16 - Step 30",
+    // increased epoch to 20,000 to allow for more data to be collected (120,000)(240,000) (200,000)
+    epoch: 200000,
+
+    // Learning and social day tick when we turn them on 50,000 and 100,000
+    learningOn: 0,
+    socialOn: 0,
+
 };
 
 const wrap = coord => (coord + PARAMETERS.worldDimension) % PARAMETERS.worldDimension;

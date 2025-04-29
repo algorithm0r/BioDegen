@@ -295,7 +295,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const docs = await new Promise(res =>
         socket.once("find", data => res(data || []))
       );
-  
+      
+      console.log(`Fetched ${docs.length} documents from the DB.`, docs);
+      console.log(
+        "Run names in returned docs:",
+        // if you want only the unique run names:
+        [...new Set(docs.map(d => d.run))]
+      );
+      
       if (!docs.length) {
         info.innerText = `No data for run ${PARAMETERS.run}`;
         return;
