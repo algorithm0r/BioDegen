@@ -134,6 +134,9 @@ function loadParameters() {
     PARAMETERS.learningRate = parseFloat(document.getElementById("learnRate").value);
     PARAMETERS.deathRate = parseFloat(document.getElementById("deathRate").value);
     PARAMETERS.socialLearningRate = parseFloat(document.getElementById("socialRate").value);
+    
+    PARAMETERS.learningOn  = parseInt(document.getElementById("learningOn").value, 10);
+    PARAMETERS.socialOn    = parseInt(document.getElementById("socialOn").value,   10);
 
     // params.sharedPlantingSeeds = document.getElementById("sharedPlantingSeeds").checked;
     // params.plantSelectionChance = parseFloat(document.getElementById("plantSelectionChance").value);
@@ -153,38 +156,168 @@ function loadParameters() {
 
 
 const runs = [
-        {
-          run: "Run11 - Step 5",
-          populationSoftCap:          30,
-          randomEnvironmentalBonuses: false,
-          maxEnvironmentalBonus:      5,
-          numTraits:                  10,
-          traitThreshold:             5,
-          reproductionThresholdStep:  5,
-          reproductionThresholdBase:  50,
-          migrationRate:              0.2,
-          mutationRate:               0.05,
-          learningRate:               0.01,
-          deathRate:                  0.005,
-          socialLearningRate:         0.1,
-        },
-        {
-          run: "Run12 - Step 10",
-          populationSoftCap:          30,
-          randomEnvironmentalBonuses: false,
-          maxEnvironmentalBonus:      5,
-          numTraits:                  10,
-          traitThreshold:             5,
-          reproductionThresholdStep:  10,
-          reproductionThresholdBase:  50,
-          migrationRate:              0.2,
-          mutationRate:               0.05,
-          learningRate:               0.01,
-          deathRate:                  0.005,
-          socialLearningRate:         0.1,
-        },
-        {
-            run: "Run13 - Step 15",
+        // {
+        //   run: "Run11 - Step 5",
+        //   populationSoftCap:          30,
+        //   randomEnvironmentalBonuses: false,
+        //   maxEnvironmentalBonus:      5,
+        //   numTraits:                  10,
+        //   traitThreshold:             5,
+        //   reproductionThresholdStep:  5,
+        //   reproductionThresholdBase:  50,
+        //   migrationRate:              0.2,
+        //   mutationRate:               0.05,
+        //   learningRate:               0.01,
+        //   deathRate:                  0.005,
+        //   socialLearningRate:         0.1,
+        // },
+        // {
+        //   run: "Run12 - Step 10",
+        //   populationSoftCap:          30,
+        //   randomEnvironmentalBonuses: false,
+        //   maxEnvironmentalBonus:      5,
+        //   numTraits:                  10,
+        //   traitThreshold:             5,
+        //   reproductionThresholdStep:  10,
+        //   reproductionThresholdBase:  50,
+        //   migrationRate:              0.2,
+        //   mutationRate:               0.05,
+        //   learningRate:               0.01,
+        //   deathRate:                  0.005,
+        //   socialLearningRate:         0.1,
+        // },
+        // {
+        //     run: "Run13 - Step 15",
+        //     populationSoftCap:          30,
+        //     randomEnvironmentalBonuses: false,
+        //     maxEnvironmentalBonus:      5,
+        //     numTraits:                  10,
+        //     traitThreshold:             5,
+        //     reproductionThresholdStep:  15,
+        //     reproductionThresholdBase:  50,
+        //     migrationRate:              0.2,
+        //     mutationRate:               0.05,
+        //     learningRate:               0.01,
+        //     deathRate:                  0.005,
+        //     socialLearningRate:         0.1,
+        //   },
+        //   {
+        //     run: "Run14 - Step 20",
+        //     populationSoftCap:          30,
+        //     randomEnvironmentalBonuses: false,
+        //     maxEnvironmentalBonus:      5,
+        //     numTraits:                  10,
+        //     traitThreshold:             5,
+        //     reproductionThresholdStep:  20,
+        //     reproductionThresholdBase:  50,
+        //     migrationRate:              0.2,
+        //     mutationRate:               0.05,
+        //     learningRate:               0.01,
+        //     deathRate:                  0.005,
+        //     socialLearningRate:         0.1,
+        //   },
+          // {
+          //   run: "Run15 - Step 25",
+          //   populationSoftCap:          30,
+          //   randomEnvironmentalBonuses: false,
+          //   maxEnvironmentalBonus:      5,
+          //   numTraits:                  10,
+          //   traitThreshold:             5,
+          //   reproductionThresholdStep:  25,
+          //   reproductionThresholdBase:  50,
+          //   migrationRate:              0.2,
+          //   mutationRate:               0.05,
+          //   learningRate:               0.01,
+          //   deathRate:                  0.005,
+          //   socialLearningRate:         0.1,
+          // },
+          // {
+          //   run: "Run16 - Step 30",
+          //   populationSoftCap:          30,
+          //   randomEnvironmentalBonuses: false,
+          //   maxEnvironmentalBonus:      5,
+          //   numTraits:                  10,
+          //   traitThreshold:             5,
+          //   reproductionThresholdStep:  30,
+          //   reproductionThresholdBase:  50,
+          //   migrationRate:              0.2,
+          //   mutationRate:               0.05,
+          //   learningRate:               0.01,
+          //   deathRate:                  0.005,
+          //   socialLearningRate:         0.1,
+          // },
+
+          //  new set of data running off of steps 5 - 15 and turning on learning and social at certain times around the simulation
+          {
+            run: "Run17 - Step 5 on",
+            populationSoftCap:          30,
+            randomEnvironmentalBonuses: false,
+            maxEnvironmentalBonus:      5,
+            numTraits:                  10,
+            traitThreshold:             5,
+            reproductionThresholdStep:  5,
+            reproductionThresholdBase:  50,
+            migrationRate:              0.2,
+            mutationRate:               0.05,
+            learningRate:               0.01,
+            deathRate:                  0.005,
+            socialLearningRate:         0.1, 
+            learningOn:                 50000,
+            socialOn:                   100000,
+          },
+          {
+            run: "Run18 - Step 5 off",
+            populationSoftCap:          30,
+            randomEnvironmentalBonuses: false,
+            maxEnvironmentalBonus:      5,
+            numTraits:                  10,
+            traitThreshold:             5,
+            reproductionThresholdStep:  5,
+            reproductionThresholdBase:  50,
+            migrationRate:              0.2,
+            mutationRate:               0.05,
+            learningRate:               0.01,
+            deathRate:                  0.005,
+            socialLearningRate:         0.1, 
+            learningOn:                 0,
+            socialOn:                   0,
+          },
+          {
+            run: "Run19 - Step 10 on",
+            populationSoftCap:          30,
+            randomEnvironmentalBonuses: false,
+            maxEnvironmentalBonus:      5,
+            numTraits:                  10,
+            traitThreshold:             5,
+            reproductionThresholdStep:  10,
+            reproductionThresholdBase:  50,
+            migrationRate:              0.2,
+            mutationRate:               0.05,
+            learningRate:               0.01,
+            deathRate:                  0.005,
+            socialLearningRate:         0.1, 
+            learningOn:                 50000,
+            socialOn:                   100000,
+          },
+          {
+            run: "Run20 - Step 10 off",
+            populationSoftCap:          30,
+            randomEnvironmentalBonuses: false,
+            maxEnvironmentalBonus:      5,
+            numTraits:                  10,
+            traitThreshold:             5,
+            reproductionThresholdStep:  10,
+            reproductionThresholdBase:  50,
+            migrationRate:              0.2,
+            mutationRate:               0.05,
+            learningRate:               0.01,
+            deathRate:                  0.005,
+            socialLearningRate:         0.1, 
+            learningOn:                 0,
+            socialOn:                   0,
+          },
+          {
+            run: "Run21 - Step 15 on",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
@@ -196,103 +329,27 @@ const runs = [
             mutationRate:               0.05,
             learningRate:               0.01,
             deathRate:                  0.005,
-            socialLearningRate:         0.1,
+            socialLearningRate:         0.1, 
+            learningOn:                 50000,
+            socialOn:                   100000,
           },
           {
-            run: "Run14 - Step 20",
+            run: "Run22 - Step 15 off",
             populationSoftCap:          30,
             randomEnvironmentalBonuses: false,
             maxEnvironmentalBonus:      5,
             numTraits:                  10,
             traitThreshold:             5,
-            reproductionThresholdStep:  20,
+            reproductionThresholdStep:  15,
             reproductionThresholdBase:  50,
             migrationRate:              0.2,
             mutationRate:               0.05,
             learningRate:               0.01,
             deathRate:                  0.005,
-            socialLearningRate:         0.1,
+            socialLearningRate:         0.1, 
+            learningOn:                 0,
+            socialOn:                   0,
           },
-          {
-            run: "Run15 - Step 25",
-            populationSoftCap:          30,
-            randomEnvironmentalBonuses: false,
-            maxEnvironmentalBonus:      5,
-            numTraits:                  10,
-            traitThreshold:             5,
-            reproductionThresholdStep:  25,
-            reproductionThresholdBase:  50,
-            migrationRate:              0.2,
-            mutationRate:               0.05,
-            learningRate:               0.01,
-            deathRate:                  0.005,
-            socialLearningRate:         0.1,
-          },
-          {
-            run: "Run16 - Step 30",
-            populationSoftCap:          30,
-            randomEnvironmentalBonuses: false,
-            maxEnvironmentalBonus:      5,
-            numTraits:                  10,
-            traitThreshold:             5,
-            reproductionThresholdStep:  30,
-            reproductionThresholdBase:  50,
-            migrationRate:              0.2,
-            mutationRate:               0.05,
-            learningRate:               0.01,
-            deathRate:                  0.005,
-            socialLearningRate:         0.1,
-          },
-      
-    // { 
-    //     reproductionThresholdStep: 5, 
-    //     run: "run11", 
-    // },
-    // { 
-    //     reproductionThresholdStep: 10, 
-    //     run: "run12", 
-    // },
-    // { 
-    //     reproductionThresholdStep: 15, 
-    //     run: "run13", 
-    // },
-    // { 
-    //     reproductionThresholdStep: 20, 
-    //     run: "run14", 
-    // },
-    // { 
-    //     reproductionThresholdStep: 25, 
-    //     run: "run15", 
-    // },
-    // { 
-    //     reproductionThresholdStep: 30, 
-    //     run: "run16", 
-    // },
+    
 ];
 
-// function nextRun() {
-//     const thresHoldStep = document.getElementById("ReproThresholdStep");
-
-//     // const popSoftCap = document.getElementById("population_soft_cap");
-//     // const envBonus = document.getElementById("maxEnvBonus");
-//     // const run = document.getElementById("run");
-//     // const traitNum = document.getElementById("numTraits");
-//     // const thresHoldbase = document.getElementById("ReproThresholdBase");
-//     // const indiv = document.getElementById("individualSeedSeparation");
-//     // const share = document.getElementById("sharedPlantingSeeds");
-
-
-//     // update params
-//     this.run = (this.run + 1) % runs.length;
-//     Object.assign(PARAMETERS, runs[this.run]);
-
-//     // update HTML
-//     // run.innerHTML = PARAMETERS.runName;
-//     thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
-//     // popSoftCap.value = PARAMETERS.populationSoftCap;
-//     // envBonus.value = PARAMETERS.maxEnvironmentalBonus;
-//     // traitNum.value = PARAMETERS.numTraits;
-//     // thresHoldbase.value = PARAMETERS.reproductionThresholdBase;
-//     // indiv.checked = PARAMETERS.individualSeedSeparation;
-//     // share.checked = PARAMETERS.sharedPlantingSeeds;
-// }

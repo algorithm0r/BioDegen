@@ -169,7 +169,8 @@ class World {
             const thresHoldStep = document.getElementById("ReproThresholdStep");
         
             const runName = document.getElementById("run");
-           
+            const learnOn = document.getElementById("learningOn");
+            const socialOn = document.getElementById("socialOn");
             // update params
             this.run = (this.run + 1) % runs.length;
             Object.assign(PARAMETERS, runs[this.run]);
@@ -177,6 +178,9 @@ class World {
             // update HTML
             runName.innerHTML = PARAMETERS.run;
             thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
+            // for new on values for learn and social tickets after 50,000 days and 100,000 days
+            learnOn.value = PARAMETERS.learningOn;
+            socialOn.value = PARAMETERS.socialOn;
     }
    
     

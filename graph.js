@@ -41,7 +41,7 @@ Graph.prototype.draw = function (ctx) {
 
     // this.clear();
 
-    if (this.data[0].length > 1) {
+    if (this.data[0].length >= 1) {
         for(var j = 0; j < this.data.length; j++) {
             var data = this.data[j];
 

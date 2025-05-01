@@ -4,7 +4,7 @@
 
 // The six BioDegen run names in your DB:
 const bioRuns = ["Run11 - Step 5","Run12 - Step 10","Run13 - Step 15","Run14 - Step 20","Run15 - Step 25","Run16 - Step 30"];
-
+// const bioRuns = ["Run17 - Step 5 on","Run18 - Step 5 off","Run19 - Step 10 on","Run20 - Step 10 off","Run21 - Step 15 on","Run22 - Step 15 off"];
 
 var socket = io.connect("https://73.19.38.112:8888");
 
@@ -235,6 +235,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const avgSocial = averageSocialTickets(docs);
         const avgLearn  = averageLearningTickets(docs);
   
+        // <-- NEW: log everything for each runName
+        console.group(`Run ${runName}`);
+        console.log("Raw docs array:", docs);
+        // console.log("  avgPop:",    avgPop);
+        // console.log("  avgGene:",   avgGene);
+        // console.log("  avgSocial:", avgSocial);
+        // console.log("  avgLearn:",  avgLearn);
+        console.groupEnd();
+
         // Population graph
         const popG = new Graph(
           game,
