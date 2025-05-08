@@ -1,44 +1,53 @@
 class World {
     constructor(gameEngine) {
+        gameEngine.World = this;
         this.game = gameEngine;
-        this.world = [];
+        // this.world = [];
         this.currentVillage = null;
        
         this.Trow = 0;
         this.Tcol = 0;
-      
-        this.data = new DataManager(this);
-        // Graphs
-        // this.popGraph = [];
-        // this.geneGraph = [];
-        // this.socialGraph = [];
-        // this.learningGraph = [];
-
-        //Village graphs
-        // this.villageLearning = [];
-        // this.villageSocial = [];
-        // this.villageAverageGenes = [];
-
-        // this.agentCounter = 0;
-
-        for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            this.world.push([]);
-            for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-                this.world[i].push(new Village(this, i, j));
-            }
-        }
         
-
-        //added in the graphs here with the last graph being just all the of the information at once
-        this.humanGraph = new Graph(gameEngine, 1020, 10, this, [this.data.popGraph], "Population", ["population"]);
-        gameEngine.addEntity(this.humanGraph);
-
-
-        this.graph = new Graph(gameEngine, 1020, 210, this, [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph], "Combined tickets", ["social T", "learning T", "gene traits"]);
-        gameEngine.addEntity(this.graph);
+        // this.data = new DataManager(this);
+    
+        this.run = -1;
         
-
+        this.buildWorld();
+       
     };
+
+    buildWorld() {
+        // 1) Clear out the old entities but keep this.World
+        this.game.entities = [];
+        this.game.addEntity(this);
+    
+        // 2) Reset your data manager / graphs
+        this.data = new DataManager(this);
+        // this.game.addEntity(this);  
+    
+        // 3) Reset simulation day
+        PARAMETERS.day = 0;
+        document.getElementById("day").innerText = `Day: 0`;
+    
+        // 4) Recreate your grid of Villages
+        this.world = [];
+        for (let i = 0; i < PARAMETERS.worldDimension; i++) {
+            this.world.push([]);
+          for (let j = 0; j < PARAMETERS.worldDimension; j++) {
+            this.world[i].push(new Village(this, i, j));
+          }
+        }
+    
+        // 5) Re‑add your global graphs
+        this.humanGraph = new Graph(this.game, 1020, 10, this,
+                                    [this.data.popGraph], "Population", ["population"]);
+        this.game.addEntity(this.humanGraph);
+    
+        this.ticketGraph = new Graph(this.game, 1020, 210, this,
+                                     [this.data.socialGraph, this.data.learningGraph, this.data.geneGraph],
+                                     "Combined tickets", ["social T","learning T","gene traits"]);
+        this.game.addEntity(this.ticketGraph);
+      }
 
     updateData() {
         this.humanPop = 0;
@@ -93,6 +102,7 @@ class World {
         
     };
     
+ 
 
     update() {
         document.getElementById("day").innerHTML = `Day: ${++PARAMETERS.day}`;
@@ -103,17 +113,9 @@ class World {
         }
         if (PARAMETERS.day % PARAMETERS.reportingPeriod === 0) {
             this.updateData();
-           
-            // testing
-            // for(let i = 0; i < PARAMETERS.worldDimension; i++) {
-            //     for(let j = 0; j < PARAMETERS.worldDimension; j++) {
-            //         this.world[i][j].updateVillageData();
-            //     }
-            // }
-            // ===================================================
         }
         
-        if(this.game.click) {
+        if (this.game.click) {
             this.handleClickOnVillage(this.game.ctx);
             setTimeout(() => {
                 this.game.click = false; // Reset the click state
@@ -121,8 +123,9 @@ class World {
         }
         if(PARAMETERS.day % PARAMETERS.epoch === 0) {
             this.data.logData(this.currentVillage);
-            reset();
-            // this.data.clearData();
+            // Reminder this reset after we logdata to MongoDB is to make sure the world starts over 
+            // and we don't have data accumulating past the amount of epoch(days) we want causing us to not be able to pull later cause of the sheer amount of data.
+            this.reset();
         }
     };
 
@@ -156,40 +159,31 @@ class World {
         }
     }
 
-
-    // experimental
-    // handleClickOnVillage(ctx) {
-    //     const cellWidth = ctx.canvas.height / PARAMETERS.worldDimension;
-    //     const cellHeight = ctx.canvas.height / PARAMETERS.worldDimension;
-    //     const clickX = this.game.clickCoords.x;
-    //     const clickY = this.game.clickCoords.y;
+    reset() {
+        this.nextRun();
+        loadParameters();
+        this.buildWorld();
+    }
     
-    //     const col = Math.floor(clickX / cellWidth);
-    //     const row = Math.floor(clickY / cellHeight);
+    nextRun() {
+            const thresHoldStep = document.getElementById("ReproThresholdStep");
+        
+            const runName = document.getElementById("run");
+            const learnOn = document.getElementById("learningOn");
+            const socialOn = document.getElementById("socialOn");
+            // update params
+            this.run = (this.run + 1) % runs.length;
+            Object.assign(PARAMETERS, runs[this.run]);
+        
+            // update HTML
+            runName.innerHTML = PARAMETERS.run;
+            thresHoldStep.value = PARAMETERS.reproductionThresholdStep;
+            // for new on values for learn and social tickets after 50,000 days and 100,000 days
+            learnOn.value = PARAMETERS.learningOn;
+            socialOn.value = PARAMETERS.socialOn;
+    }
+   
     
-    //     this.Tcol = col;
-    //     this.Trow = row;
-    
-    //     // Ensure the world and the clicked village exist before proceeding
-    //     if (!this.world || !this.world[col] || !this.world[col][row]) {
-    //         console.warn("Invalid village selection or world not initialized.");
-    //         this.currentVillage = null; // Reset selection
-    //         return;
-    //     }
-    
-    //     if (this.currentVillage) {
-    //         this.currentVillage.isSelected = false; // Deselect the previous village
-    //     }
-    
-    //     this.currentVillage = this.world[col][row];
-    
-    //     if (this.currentVillage) {
-    //         this.currentVillage.isSelected = true;
-    //         this.updateGraph();
-    //         console.log(`Village at ${col}, ${row} was clicked.`);
-    //     }
-    // }
-
     updateGraph() {
         // Clear existing graph if any
         if (this.villageGraph) {
