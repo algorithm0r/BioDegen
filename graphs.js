@@ -6,8 +6,8 @@
 // const bioRuns = ["Run11 - Step 5","Run12 - Step 10","Run13 - Step 15","Run14 - Step 20","Run15 - Step 25","Run16 - Step 30"];
 // const bioRuns = ["Run17 - Step 5 on","Run18 - Step 5 off","Run19 - Step 10 on","Run20 - Step 10 off","Run21 - Step 15 on","Run22 - Step 15 off"];
 
-const bioRuns = ["Run17 - Step 5 on","Run19 - Step 10 on","Run21 - Step 15 on"];
-const bioRuns2 = ["Run23 - step 7 on", "Run24 - step 9 on", "Run25 - step 11 on", "Run26 - step 13 on"];
+// const bioRuns = ["Run17 - Step 5 on","Run19 - Step 10 on","Run21 - Step 15 on"];
+const bioRuns = ["Run23 - Step 7 on", "Run24 - Step 9 on", "Run25 - Step 11 on", "Run26 - Step 13 on"];
 
 var socket = io.connect("https://73.19.38.112:8888");
 
@@ -214,8 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const cellH     = graphH * 2 + 10;
   
     //   Draw each run in a 3×3 grid
-      for (let i = 0; i < bioRuns2.length; i++) {
-        const runName = bioRuns2[i];
+      for (let i = 0; i < bioRuns.length; i++) {
+        const runName = bioRuns[i];
         const col = i % cols, row = Math.floor(i / cols);
         const baseX = margin + col * (cellW + gapX);
         const baseY = margin + row * (cellH + gapY);
