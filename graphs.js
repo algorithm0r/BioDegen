@@ -194,7 +194,7 @@ function averageLearningTickets(data) {
 // Downloading all the recent runs with new Steps
 
 document.addEventListener("DOMContentLoaded", () => {
-    const downloadAllBtn = document.getElementById("downloadAll");
+    const downloadAllBtn = document.getElementById("queryAll");
     downloadAllBtn.addEventListener("click", async () => {
       const canvas = document.getElementById("chart");
       const ctx    = canvas.getContext("2d");
