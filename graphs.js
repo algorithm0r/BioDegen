@@ -356,3 +356,179 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
+
+
+  // download to csv tester with genes code
+//   document.addEventListener("DOMContentLoaded", () => {
+//   const downloadBtn = document.getElementById("downloadCSV");
+
+//   downloadBtn.addEventListener("click", async () => {
+//     // (a) Immediately disable the button to prevent double-clicks
+//     downloadBtn.disabled = true;
+//     downloadBtn.innerText = "Preparing CSV…";
+
+//     // Fetch ALL documents for each bioRun, compute the averaged geneTickets curve,
+//     //     then append that curve into a CSV string (one line per run).
+//     const headerRow = bioRuns.join(", ") + "\n";
+//     let csvBody = "";
+
+//     for (let i = 0; i < bioRuns.length; i++) {
+//       const runName = bioRuns[i];
+
+//       // Emit a “find” for this run:
+//       socket.emit("find", {
+//         db:         PARAMETERS.db,
+//         collection: PARAMETERS.collection,
+//         query:      { run: runName },
+//         limit:      1000
+//       });
+
+//       // Await the server’s response once:
+//       const docs = await new Promise(res => {
+//         socket.once("find", data => res(data || []));
+//       });
+//       if (!docs.length) {
+//         console.warn(`No documents found for ${runName}.`);
+//         // Emit an empty row so columns remain aligned
+//         csvBody += "\n";
+//         continue;
+//       }
+
+//       // Compute the average geneTickets time-series for this run:
+//       const avgGene = averageGeneTickets(docs);
+
+//       // Turn that array into a single CSV line:
+//       //    e.g. [0.2, 0.5, 0.7, ...]  →  "0.2,0.5,0.7,…"
+//       csvBody += avgGene.join(",") + "\n";
+//     }
+
+//     // (c) Concatenate header+body
+//     const fullCSV = headerRow + csvBody;
+
+//     // (d) Create a Blob and trigger download
+//     const blob = new Blob([fullCSV], { type: "text/csv" });
+//     const url  = URL.createObjectURL(blob);
+//     const a    = document.createElement("a");
+//     a.href      = url;
+//     a.download  = "BioDegen_GeneTickets.csv";
+//     a.click();
+//     URL.revokeObjectURL(url);
+
+//     // (e) Re-enable button
+//     downloadBtn.disabled = false;
+//     downloadBtn.innerText = "Download Gene-Ticket CSV";
+//   });
+// });
+
+
+// trying download for all of them
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadCSV");
+
+  downloadBtn.addEventListener("click", async () => {
+    // Disable button immediately to prevent double‐click and glitches
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = "Preparing CSV…";
+
+
+    // First: determine the maximum length (maxTicks) across all runs & all four metrics,
+    // so that we can pad any shorter arrays with blanks:
+    let globalMaxTicks = 0;
+
+    // We’ll store each run’s four averages in an object:
+    const allAverages = [];
+
+    for (let runName of bioRuns) {
+      // Fetch ALL documents for this run from MongoDB
+      socket.emit("find", {
+        db:         PARAMETERS.db,
+        collection: PARAMETERS.collection,
+        query:      { run: runName },
+        limit:      1000
+      });
+      const docs = await new Promise(res => {
+        socket.once("find", data => res(data || []));
+      });
+
+      // If no docs, we’ll still push placeholders:
+      if (!docs.length) {
+        console.warn(`No documents found for ${runName}`);
+        allAverages.push({
+          run:     runName,
+          population: [],
+          gene:       [],
+          social:     [],
+          learning:   []
+        });
+        continue;
+      }
+
+      // Compute each metric’s averaged array
+      const avgPop    = averagePopulation(docs);
+      const avgGene   = averageGeneTickets(docs);
+      const avgSocial = averageSocialTickets(docs);
+      const avgLearn  = averageLearningTickets(docs);
+
+      // Track the length so we know how many columns to create
+      globalMaxTicks = Math.max(
+        globalMaxTicks,
+        avgPop.length,
+        avgGene.length,
+        avgSocial.length,
+        avgLearn.length
+      );
+
+      // Save into our “allAverages” array
+      allAverages.push({
+        run:        runName,
+        population: avgPop,
+        gene:       avgGene,
+        social:     avgSocial,
+        learning:   avgLearn
+      });
+    }
+
+    // Header row
+    let headerRow = ["Run", "Metric"];
+    for (let t = 0; t < globalMaxTicks; t++) {
+      headerRow.push(`t${t}`);
+    }
+    let csvString = headerRow.join(", ") + "\n";
+
+    // For each run & each data, produce a single CSV row
+    for (let obj of allAverages) {
+      const { run, population, gene, social, learning } = obj;
+
+     
+
+      csvString += buildRow("Population", population, run, globalMaxTicks) + "\n";
+      csvString += buildRow("GeneTickets",  gene, run, globalMaxTicks)       + "\n";
+      csvString += buildRow("SocialTickets",social, run, globalMaxTicks)     + "\n";
+      csvString += buildRow("LearningTickets",learning, run, globalMaxTicks) + "\n";
+    }
+
+    // Trigger the actual file download
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+
+    a.href     = url;
+    a.download = "BioDegen_AllRuns_Metrics.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+
+    // (e) Re‐enable button
+    downloadBtn.disabled = false;
+    downloadBtn.innerText = "Download CSV";
+  });
+});
+
+ // Helper function to build one row given a name and its averaged array:
+function buildRow(metricName, arr, run, globalMaxTicks) {
+        // Pad with empty strings if shorter than globalMaxTicks
+        const row = [run, metricName];
+        for (let i = 0; i < globalMaxTicks; i++) {
+          row.push(i < arr.length ? arr[i] : "");
+        }
+        return row.join(", ");
+}
