@@ -51,7 +51,7 @@ const PARAMETERS = {
     collection: "test",
     // run10 (thresholdStep 5), run9 (changing threshHoldStep in HTML decreasing to 10), run8(changed human energy and reproduction ThreshHold mechanic), run7(240,000 epoch), run6, run5, run4(longer faulty tests),
     // run3(faulty tests), run2, run1, X2, testAVG, run10000000000 (tester)
-    run: "Run16 - Step 30",
+    run: "Step 15 learn boost",
     // increased epoch to 20,000 to allow for more data to be collected (120,000)(240,000) (200,000)
     epoch: 200000,
 
