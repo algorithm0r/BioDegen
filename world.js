@@ -171,6 +171,8 @@ class World {
             const runName = document.getElementById("run");
             const learnOn = document.getElementById("learningOn");
             const socialOn = document.getElementById("socialOn");
+            const learningRateInput  = document.getElementById("learnRate");   // ← grab it
+
             // update params
             this.run = (this.run + 1) % runs.length;
             Object.assign(PARAMETERS, runs[this.run]);
@@ -181,6 +183,7 @@ class World {
             // for new on values for learn and social tickets after 50,000 days and 100,000 days
             learnOn.value = PARAMETERS.learningOn;
             socialOn.value = PARAMETERS.socialOn;
+            learningRateInput.value    = PARAMETERS.learningRate; 
     }
    
     

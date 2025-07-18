@@ -5,7 +5,13 @@
 // The six BioDegen run names in your DB:
 // const bioRuns = ["Run11 - Step 5","Run12 - Step 10","Run13 - Step 15","Run14 - Step 20","Run15 - Step 25","Run16 - Step 30"];
 // const bioRuns = ["Run17 - Step 5 on","Run18 - Step 5 off","Run19 - Step 10 on","Run20 - Step 10 off","Run21 - Step 15 on","Run22 - Step 15 off"];
-const bioRuns = ["Run17 - Step 5 on","Run19 - Step 10 on","Run21 - Step 15 on"];
+
+// const bioRuns = ["Run17 - Step 5 on","Run19 - Step 10 on","Run21 - Step 15 on"];
+
+// const bioRuns = ["Run17 - Step 5 on", "Run23 - Step 7 on", "Run24 - Step 9 on", "Run19 - Step 10 on",
+//                 "Run25 - Step 11 on", "Run26 - Step 13 on", "Run21 - Step 15 on"];
+
+const bioRuns = ["Step 5 learn boost" , "Step 7 learn boost", "Step 9 learn boost", "Step 10 learn boost", "Step 11 learn boost", "Step 13 learn boost", "Step 15 learn boost"]
 
 var socket = io.connect("https://73.19.38.112:8888");
 
@@ -189,10 +195,10 @@ function averageLearningTickets(data) {
 
 
 // ============================================================================================================================================================================
-// Downloading all the recent runs with new Steps
+// Querying all the recent runs with new Steps
 
 document.addEventListener("DOMContentLoaded", () => {
-    const downloadAllBtn = document.getElementById("downloadAll");
+    const downloadAllBtn = document.getElementById("queryAll");
     downloadAllBtn.addEventListener("click", async () => {
       const canvas = document.getElementById("chart");
       const ctx    = canvas.getContext("2d");
@@ -211,8 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const cellW     = graphW;       
       const cellH     = graphH * 2 + 10;
   
-    //   Draw each run in a 3×3 grid
-      for (let i = 0; i < bioRuns.length; i++) {
+   // … inside your click handler, after grabbing margin, gapY, cellH, etc.
+      const runsCount = bioRuns.length;
+      const rows     = Math.ceil(runsCount / cols);
+
+      // compute exactly how tall the canvas needs to be:
+      canvas.height = margin * 2 
+                    + rows * cellH 
+                    + (rows - 1) * gapY;
+
+      // now your loop will never paint past the bottom edge
+      for (let i = 0; i < runsCount; i++) {
+        // … draw each cell as before
         const runName = bioRuns[i];
         const col = i % cols, row = Math.floor(i / cols);
         const baseX = margin + col * (cellW + gapX);
@@ -354,3 +370,148 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
+
+// ==============================================================
+// download but for all and in seperate files.
+// --- helper: build a single CSV row for one run+metric ---
+function buildRow(runName, arr, maxTicks) {
+  const row = [runName];
+  for (let i = 0; i < maxTicks; i++) {
+    row.push(i < arr.length ? arr[i] : "");
+  }
+  return row.join(", ");
+}
+
+// --- helper: build complete CSV text for one metric key ---
+function buildMetricCSV(allAverages, metricKey, maxTicks) {
+  // Header
+  const header = ["Run"];
+  for (let t = 0; t < maxTicks; t++) header.push(`t${t}`);
+  let csv = header.join(",") + "\n";
+
+  // One row per run
+  allAverages.forEach(obj => {
+    csv += buildRow(obj.run, obj[metricKey], maxTicks) + "\n";
+  });
+
+  return csv;
+}
+
+// --- helper: download any text as a CSV file ---
+function downloadBlob(content, filename) {
+  const blob = new Blob([content], { type: "text/csv" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// the actual event that happens 
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadCSV");
+
+  downloadBtn.addEventListener("click", async () => {
+      // Disable button immediately to prevent double‐click and glitches
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = "Preparing CSV…";
+
+//  First: determine the maximum length (maxTicks) across all runs & all four metrics,
+//     // so that we can pad any shorter arrays with blanks:
+    let globalMaxTicks = 0;
+
+//     // We’ll store each run’s four averages in an object:
+    const allAverages = [];
+     for (let runName of bioRuns) {
+      // Fetch ALL documents for this run from MongoDB
+      socket.emit("find", {
+        db:         PARAMETERS.db,
+        collection: PARAMETERS.collection,
+        query:      { run: runName },
+        limit:      1000
+      });
+      const docs = await new Promise(res => {
+        socket.once("find", data => res(data || []));
+      });
+
+      // If no docs, we’ll still push placeholders:
+      if (!docs.length) {
+        console.warn(`No documents found for ${runName}`);
+        allAverages.push({
+          run:     runName,
+          population: [],
+          gene:       [],
+          social:     [],
+          learning:   []
+        });
+        continue;
+      }
+
+      // Compute each metric’s averaged array
+      const avgPop    = averagePopulation(docs);
+      const avgGene   = averageGeneTickets(docs);
+      const avgSocial = averageSocialTickets(docs);
+      const avgLearn  = averageLearningTickets(docs);
+
+      // Track the length so we know how many columns to create
+      globalMaxTicks = Math.max(
+        globalMaxTicks,
+        avgPop.length,
+        avgGene.length,
+        avgSocial.length,
+        avgLearn.length
+      );
+
+      // Save into our “allAverages” array
+      allAverages.push({
+        run:        runName,
+        population: avgPop,
+        gene:       avgGene,
+        social:     avgSocial,
+        learning:   avgLearn
+      });
+    }
+    // … fetch docs, compute allAverages & globalMaxTicks as before …
+
+
+      // Now loop over each metric and download its own CSV:
+    const metrics = [
+      { key: "population", filename: "Population.csv"      },
+      { key: "gene",       filename: "GeneTickets.csv"     },
+      { key: "social",     filename: "SocialTickets.csv"   },
+      { key: "learning",   filename: "LearningTickets.csv" },
+    ];
+
+    metrics.forEach(({ key, filename }) => {
+      // find the longest time-series for this metric
+      const maxTicks = Math.max(...allAverages.map(o => (o[key]||[]).length));
+      // build the CSV text
+      const csvText = buildMetricCSV(allAverages, key, maxTicks);
+      // trigger download
+      downloadBlob(csvText, filename);
+    });
+    // // Build & download four separate CSVs
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "population", globalMaxTicks),
+    //   "BioDegen_Population.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "gene", globalMaxTicks),
+    //   "BioDegen_GeneTickets.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "social", globalMaxTicks),
+    //   "BioDegen_SocialTickets.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "learning", globalMaxTicks),
+    //   "BioDegen_LearningTickets.csv"
+    // );
+
+    downloadBtn.disabled = false;
+    downloadBtn.innerText = "Download All";
+  });
+});
