@@ -1,7 +1,19 @@
 // ============================================================================================================================================================================
 // Initial Code 
 
-var socket = io.connect("http://73.19.38.112:8888");
+
+// The six BioDegen run names in your DB:
+// const bioRuns = ["Run11 - Step 5","Run12 - Step 10","Run13 - Step 15","Run14 - Step 20","Run15 - Step 25","Run16 - Step 30"];
+// const bioRuns = ["Run17 - Step 5 on","Run18 - Step 5 off","Run19 - Step 10 on","Run20 - Step 10 off","Run21 - Step 15 on","Run22 - Step 15 off"];
+
+// const bioRuns = ["Run17 - Step 5 on","Run19 - Step 10 on","Run21 - Step 15 on"];
+
+// const bioRuns = ["Run17 - Step 5 on", "Run23 - Step 7 on", "Run24 - Step 9 on", "Run19 - Step 10 on",
+//                 "Run25 - Step 11 on", "Run26 - Step 13 on", "Run21 - Step 15 on"];
+
+const bioRuns = ["Step 5 learn boost" , "Step 7 learn boost", "Step 9 learn boost", "Step 10 learn boost", "Step 11 learn boost", "Step 13 learn boost", "Step 15 learn boost"]
+
+var socket = io.connect("https://73.19.38.112:8888");
 
 
 socket.on("connect", function () {
@@ -32,35 +44,20 @@ socket.on("disconnect", function () {
 //         });
 // });
 
-socket.on("log", (data) => {
-    // Assume db is already connected and collection is accessible
-    console.log(data);
-});
+// socket.on("log", (data) => {
+//     // Assume db is already connected and collection is accessible
+//     console.log(data);
+// });
 
-socket.on("find", (data) => {
-    // Assume db is already connected and collection is accessible
-    console.log(data);
-});
+// socket.on("find", (data) => {
+//     // Assume db is already connected and collection is accessible
+//     console.log(data);
+// });
 
-// ============================================================================================================================================================================
-//  to find the latest couple runs on X2
 
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Requesting the latest run...");
 
-    canvas = document.getElementById("chart");
-    context = canvas.getContext("2d");
-
-    // Emit a socket event to fetch the latest run
-    socket.emit("find", { 
-        db: PARAMETERS.db, 
-        collection: PARAMETERS.collection, 
-        // run1, X2, testAVG
-        query: {run: "run1"}, // Fetch all runs
-        limit: 20, // modify this number to see how many you want to average for now its 5
-    });
-});
-
+// // ============================================================================================================================================================================
+// //  to find the latest couple runs on X2
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     console.log("Requesting the latest run...");
@@ -72,56 +69,53 @@ document.addEventListener("DOMContentLoaded", function () {
 //     socket.emit("find", { 
 //         db: PARAMETERS.db, 
 //         collection: PARAMETERS.collection, 
-//         query: {run: "testAVG"}, // Fetch all runs
-//         limit: 20, // modify this number to see how many you want to average for now its 5
+//         // run2, run1, X2, testAVG
+//         query: {run: PARAMETERS.run}, // Fetch all runs
+//         limit: 100, // modify this number to see how many you want to average for now its 5
 //     });
 // });
 
 
-// all averaged data attempt
-socket.on("find", (data) => {
-    if (data && data.length > 0) {
-        console.log(`Found ${data.length} runs. Computing averages...`);
+// // all averaged data attempt
+// socket.on("find", (data) => {
+//     if (data && data.length > 0) {
+//         console.log(`Found ${data.length} runs. Computing averages...`);
 
-        // Compute Average Data
-        const avgPopulation = averagePopulation(data);
-        const avgGeneTickets = averageGeneTickets(data);
-        const avgSocialTickets = averageSocialTickets(data);
-        const avgLearningTickets = averageLearningTickets(data);
+//         // Compute Average Data
+//         const avgPopulation = averagePopulation(data);
+//         const avgGeneTickets = averageGeneTickets(data);
+//         const avgSocialTickets = averageSocialTickets(data);
+//         const avgLearningTickets = averageLearningTickets(data);
 
-        console.log("Averaged Population:", avgPopulation);
-        console.log("Averaged Gene Tickets:", avgGeneTickets);
-        console.log("Averaged Social Tickets:", avgSocialTickets);
-        console.log("Averaged Learning Tickets:", avgLearningTickets);
+//         console.log("Averaged Population:", avgPopulation);
+//         console.log("Averaged Gene Tickets:", avgGeneTickets);
+//         console.log("Averaged Social Tickets:", avgSocialTickets);
+//         console.log("Averaged Learning Tickets:", avgLearningTickets);
 
-        // Simulating a game engine object since Graph requires `game.ctx`
-        const gameEngine = { ctx: context };
+//         // Simulating a game engine object since Graph requires `game.ctx`
+//         const gameEngine = { ctx: context };
 
-        // **Clear previous graphs before redrawing**
-        // context.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Graph: Averaged Population
-        humanAvgGraph = new Graph(gameEngine, 50, 50, { day: avgPopulation.length }, 
-                               [avgPopulation], "Averaged Population", ["Population"]);
+//         // Graph: Averaged Population
+//         humanAvgGraph = new Graph(gameEngine, 50, 50, { day: avgPopulation.length }, 
+//                                [avgPopulation], "Averaged Population", ["Population"]);
 
-        // Graph: Averaged Tickets
-        ticketAvgGraph = new Graph(gameEngine, 50, 300, { day: avgGeneTickets.length }, 
-                               [avgGeneTickets, avgSocialTickets, avgLearningTickets], 
-                               "Averaged Tickets", ["Gene Tickets", "Social Tickets", "Learning Tickets"]);
+//         // Graph: Averaged Tickets
+//         ticketAvgGraph = new Graph(gameEngine, 50, 300, { day: avgGeneTickets.length }, 
+//                                [avgGeneTickets, avgSocialTickets, avgLearningTickets], 
+//                                "Averaged Tickets", ["Gene Tickets", "Social Tickets", "Learning Tickets"]);
 
-        // Ensure we only draw the averaged data
-        humanAvgGraph.update();
-        humanAvgGraph.draw(context);
+//         humanAvgGraph.update();
+//         humanAvgGraph.draw(context);
 
-        ticketAvgGraph.update();
-        ticketAvgGraph.draw(context);
-    } else {
-        console.error("No runs found.");
-    }
-});
+//         ticketAvgGraph.update();
+//         ticketAvgGraph.draw(context);
+//     } else {
+//         console.error("No runs found.");
+//     }
+// });
 
 // ============================================================================================================================================================================
-// **Compute Average Population**
 function averagePopulation(data) {
     if (!data.length) return [];
 
@@ -141,7 +135,6 @@ function averagePopulation(data) {
     return avgPop.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
 }
 
-// **Compute Average Gene Tickets**
 function averageGeneTickets(data) {
     if (!data.length) return [];
 
@@ -161,7 +154,6 @@ function averageGeneTickets(data) {
     return avgGene.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
 }
 
-// **Compute Average Social Tickets**
 function averageSocialTickets(data) {
     if (!data.length) return [];
 
@@ -181,7 +173,7 @@ function averageSocialTickets(data) {
     return avgSocial.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
 }
 
-// **Compute Average Learning Tickets**
+
 function averageLearningTickets(data) {
     if (!data.length) return [];
 
@@ -201,112 +193,325 @@ function averageLearningTickets(data) {
     return avgLearning.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
 }
 
+
 // ============================================================================================================================================================================
-// **Simplified Averaging Function (Only Population)**
+// Querying all the recent runs with new Steps
 
-// function averagePopulation(data) {
-//     if (!data.length) return [];
+document.addEventListener("DOMContentLoaded", () => {
+    const downloadAllBtn = document.getElementById("queryAll");
+    downloadAllBtn.addEventListener("click", async () => {
+      const canvas = document.getElementById("chart");
+      const ctx    = canvas.getContext("2d");
+      const game   = { ctx };
+  
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      // Layout constants
+      const cols      = 3;            // 3 columns
+      const margin    = 30;           // outer margin
+      const gapX      = 40;           // horizontal gap
+      const gapY      = 50;           // vertical gap
+      const graphW    = 500;          // new, smaller width
+      const graphH    = 175;          // keep height
+      const cellW     = graphW;       
+      const cellH     = graphH * 2 + 10;
+  
+   // … inside your click handler, after grabbing margin, gapY, cellH, etc.
+      const runsCount = bioRuns.length;
+      const rows     = Math.ceil(runsCount / cols);
 
-//     let maxTicks = Math.max(...data.map(run => (run.population ? run.population.length : 0)));
-//     let avgPop = new Array(maxTicks).fill(0);
-//     let counts = new Array(maxTicks).fill(0);
+      // compute exactly how tall the canvas needs to be:
+      canvas.height = margin * 2 
+                    + rows * cellH 
+                    + (rows - 1) * gapY;
 
-//     data.forEach(run => {
-//         if (run.population && run.population.length > 0) {
-//             run.population.forEach((value, index) => {
-//                 avgPop[index] += value;
-//                 counts[index]++;
-//             });
-//         }
-//     });
+      // now your loop will never paint past the bottom edge
+      for (let i = 0; i < runsCount; i++) {
+        // … draw each cell as before
+        const runName = bioRuns[i];
+        const col = i % cols, row = Math.floor(i / cols);
+        const baseX = margin + col * (cellW + gapX);
+        const baseY = margin + row * (cellH + gapY);
+  
+        // Fetch data once
+        socket.emit("find", {
+          db:         PARAMETERS.db,
+          collection: PARAMETERS.collection,
+          query:      { run: runName },
+          limit:      1000
+        });
+        const docs = await new Promise(res =>
+          socket.once("find", data => res(data || []))
+        );
+        if (!docs.length) continue;
+  
+        // Compute averages
+        const avgPop    = averagePopulation(docs);
+        const avgGene   = averageGeneTickets(docs);
+        const avgSocial = averageSocialTickets(docs);
+        const avgLearn  = averageLearningTickets(docs);
+  
+        // <-- NEW: log everything for each runName
+        console.group(`Run ${runName}`);
+        console.log("Raw docs array:", docs);
+        // console.log("  avgPop:",    avgPop);
+        // console.log("  avgGene:",   avgGene);
+        // console.log("  avgSocial:", avgSocial);
+        // console.log("  avgLearn:",  avgLearn);
+        console.groupEnd();
 
-//     return avgPop.map((sum, index) => (counts[index] > 0 ? sum / counts[index] : 0));
-// }
-// ============================================================================================================================================================================
-// Graphing the Latest Averaged Population
+        // Population graph
+        const popG = new Graph(
+          game,
+          baseX,
+          baseY,
+          { day: avgPop.length },
+          [ avgPop ],
+          `${runName} — Population`,
+          ["Population"]
+        );
+        popG.xSize = graphW;         
+        popG.update();
+        popG.draw(ctx);
+  
+        // Tickets graph
+        const tickG = new Graph(
+          game,
+          baseX,
+          baseY + graphH + 10,
+          { day: avgGene.length },
+          [ avgGene, avgSocial, avgLearn ],
+          `${runName} — Tickets`,
+          ["Gene","Social","Learning"]
+        );
+        tickG.xSize = graphW;              
+        tickG.update();
+        tickG.draw(ctx);
+      }
+  
+      console.log("All BioDegen runs graphed with smaller width.");
+    });
+  });
+//   =============================================================================================================================================================================
+//  Singular RUNS from QUERY button 
 
-// socket.on("find", (data) => {
-//     if (data && data.length > 0) {
-//         console.log(`Found ${data.length} runs. Computing averages...`);
+// emit your query once DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+    const queryBtn = document.getElementById("query");
+    const info     = document.getElementById("query_info");
+    const canvas   = document.getElementById("chart");
+    const ctx      = canvas.getContext("2d");
+    const game     = { ctx };
+  
+    queryBtn.addEventListener("click", async () => {
+      // clear old drawings
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      // status update
+      info.innerText = `Querying run ${PARAMETERS.run}…`;
+  
+      // fetch all docs for this single run
+      socket.emit("find", {
+        db:         PARAMETERS.db,
+        collection: PARAMETERS.collection,
+        query:      { run: PARAMETERS.run },
+        limit:      1000
+      });
+      const docs = await new Promise(res =>
+        socket.once("find", data => res(data || []))
+      );
+      
+      console.log(`Fetched ${docs.length} documents from the DB.`, docs);
+      console.log(
+        "Run names in returned docs:",
+        // if you want only the unique run names:
+        [...new Set(docs.map(d => d.run))]
+      );
+      
+      if (!docs.length) {
+        info.innerText = `No data for run ${PARAMETERS.run}`;
+        return;
+      }
+  
+      // compute averages
+      const avgPopulation      = averagePopulation(docs);
+      const avgGeneTickets     = averageGeneTickets(docs);
+      const avgSocialTickets   = averageSocialTickets(docs);
+      const avgLearningTickets = averageLearningTickets(docs);
+  
+      info.innerText = `Found ${docs.length} records — rendering…`;
+  
+      // draw Population graph
+      const popG = new Graph(
+        game,
+        50,  50,
+        { day: avgPopulation.length },
+        [avgPopulation],
+        `Run ${PARAMETERS.run} — Population`,
+        ["Population"]
+      );
+      popG.update();
+      popG.draw(ctx);
+  
+      // draw Tickets graph
+      const tickG = new Graph(
+        game,
+        50,   300,
+        { day: avgGeneTickets.length },
+        [avgGeneTickets, avgSocialTickets, avgLearningTickets],
+        `Run ${PARAMETERS.run} — Tickets`,
+        ["Gene", "Social", "Learn"]
+      );
+      tickG.update();
+      tickG.draw(ctx);
+  
+      info.innerText = `Rendered run ${PARAMETERS.run}.`;
+    });
+  });
+  
 
-//         // **Compute Average Population**
-//         const avgPopulation = averagePopulation(data);
+// ==============================================================
+// download but for all and in seperate files.
+// --- helper: build a single CSV row for one run+metric ---
+function buildRow(runName, arr, maxTicks) {
+  const row = [runName];
+  for (let i = 0; i < maxTicks; i++) {
+    row.push(i < arr.length ? arr[i] : "");
+  }
+  return row.join(", ");
+}
 
-//         console.log("Averaged Population:", avgPopulation);
+// --- helper: build complete CSV text for one metric key ---
+function buildMetricCSV(allAverages, metricKey, maxTicks) {
+  // Header
+  const header = ["Run"];
+  for (let t = 0; t < maxTicks; t++) header.push(`t${t}`);
+  let csv = header.join(",") + "\n";
 
-//         const gameEngine = { ctx: context };
+  // One row per run
+  allAverages.forEach(obj => {
+    csv += buildRow(obj.run, obj[metricKey], maxTicks) + "\n";
+  });
 
-//         // **Graph: Averaged Population**
-//         humanAvgGraph = new Graph(gameEngine, 800, 50, { day: avgPopulation.length }, 
-//                                [avgPopulation], "Averaged Population", ["Populations"]);
+  return csv;
+}
 
-//         // **Graph: Averaged Tickets **
+// --- helper: download any text as a CSV file ---
+function downloadBlob(content, filename) {
+  const blob = new Blob([content], { type: "text/csv" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
-        
-//         // Update and draw the graph
-//         humanAvgGraph.update();
-//         humanAvgGraph.draw(context);
-//     } else {
-//         console.error("No runs found.");
-//     }
-// });
+// the actual event that happens 
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadCSV");
 
-// =======================================================================================================================
-// ============================================================================================================================================================================
-//  Old GRAPHING LOGIC
+  downloadBtn.addEventListener("click", async () => {
+      // Disable button immediately to prevent double‐click and glitches
+    downloadBtn.disabled = true;
+    downloadBtn.innerText = "Preparing CSV…";
 
-// Handle the 'find' event to process and graph the latest run
-// socket.on("find", (data) => {
-//     if (data && data.length > 0) {
-//         // Assuming the last element in the array is the latest
-//         const latestRun = data[data.length - 1];
-//         console.log("Latest run found:", latestRun);
+//  First: determine the maximum length (maxTicks) across all runs & all four metrics,
+//     // so that we can pad any shorter arrays with blanks:
+    let globalMaxTicks = 0;
 
-//         // Extract relevant data
-//         const popGraphData = latestRun.population || [];
-//         const geneTickets = latestRun.geneTickets || [];
-//         const socialTickets = latestRun.socialTickets || [];
-//         const learningTickets = latestRun.learningTickets || [];
+//     // We’ll store each run’s four averages in an object:
+    const allAverages = [];
+     for (let runName of bioRuns) {
+      // Fetch ALL documents for this run from MongoDB
+      socket.emit("find", {
+        db:         PARAMETERS.db,
+        collection: PARAMETERS.collection,
+        query:      { run: runName },
+        limit:      1000
+      });
+      const docs = await new Promise(res => {
+        socket.once("find", data => res(data || []));
+      });
 
-//         if (!popGraphData.length) {
-//             console.error("No population data found in the latest run.");
-//             return;
-//         }
+      // If no docs, we’ll still push placeholders:
+      if (!docs.length) {
+        console.warn(`No documents found for ${runName}`);
+        allAverages.push({
+          run:     runName,
+          population: [],
+          gene:       [],
+          social:     [],
+          learning:   []
+        });
+        continue;
+      }
 
-//         // Log the extracted information
-//         console.log("Gene Tickets:", geneTickets);
-//         console.log("Social Tickets:", socialTickets);
-//         console.log("Learning Tickets:", learningTickets);
+      // Compute each metric’s averaged array
+      const avgPop    = averagePopulation(docs);
+      const avgGene   = averageGeneTickets(docs);
+      const avgSocial = averageSocialTickets(docs);
+      const avgLearn  = averageLearningTickets(docs);
 
-//         // Simulating a game engine object since Graph requires `game.ctx`
-//         const gameEngine = { ctx: context };
+      // Track the length so we know how many columns to create
+      globalMaxTicks = Math.max(
+        globalMaxTicks,
+        avgPop.length,
+        avgGene.length,
+        avgSocial.length,
+        avgLearn.length
+      );
 
-//         // Create the Population Graph
-//         humanGraph = new Graph(gameEngine, 50, 50, { day: popGraphData.length }, [popGraphData], "Population", ["Population"]);
-
-//         // Create the Tickets Graph (combining Gene, Social, and Learning Tickets)
-//         ticketGraph = new Graph(gameEngine, 50, 300, { day: geneTickets.length }, [geneTickets, socialTickets, learningTickets], 
-//                                 "Tickets Distribution", ["Gene Tickets", "Social Tickets", "Learning Tickets"]);
-
-//         // Update and draw the graphs
-//         // humanGraph.update();
-//         humanGraph.draw(context);
-
-//         ticketGraph.update();
-//         ticketGraph.draw(context);
-//     } else {
-//         console.error("No runs found.");
-//     }
-// }); 
-// ============================================================================================================================================================================
-
-
-
-
-
-
-
-
-
+      // Save into our “allAverages” array
+      allAverages.push({
+        run:        runName,
+        population: avgPop,
+        gene:       avgGene,
+        social:     avgSocial,
+        learning:   avgLearn
+      });
+    }
+    // … fetch docs, compute allAverages & globalMaxTicks as before …
 
 
+      // Now loop over each metric and download its own CSV:
+    const metrics = [
+      { key: "population", filename: "Population.csv"      },
+      { key: "gene",       filename: "GeneTickets.csv"     },
+      { key: "social",     filename: "SocialTickets.csv"   },
+      { key: "learning",   filename: "LearningTickets.csv" },
+    ];
+
+    metrics.forEach(({ key, filename }) => {
+      // find the longest time-series for this metric
+      const maxTicks = Math.max(...allAverages.map(o => (o[key]||[]).length));
+      // build the CSV text
+      const csvText = buildMetricCSV(allAverages, key, maxTicks);
+      // trigger download
+      downloadBlob(csvText, filename);
+    });
+    // // Build & download four separate CSVs
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "population", globalMaxTicks),
+    //   "BioDegen_Population.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "gene", globalMaxTicks),
+    //   "BioDegen_GeneTickets.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "social", globalMaxTicks),
+    //   "BioDegen_SocialTickets.csv"
+    // );
+    // downloadBlob(
+    //   buildMetricCSV(allAverages, "learning", globalMaxTicks),
+    //   "BioDegen_LearningTickets.csv"
+    // );
+
+    downloadBtn.disabled = false;
+    downloadBtn.innerText = "Download All";
+  });
+});

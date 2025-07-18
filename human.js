@@ -46,17 +46,17 @@ class Human {
         const newHuman = new Human(newVillage, this);
         if (otherParent) newHuman.crossover(otherParent);
         newVillage.addHuman(newHuman);
-        this.energy -= PARAMETERS.reproductionThresholdStep;
+        this.energy -= this.reproductionThreshold;
     };
 
     learn() {
-        if (Math.random() < PARAMETERS.learningRate) {
+        if (Math.random() < PARAMETERS.learningRate && PARAMETERS.learningOn < PARAMETERS.day) {
             this.memes[randomInt(this.memes.length)]++;
         }
     };
 
     socialLearn() {
-        if (Math.random() < PARAMETERS.socialLearningRate) {
+        if (Math.random() < PARAMETERS.socialLearningRate && PARAMETERS.socialOn < PARAMETERS.day) {
             const other = this.village.population[randomInt(this.village.population.length)];
             const memeIndex = randomInt(PARAMETERS.numTraits);
             if (this.memes[memeIndex] < other.memes[memeIndex]) {

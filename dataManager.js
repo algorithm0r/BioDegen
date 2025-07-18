@@ -7,7 +7,6 @@ class DataManager {
         this.geneGraph = [];
         this.learningGraph = [];
         this.socialGraph = [];
-        this.geneTraits = [];
             
             // village 2 dimensional
         this.villageLearning = [];
@@ -47,7 +46,7 @@ class DataManager {
             collection: PARAMETERS.collection,
             //maybe change this to query?
             data: {
-                run: "run1",
+                run: PARAMETERS.run,
                 params: PARAMETERS,
                 population: this.popGraph,
                 geneTickets: this.geneGraph,
@@ -71,6 +70,21 @@ class DataManager {
 
          console.log(`Total villages logged: ${this.villageLearning.length}`);
     };
+
+    // make a function here called clearData()
+    // clearData() {
+    //     this.popGraph = [];
+    //     this.geneGraph = [];
+    //     this.learningGraph = [];
+    //     this.socialGraph = [];
+    //     this.geneTraits = [];
+            
+    //         // village 2 dimensional
+    //     this.villageLearning = [];
+    //     this.villageSocial = [];
+    //     this.villageAverageGenes = [];
+    // }
+
 
     // ======================================================================================================================================
     // TESTING LOGGING DATA
