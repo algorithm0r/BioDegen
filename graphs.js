@@ -12,7 +12,13 @@
 //                 "Run25 - Step 11 on", "Run26 - Step 13 on", "Run21 - Step 15 on"];
 
 // const bioRuns = ["Step 5 learn boost" , "Step 7 learn boost", "Step 9 learn boost", "Step 10 learn boost", "Step 11 learn boost", "Step 13 learn boost", "Step 15 learn boost"]
-const bioRuns = ["Step 5 learn 0.03" , "Step 7 learn 0.03", "Step 9 learn 0.03", "Step 10 learn 0.03", "Step 11 learn 0.03", "Step 13 learn 0.03", "Step 15 learn 0.03"]
+// const bioRuns = ["Step 5 learn 0.03" , "Step 7 learn 0.03", "Step 9 learn 0.03", "Step 10 learn 0.03", "Step 11 learn 0.03", "Step 13 learn 0.03", "Step 15 learn 0.03"];
+
+const bioRuns = ["Step 5 learn 0.01 Mutation" , "Step 7 learn 0.01 Mutation", "Step 9 learn 0.01 Mutation", "Step 10 learn 0.01 Mutation", 
+                 "Step 11 learn 0.01 Mutation", "Step 13 learn 0.01 Mutation", "Step 15 learn 0.01 Mutation", 
+                 "Step 5 learn 0.02 Mutation", "Step 7 learn 0.02 Mutation", "Step 9 learn 0.02 Mutation", "Step 10 learn 0.02 Mutation", "Step 11 learn 0.02 Mutation",
+                 "Step 13 learn 0.02 Mutation", "Step 15 learn 0.02 Mutation", "Step 5 learn 0.03 Mutation", "Step 7 learn 0.03 Mutation", "Step 9 learn 0.03 Mutation",
+                 "Step 10 learn 0.03 Mutation", "Step 11 learn 0.03 Mutation", "Step 13 learn 0.03 Mutation", "Step 15 learn 0.03 Mutation"];
 
 var socket = io.connect("https://73.19.38.112:8888");
 
