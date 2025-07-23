@@ -9,10 +9,20 @@ def load_and_fix(fname):
     df.columns = df.columns.str.replace(r"^t", "", regex=True).astype(int)
     return df
 
-pop_df      = load_and_fix("Population.csv")
-gene_df     = load_and_fix("GeneTickets.csv")
-social_df   = load_and_fix("SocialTickets.csv")
-learning_df = load_and_fix("LearningTickets.csv")
+# pop_df      = load_and_fix("Population.csv")
+# gene_df     = load_and_fix("GeneTickets.csv")
+# social_df   = load_and_fix("SocialTickets.csv")
+# learning_df = load_and_fix("LearningTickets.csv")
+
+# pop_df      = load_and_fix("PopulationLB.csv")
+# gene_df     = load_and_fix("GeneLB.csv")
+# social_df   = load_and_fix("SocialLB.csv")
+# learning_df = load_and_fix("LearningLB.csv")
+
+pop_df      = load_and_fix("PopulationLB03.csv")
+gene_df     = load_and_fix("GenesLB03.csv")
+social_df   = load_and_fix("SocialLB03.csv")
+learning_df = load_and_fix("LearningLB03.csv")
 
 # ——— pack them into a list so we can loop ———
 plots = [
