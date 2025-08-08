@@ -22,8 +22,8 @@
 
 
 
-const bioRuns = ["Step 5 learn 0.03 Mutation", "Step 7 learn 0.03 Mutation", "Step 9 learn 0.03 Mutation",
-                 "Step 10 learn 0.03 Mutation", "Step 11 learn 0.03 Mutation", "Step 13 learn 0.03 Mutation", "Step 15 learn 0.03 Mutation"];
+const bioRuns = ["Step 5 learn 0.02 Mutation 0.15", "Step 7 learn 0.02 Mutation 0.15", "Step 9 learn 0.02 Mutation 0.15",
+                 "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", "Step 15 learn 0.02 Mutation 0.15"];
 var socket = io.connect("https://73.19.38.112:8888");
 
 

@@ -19,10 +19,15 @@ def load_and_fix(fname):
 # social_df   = load_and_fix("SocialLB.csv")
 # learning_df = load_and_fix("LearningLB.csv")
 
-pop_df      = load_and_fix("PopulationLB0.03M.csv")
-gene_df     = load_and_fix("GeneLB0.03M.csv")
-social_df   = load_and_fix("SocialLB0.03M.csv")
-learning_df = load_and_fix("LearningLB0.03M.csv")
+# pop_df      = load_and_fix("PopulationLB0.03M.csv")
+# gene_df     = load_and_fix("GeneLB0.03M.csv")
+# social_df   = load_and_fix("SocialLB0.03M.csv")
+# learning_df = load_and_fix("LearningLB0.03M.csv")
+
+pop_df      = load_and_fix("dataLists/PopulationMutation0.15Part2.csv")
+gene_df     = load_and_fix("dataLists/GeneMutation0.15Part2.csv")
+social_df   = load_and_fix("dataLists/SocialMutation0.15Part2.csv")
+learning_df = load_and_fix("dataLists/LearningMutation0.15Part2.csv")
 
 # ——— pack them into a list so we can loop ———
 plots = [
