@@ -172,6 +172,7 @@ class World {
             const learnOn = document.getElementById("learningOn");
             const socialOn = document.getElementById("socialOn");
             const learningRateInput  = document.getElementById("learnRate");   // ← grab it
+            const mutationRate = document.getElementById("mutationRate");
 
             // update params
             this.run = (this.run + 1) % runs.length;
@@ -184,6 +185,7 @@ class World {
             learnOn.value = PARAMETERS.learningOn;
             socialOn.value = PARAMETERS.socialOn;
             learningRateInput.value    = PARAMETERS.learningRate; 
+            mutationRate.value = PARAMETERS.mutationRate;
     }
    
     

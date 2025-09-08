@@ -11,10 +11,58 @@
 // const bioRuns = ["Run17 - Step 5 on", "Run23 - Step 7 on", "Run24 - Step 9 on", "Run19 - Step 10 on",
 //                 "Run25 - Step 11 on", "Run26 - Step 13 on", "Run21 - Step 15 on"];
 
-const bioRuns = ["Step 5 learn boost" , "Step 7 learn boost", "Step 9 learn boost", "Step 10 learn boost", "Step 11 learn boost", "Step 13 learn boost", "Step 15 learn boost"]
+// const bioRuns = ["Step 5 learn boost" , "Step 7 learn boost", "Step 9 learn boost", "Step 10 learn boost", "Step 11 learn boost", "Step 13 learn boost", "Step 15 learn boost"]
+// const bioRuns = ["Step 5 learn 0.03" , "Step 7 learn 0.03", "Step 9 learn 0.03", "Step 10 learn 0.03", "Step 11 learn 0.03", "Step 13 learn 0.03", "Step 15 learn 0.03"];
+
+// const bioRuns = ["Step 5 learn 0.01 Mutation" , "Step 7 learn 0.01 Mutation", "Step 9 learn 0.01 Mutation", "Step 10 learn 0.01 Mutation", 
+//                  "Step 11 learn 0.01 Mutation", "Step 13 learn 0.01 Mutation", "Step 15 learn 0.01 Mutation", 
+//                  "Step 5 learn 0.02 Mutation", "Step 7 learn 0.02 Mutation", "Step 9 learn 0.02 Mutation", "Step 10 learn 0.02 Mutation", "Step 11 learn 0.02 Mutation",
+//                  "Step 13 learn 0.02 Mutation", "Step 15 learn 0.02 Mutation", "Step 5 learn 0.03 Mutation", "Step 7 learn 0.03 Mutation", "Step 9 learn 0.03 Mutation",
+//                  "Step 10 learn 0.03 Mutation", "Step 11 learn 0.03 Mutation", "Step 13 learn 0.03 Mutation", "Step 15 learn 0.03 Mutation", 
+//                  "Step 5 learn 0.01 Mutation 0.15", "Step 7 learn 0.01 Mutation 0.15", "Step 9 learn 0.01 Mutation 0.15",
+//                  "Step 10 learn 0.01 Mutation 0.15", "Step 11 learn 0.01 Mutation 0.15", "Step 13 learn 0.01 Mutation 0.15", 
+//                  "Step 15 learn 0.01 Mutation 0.15", "Step 5 learn 0.02 Mutation 0.15", "Step 7 learn 0.02 Mutation 0.15", "Step 9 learn 0.02 Mutation 0.15",
+//                  "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", 
+//                  "Step 15 learn 0.02 Mutation 0.15", "Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
+//                  "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
+//                  "Step 13 learn 0.03 Mutation 0.15", 
+//                  "Step 15 learn 0.03 Mutation 0.15"];
+
+// const bioRuns = ["Step 5 learn 0.02 Mutation 0.15", "Step 7 learn 0.02 Mutation 0.15", "Step 9 learn 0.02 Mutation 0.15",
+//                  "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", "Step 15 learn 0.02 Mutation 0.15"];
+
+// const bioRuns = ["Step 5 learn 0.01 Mutation 0.15", "Step 7 learn 0.01 Mutation 0.15", "Step 9 learn 0.01 Mutation 0.15",
+//                  "Step 10 learn 0.01 Mutation 0.15", "Step 11 learn 0.01 Mutation 0.15", "Step 13 learn 0.01 Mutation 0.15", 
+//                  "Step 15 learn 0.01 Mutation 0.15", 
+//                  "Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", "Step 9 learn 0.03 Mutation 0.15",
+//                  "Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", "Step 13 learn 0.03 Mutation 0.15", 
+//                  "Step 15 learn 0.03 Mutation 0.15"];
+
+// ======================================BIORUNS 1-6==========================================================================
+// const bioRun1 = ["Step 5 learn 0.01 Mutation" , "Step 7 learn 0.01 Mutation", "Step 9 learn 0.01 Mutation", "Step 10 learn 0.01 Mutation", 
+//                  "Step 11 learn 0.01 Mutation", "Step 13 learn 0.01 Mutation", "Step 15 learn 0.01 Mutation"];
+
+// const bioRun2 = ["Step 5 learn 0.02 Mutation", "Step 7 learn 0.02 Mutation", "Step 9 learn 0.02 Mutation", "Step 10 learn 0.02 Mutation", "Step 11 learn 0.02 Mutation",
+//                  "Step 13 learn 0.02 Mutation", "Step 15 learn 0.02 Mutation"];
+
+// const bioRun3 = ["Step 5 learn 0.03 Mutation", "Step 7 learn 0.03 Mutation", "Step 9 learn 0.03 Mutation",
+//                  "Step 10 learn 0.03 Mutation", "Step 11 learn 0.03 Mutation", "Step 13 learn 0.03 Mutation", "Step 15 learn 0.03 Mutation"];
+
+// const bioRun4 = [ "Step 5 learn 0.01 Mutation 0.15", "Step 7 learn 0.01 Mutation 0.15", "Step 9 learn 0.01 Mutation 0.15",
+//                  "Step 10 learn 0.01 Mutation 0.15", "Step 11 learn 0.01 Mutation 0.15", "Step 13 learn 0.01 Mutation 0.15", 
+//                  "Step 15 learn 0.01 Mutation 0.15"];
+
+// const bioRun5 = ["Step 5 learn 0.02 Mutation 0.15", "Step 7 learn 0.02 Mutation 0.15", "Step 9 learn 0.02 Mutation 0.15",
+//                  "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", 
+//                  "Step 15 learn 0.02 Mutation 0.15"];
+
+const bioRun6 = ["Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
+                 "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
+                 "Step 13 learn 0.03 Mutation 0.15", 
+                 "Step 15 learn 0.03 Mutation 0.15"]
+
 
 var socket = io.connect("https://73.19.38.112:8888");
-
 
 socket.on("connect", function () {
     databaseConnected();
@@ -218,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const cellH     = graphH * 2 + 10;
   
    // … inside your click handler, after grabbing margin, gapY, cellH, etc.
-      const runsCount = bioRuns.length;
+      const runsCount = bioRun6.length;
       const rows     = Math.ceil(runsCount / cols);
 
       // compute exactly how tall the canvas needs to be:
@@ -229,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // now your loop will never paint past the bottom edge
       for (let i = 0; i < runsCount; i++) {
         // … draw each cell as before
-        const runName = bioRuns[i];
+        const runName = bioRun6[i];
         const col = i % cols, row = Math.floor(i / cols);
         const baseX = margin + col * (cellW + gapX);
         const baseY = margin + row * (cellH + gapY);
@@ -425,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //     // We’ll store each run’s four averages in an object:
     const allAverages = [];
-     for (let runName of bioRuns) {
+     for (let runName of bioRun6) {
       // Fetch ALL documents for this run from MongoDB
       socket.emit("find", {
         db:         PARAMETERS.db,

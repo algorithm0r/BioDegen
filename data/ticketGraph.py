@@ -9,10 +9,59 @@ def load_and_fix(fname):
     df.columns = df.columns.str.replace(r"^t", "", regex=True).astype(int)
     return df
 
-pop_df      = load_and_fix("Population.csv")
-gene_df     = load_and_fix("GeneTickets.csv")
-social_df   = load_and_fix("SocialTickets.csv")
-learning_df = load_and_fix("LearningTickets.csv")
+# pop_df      = load_and_fix("Population.csv")
+# gene_df     = load_and_fix("GeneTickets.csv")
+# social_df   = load_and_fix("SocialTickets.csv")
+# learning_df = load_and_fix("LearningTickets.csv")
+
+# pop_df      = load_and_fix("PopulationLB.csv")
+# gene_df     = load_and_fix("GeneLB.csv")
+# social_df   = load_and_fix("SocialLB.csv")
+# learning_df = load_and_fix("LearningLB.csv")
+
+# pop_df      = load_and_fix("PopulationLB0.03M.csv")
+# gene_df     = load_and_fix("GeneLB0.03M.csv")
+# social_df   = load_and_fix("SocialLB0.03M.csv")
+# learning_df = load_and_fix("LearningLB0.03M.csv")
+
+
+# ==========================================================================
+# USEFUL GRAPHS
+# L01M_Graphs
+# pop_df      = load_and_fix("dataLists/useful/L01M_P.csv")
+# gene_df     = load_and_fix("dataLists/useful/L01M_G.csv")
+# social_df   = load_and_fix("dataLists/useful/L01M_ST.csv")
+# learning_df = load_and_fix("dataLists/useful/L01M_LT.csv")
+
+# L02M_Graphs
+# pop_df      = load_and_fix("dataLists/useful/L02M_P.csv")
+# gene_df     = load_and_fix("dataLists/useful/L02M_G.csv")
+# social_df   = load_and_fix("dataLists/useful/L02M_ST.csv")
+# learning_df = load_and_fix("dataLists/useful/L02M_LT.csv")
+
+# L03M_Graphs
+# pop_df      = load_and_fix("dataLists/useful/L03M_P.csv")
+# gene_df     = load_and_fix("dataLists/useful/L03M_G.csv")
+# social_df   = load_and_fix("dataLists/useful/L03M_ST.csv")
+# learning_df = load_and_fix("dataLists/useful/L03M_LT.csv")
+
+# L01M15_Graphs
+# pop_df      = load_and_fix("dataLists/useful/L01M15_P.csv")
+# gene_df     = load_and_fix("dataLists/useful/L01M15_G.csv")
+# social_df   = load_and_fix("dataLists/useful/L01M15_ST.csv")
+# learning_df = load_and_fix("dataLists/useful/L01M15_LT.csv")
+
+# L02M15_Graphs
+# pop_df      = load_and_fix("dataLists/useful/L02M15_P.csv")
+# gene_df     = load_and_fix("dataLists/useful/L02M15_G.csv")
+# social_df   = load_and_fix("dataLists/useful/L02M15_ST.csv")
+# learning_df = load_and_fix("dataLists/useful/L02M15_LT.csv")
+
+# L03M15_Graphs
+pop_df      = load_and_fix("dataLists/useful/L03M15_P.csv")
+gene_df     = load_and_fix("dataLists/useful/L03M15_G.csv")
+social_df   = load_and_fix("dataLists/useful/L03M15_ST.csv")
+learning_df = load_and_fix("dataLists/useful/L03M15_LT.csv")
 
 # ——— pack them into a list so we can loop ———
 plots = [
