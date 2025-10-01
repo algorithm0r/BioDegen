@@ -56,10 +56,15 @@
 //                  "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", 
 //                  "Step 15 learn 0.02 Mutation 0.15"];
 
-const bioRun6 = ["Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
-                 "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
-                 "Step 13 learn 0.03 Mutation 0.15", 
-                 "Step 15 learn 0.03 Mutation 0.15"]
+// const bioRun6 = ["Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
+//                  "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
+//                  "Step 13 learn 0.03 Mutation 0.15", 
+//                  "Step 15 learn 0.03 Mutation 0.15"]
+
+const bioRun6 = ["Step 5 learn 0.03 Mutation 0.2", "Step 7 learn 0.03 Mutation 0.2", 
+                 "Step 9 learn 0.03 Mutation 0.2","Step 10 learn 0.03 Mutation 0.2", "Step 11 learn 0.03 Mutation 0.2", 
+                 "Step 13 learn 0.03 Mutation 0.2", 
+                 "Step 15 learn 0.03 Mutation 0.2"]
 
 
 var socket = io.connect("https://73.19.38.112:8888");
