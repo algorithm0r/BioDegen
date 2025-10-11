@@ -159,10 +159,17 @@ def plot_metric(ax, df: pd.DataFrame, title: str, ylabel: str):
 # learning_df = load_metric_csv("dataLists/useful/L02M15_LT.csv")
 
 # L03M15  (CURRENT)
-pop_df      = load_metric_csv("dataLists/useful/L03M15_P.csv")
-gene_df     = load_metric_csv("dataLists/useful/L03M15_G.csv")
-social_df   = load_metric_csv("dataLists/useful/L03M15_ST.csv")
-learning_df = load_metric_csv("dataLists/useful/L03M15_LT.csv")
+# pop_df      = load_metric_csv("dataLists/useful/L03M15_P.csv")
+# gene_df     = load_metric_csv("dataLists/useful/L03M15_G.csv")
+# social_df   = load_metric_csv("dataLists/useful/L03M15_ST.csv")
+# learning_df = load_metric_csv("dataLists/useful/L03M15_LT.csv")
+
+# L03M2
+pop_df      = load_metric_csv("dataLists/useful/L03M2_P.csv")
+gene_df     = load_metric_csv("dataLists/useful/L03M2_G.csv")
+social_df   = load_metric_csv("dataLists/useful/L03M2_ST.csv")
+learning_df = load_metric_csv("dataLists/useful/L03M2_LT.csv")
+
 
 # ===================== PLOT 2×2 =====================
 plots = [
