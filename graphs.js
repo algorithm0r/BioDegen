@@ -56,10 +56,64 @@
 //                  "Step 10 learn 0.02 Mutation 0.15", "Step 11 learn 0.02 Mutation 0.15", "Step 13 learn 0.02 Mutation 0.15", 
 //                  "Step 15 learn 0.02 Mutation 0.15"];
 
-const bioRun6 = ["Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
-                 "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
-                 "Step 13 learn 0.03 Mutation 0.15", 
-                 "Step 15 learn 0.03 Mutation 0.15"]
+// const bioRun6 = ["Step 5 learn 0.03 Mutation 0.15", "Step 7 learn 0.03 Mutation 0.15", 
+//                  "Step 9 learn 0.03 Mutation 0.15","Step 10 learn 0.03 Mutation 0.15", "Step 11 learn 0.03 Mutation 0.15", 
+//                  "Step 13 learn 0.03 Mutation 0.15", 
+//                  "Step 15 learn 0.03 Mutation 0.15"]
+
+// const bioRun6 = ["Step 5 learn 0.03 Mutation 0.2", "Step 7 learn 0.03 Mutation 0.2", 
+//                  "Step 9 learn 0.03 Mutation 0.2","Step 10 learn 0.03 Mutation 0.2", "Step 11 learn 0.03 Mutation 0.2", 
+//                  "Step 13 learn 0.03 Mutation 0.2", 
+//                  "Step 15 learn 0.03 Mutation 0.2"]
+
+// const bioRun6 = ["Step 5 l01M15" ,  "Step 7 l01M15",  "Step 9 l01M15",  "Step 10 l01M15",  "Step 11 l01M15",  "Step 13 l01M15", "Step 15 l01M15",
+//                  "Step 5 l02M15" ,  "Step 7 l02M15",  "Step 9 l02M15",  "Step 10 l02M15",  "Step 11 l02M15",  "Step 13 l02M15", "Step 15 l02M15",
+//                  "Step 5 l03M15" ,  "Step 7 l03M15",  "Step 9 l03M15",  "Step 10 l03M15",  "Step 11 l03M15",  "Step 13 l03M15", "Step 15 l03M15"];
+// const bioRun6 = ["Step 5 l03M15" ,  "Step 7 l03M15",  "Step 9 l03M15",  "Step 10 l03M15",  "Step 11 l03M15",  "Step 13 l03 M15", "Step 15 l03M15"];
+// const bioRun6 = ["Step 5 l01M15" ,  "Step 7 l01M15",  "Step 9 l01M15",  "Step 10 l01M15",  "Step 11 l01M15",  "Step 13 l01M15", "Step 15 l01M15"];
+                 
+const bioRun6 = ["Step 5 l02M15" ,  "Step 7 l02M15",  "Step 9 l02M15",  "Step 10 l02M15",  "Step 11 l02M15",  "Step 13 l02M15", "Step 15 l02M15"];
+// const bioRunAll = [
+
+//   // ===== CONTROL (Step 0, learning/social enabled) =====
+//   "Step 0 l01M15 (control)",
+//   "Step 0 l02M15 (control)",
+//   "Step 0 l03M15 (control)",
+
+
+//   // ===== LR 0.01 — NO LEARNING / SOCIAL =====
+//   "Step 0 l01M15 (no learn/social)",
+//   "Step 5 l01M15 (no learn/social)",
+//   "Step 7 l01M15 (no learn/social)",
+//   "Step 9 l01M15 (no learn/social)",
+//   "Step 10 l01M15 (no learn/social)",
+//   "Step 11 l01M15 (no learn/social)",
+//   "Step 13 l01M15 (no learn/social)",
+//   "Step 15 l01M15 (no learn/social)",
+
+
+//   // ===== LR 0.02 — NO LEARNING / SOCIAL =====
+//   "Step 0 l02M15 (no learn/social)",
+//   "Step 5 l02M15 (no learn/social)",
+//   "Step 7 l02M15 (no learn/social)",
+//   "Step 9 l02M15 (no learn/social)",
+//   "Step 10 l02M15 (no learn/social)",
+//   "Step 11 l02M15 (no learn/social)",
+//   "Step 13 l02M15 (no learn/social)",
+//   "Step 15 l02M15 (no learn/social)",
+
+
+//   // ===== LR 0.03 — NO LEARNING / SOCIAL =====
+//   "Step 0 l03M15 (no learn/social)",
+//   "Step 5 l03M15 (no learn/social)",
+//   "Step 7 l03M15 (no learn/social)",
+//   "Step 9 l03M15 (no learn/social)",
+//   "Step 10 l03M15 (no learn/social)",
+//   "Step 11 l03M15 (no learn/social)",
+//   "Step 13 l03M15 (no learn/social)",
+//   "Step 15 l03M15 (no learn/social)"
+
+// ];
 
 
 var socket = io.connect("https://73.19.38.112:8888");
