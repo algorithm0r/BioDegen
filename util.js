@@ -27,6 +27,8 @@ const PARAMETERS = {
     maxEnvironmentalBonus: 5,
     randomEnvironmentalBonuses: false,
 
+    graphWidth: 600,
+    graphHeight: 100,
     // village parameters
     populationSoftCap: 30,
 
