@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BioDegen Data Graphs</title>
+    <link rel="stylesheet" type="text/css" href="./style.css"></link>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./graphs.js"></script>
+</head>
+<body>
+    <canvas id="chart" tabindex="1" width="1400" height="1000"></canvas><br />
+    <div id="db" class="db-status">Database</div><br />
+    <label for="run_selection">Select Run:</label>
+    <select id="run_selection"></select><br /><br />
+    <button id="query">Query & Display</button>
+    <button id="next">Next Run</button>   
+    <div id="query_info">Ready to query</div><br /><br />
+    <button id="download">Download Current Run Data</button><br /><br />
+    
+    <div style="margin-top: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 5px; max-width: 600px;">
+        <strong>Instructions:</strong>
+        <ul>
+            <li>Select a run from the dropdown menu</li>
+            <li>Click "Query & Display" to fetch and visualize the data</li>
+            <li>Click "Next Run" to automatically move to and display the next run</li>
+            <li>Line graphs show averages across all records for that run</li>
+            <li>Tickets graph shows Gene (red), Social (blue), and Learning (purple) overlaid</li>
+            <li>Histograms show merged data from records that have histogram data</li>
+            <li>Click "Download" to export the current run's data as CSV files</li>
+        </ul>
+    </div>
+</body>
+</html>
