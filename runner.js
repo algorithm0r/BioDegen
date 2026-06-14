@@ -114,7 +114,7 @@ if (!isMainThread) {
             } catch {
                 ({ io: ioClient } = require('../Server/node_modules/socket.io-client'));
             }
-            socket = ioClient(serverUrl);
+            socket = ioClient(serverUrl, { rejectUnauthorized: false });
             await new Promise((resolve, reject) => {
                 socket.on('connect', resolve);
                 socket.on('connect_error', reject);
