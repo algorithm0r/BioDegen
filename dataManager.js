@@ -61,7 +61,7 @@ class DataManager {
             //maybe change this to query?
             data: {
                 run: PARAMETERS.run,
-                params: PARAMETERS,
+                params: Object.assign({}, PARAMETERS),
                 population: this.popGraph,
                 geneTickets: this.geneGraph,
                 learningTickets: this.learningGraph,
