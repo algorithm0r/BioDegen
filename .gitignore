@@ -1,0 +1,6 @@
+# Runner runtime artifacts
+status.json
+completed.log
+
+# Node
+node_modules/

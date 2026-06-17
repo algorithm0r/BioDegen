@@ -20,15 +20,20 @@ const fs   = require('fs');
 const path = require('path');
 const vm   = require('vm');
 
-let MongoClient;
+let MongoClient = null;
 try {
     ({ MongoClient } = require('mongodb'));
 } catch {
-    ({ MongoClient } = require('../Server/node_modules/mongodb'));
+    try {
+        ({ MongoClient } = require('../Server/node_modules/mongodb'));
+    } catch {
+        // mongodb driver not installed — only needed for direct (non --server) mode.
+    }
 }
 
 const DEFAULT_MONGO_URL = 'mongodb://127.0.0.1:27017';
 const DIR = __dirname;
+const HEARTBEAT_MS = 2000; // how often each worker reports progress to the main thread
 
 // BASE defaults applied before each run's own overrides.
 const BASE = {
@@ -124,6 +129,28 @@ if (!isMainThread) {
             await client.connect();
         }
 
+        // Run one full simulation to completion, emitting a heartbeat to the
+        // main thread every HEARTBEAT_MS so progress is observable live.
+        function runWorldLoop() {
+            let runComplete = false;
+            let lastBeat = Date.now();
+            const world = vm.runInContext('new World(gameEngine)', ctx);
+            world.reset = () => { runComplete = true; };
+            while (!runComplete) {
+                world.update();
+                const now = Date.now();
+                if (now - lastBeat >= HEARTBEAT_MS) {
+                    lastBeat = now;
+                    parentPort.postMessage({
+                        type:  'heartbeat',
+                        run:   PARAMETERS.run,
+                        day:   PARAMETERS.day,
+                        epoch: PARAMETERS.epoch,
+                    });
+                }
+            }
+        }
+
         async function processRun(run) {
             const t0 = Date.now();
 
@@ -134,27 +161,19 @@ if (!isMainThread) {
 
             if (socket) {
                 ctx.socket.emit = (event, packet) => socket.emit(event, packet);
-            } else {
-                let capturedData = null;
-                ctx.socket.emit = (event, packet) => {
-                    if (event === 'insert') capturedData = JSON.parse(JSON.stringify(packet));
-                };
-                let runComplete = false;
-                const world = vm.runInContext('new World(gameEngine)', ctx);
-                world.reset = () => { runComplete = true; };
-                while (!runComplete) world.update();
-                if (capturedData) {
-                    const col = client.db(capturedData.db).collection(capturedData.collection);
-                    await col.insertOne(capturedData.data);
-                }
+                runWorldLoop();
                 return Date.now() - t0;
             }
 
-            let runComplete = false;
-            const world = vm.runInContext('new World(gameEngine)', ctx);
-            world.reset = () => { runComplete = true; };
-            while (!runComplete) world.update();
-
+            let capturedData = null;
+            ctx.socket.emit = (event, packet) => {
+                if (event === 'insert') capturedData = JSON.parse(JSON.stringify(packet));
+            };
+            runWorldLoop();
+            if (capturedData) {
+                const col = client.db(capturedData.db).collection(capturedData.collection);
+                await col.insertOne(capturedData.data);
+            }
             return Date.now() - t0;
         }
 
@@ -245,7 +264,45 @@ if (isMainThread) {
         const total     = queue.length;
         const startTime = Date.now();
 
-        await Promise.all(Array.from({ length: n }, () => new Promise((resolve, reject) => {
+        // ── Live status instrumentation ──────────────────────────────────────
+        // Each worker's latest heartbeat is mirrored into status.json so a
+        // separate `node status.js` can report batch progress at any time, and
+        // every completed run is appended to completed.log.
+        const STATUS_FILE   = path.join(DIR, 'status.json');
+        const COMPLETED_LOG = path.join(DIR, 'completed.log');
+        const workerStates  = new Array(n).fill(null);
+        let lastStatusWrite = 0;
+
+        function buildStatus() {
+            const elapsed = (Date.now() - startTime) / 1000;
+            const perRun  = done ? (Date.now() - startTime) / done : 0;
+            const eta     = perRun ? (perRun * (total - done)) / 1000 : 0;
+            return {
+                pid:         process.pid,
+                startedAt:   new Date(startTime).toISOString(),
+                updatedAt:   new Date().toISOString(),
+                total, done,
+                elapsedSec:  Math.round(elapsed),
+                etaSec:      Math.round(eta),
+                avgMsPerRun: Math.round(perRun),
+                workers: workerStates.map((w, id) => w && {
+                    id,
+                    run:   w.run,
+                    day:   w.day,
+                    epoch: w.epoch,
+                    pct:   w.epoch ? +(100 * w.day / w.epoch).toFixed(1) : 0,
+                }),
+            };
+        }
+
+        function writeStatus(force = false) {
+            const now = Date.now();
+            if (!force && now - lastStatusWrite < 1000) return; // throttle to ~1/s
+            lastStatusWrite = now;
+            try { fs.writeFileSync(STATUS_FILE, JSON.stringify(buildStatus(), null, 2)); } catch {}
+        }
+
+        await Promise.all(Array.from({ length: n }, (_, idx) => new Promise((resolve, reject) => {
             const worker = new Worker(__filename, { workerData: { collection, mongoUrl, serverUrl } });
 
             function sendNext() {
@@ -257,14 +314,23 @@ if (isMainThread) {
             worker.on('message', msg => {
                 if (msg.type === 'ready') {
                     sendNext();
+                } else if (msg.type === 'heartbeat') {
+                    workerStates[idx] = { run: msg.run, day: msg.day, epoch: msg.epoch };
+                    writeStatus();
                 } else if (msg.type === 'done') {
                     done++;
+                    workerStates[idx] = null;
+                    try {
+                        fs.appendFileSync(COMPLETED_LOG,
+                            `${new Date().toISOString()}\t${msg.run}\t${msg.ms}ms\n`);
+                    } catch {}
                     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
                     const perRun  = (Date.now() - startTime) / done;
                     const eta     = ((perRun * (total - done)) / 1000).toFixed(0);
                     process.stdout.write(
                         `\r[${String(done).padStart(4)}/${total}] ${msg.run.padEnd(44)} ${String(msg.ms).padStart(6)}ms | ${elapsed}s | ~${eta}s left  `
                     );
+                    writeStatus(true);
                     sendNext();
                 }
             });
@@ -275,6 +341,7 @@ if (isMainThread) {
 
         const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
         const avg = ((Date.now() - startTime) / done) | 0;
+        writeStatus(true);
         console.log(`\n\nDone — ${done} runs in ${totalTime}s  (avg ${avg}ms/run)\n`);
     }
 
