@@ -24,6 +24,46 @@ try {
 const MONGO_URL = 'mongodb://127.0.0.1:27017';
 const DB_NAME   = 'BioDegenDB';
 
+// Nosocial conditions (individual learning only; social never fires).
+// Stored as 1-D ticket arrays, not histograms.
+const nosocialRunAll = [
+    "6 Step 5 l01M15 (no social)",  "6 Step 7 l01M15 (no social)",
+    "6 Step 9 l01M15 (no social)",  "6 Step 11 l01M15 (no social)",
+    "6 Step 13 l01M15 (no social)", "6 Step 15 l01M15 (no social)",
+    "6 Step 5 l02M15 (no social)",  "6 Step 7 l02M15 (no social)",
+    "6 Step 9 l02M15 (no social)",  "6 Step 11 l02M15 (no social)",
+    "6 Step 13 l02M15 (no social)", "6 Step 15 l02M15 (no social)",
+    "6 Step 5 l03M15 (no social)",  "6 Step 7 l03M15 (no social)",
+    "6 Step 9 l03M15 (no social)",  "6 Step 11 l03M15 (no social)",
+    "6 Step 13 l03M15 (no social)", "6 Step 15 l03M15 (no social)",
+];
+
+const TICKET_METRICS = [
+    ["geneTickets",     "gene"],
+    ["learningTickets", "learning"],
+    ["socialTickets",   "social"],
+];
+
+function nosocialRows(runName, runIndex, doc) {
+    const rows = [];
+    const period = (doc.params && (doc.params.reportingPeriod || doc.params.reportPeriod)) || 400;
+    for (const [field, metric] of TICKET_METRICS) {
+        const series = doc[field];
+        if (!Array.isArray(series)) continue;
+        for (let t = 0; t < series.length; t++) {
+            const val = series[t];
+            if (val == null) continue;
+            rows.push(`${csv(runName)},${runIndex},${t * period},${metric},,${val.toFixed(6)},`);
+        }
+    }
+    if (Array.isArray(doc.population)) {
+        for (let t = 0; t < doc.population.length; t++) {
+            rows.push(`${csv(runName)},${runIndex},${t * period},population,,${doc.population[t]},`);
+        }
+    }
+    return rows;
+}
+
 // Active run names — matches util.js (s=0 removed).
 const bioRunAll = [
     // no-learn/social controls
@@ -121,6 +161,15 @@ async function main() {
         ).toArray();
         console.log(`[${String(i + 1).padStart(2)}/${bioRunAll.length}] ${runName.padEnd(46)} ${docs.length} reps`);
         docs.forEach((doc, idx) => lines.push(...runRows(runName, idx, doc)));
+        totalDocs += docs.length;
+    }
+
+    // Nosocial conditions (ticket-format docs)
+    for (let i = 0; i < nosocialRunAll.length; i++) {
+        const runName = nosocialRunAll[i];
+        const docs = await col.find({ run: runName }, { sort: { _id: 1 } }).toArray();
+        console.log(`[nosocial ${String(i + 1).padStart(2)}/${nosocialRunAll.length}] ${runName.padEnd(40)} ${docs.length} reps`);
+        docs.forEach((doc, idx) => lines.push(...nosocialRows(runName, idx, doc)));
         totalDocs += docs.length;
     }
 

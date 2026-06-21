@@ -10,7 +10,7 @@ class Human {
         }
         this.genes.push(other ? other.genes[PARAMETERS.numTraits] : 0); // learning tickets
         this.genes.push(other ? other.genes[PARAMETERS.numTraits + 1] : 0); // social learning tickets
-        this.geneTotal = this.genes.reduce((accumulator, currentValue) => accumulator + currentValue, 1);
+        this.geneTotal = this.genes.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         this.reproductionThreshold = PARAMETERS.reproductionThresholdBase + PARAMETERS.reproductionThresholdStep * this.geneTotal;
 
         this.mutate();

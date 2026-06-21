@@ -4,3 +4,10 @@ completed.log
 
 # Node
 node_modules/
+
+# Large per-run export (regenerate with: node export.js); too big for GitHub
+data/biodegen_perrun_all.csv
+
+# Python caches
+__pycache__/
+*.pyc

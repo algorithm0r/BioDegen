@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BioDegen Per-Run Export</title>
+    <link rel="stylesheet" type="text/css" href="./style.css"></link>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./export.js"></script>
+</head>
+<body>
+    <h2>BioDegen Per-Run Exporter</h2>
+    <div id="db" class="db-status">Database</div><br />
+
+    <label for="run_selection">Condition:</label>
+    <select id="run_selection"></select>
+    <button id="export_one">Export this condition</button>
+    <button id="export_all">Export ALL conditions</button>
+    <br /><br />
+    <div id="status">Ready.</div>
+
+    <div style="margin-top: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 5px; max-width: 720px;">
+        <strong>What this produces</strong>
+        <ul>
+            <li>One tidy CSV: <code>run, run_index, timestep, metric, n, mean, median</code></li>
+            <li><code>metric</code> &isin; {gene, learning, social, meme, population}</li>
+            <li>One row per (run &times; snapshot &times; metric). <code>run_index</code> distinguishes the
+                ~48 individual runs within a condition &mdash; this is the unit of replication for statistics.</li>
+            <li>Trait rows give the per-run <code>mean</code>/<code>median</code> collapsed from the 20-bucket
+                histogram; <code>population</code> rows store the value in <code>mean</code>.</li>
+            <li>"Export ALL" chains through every condition and downloads a single
+                <code>biodegen_perrun_all.csv</code>. Feed that to <code>data/stats_analysis.py</code>.</li>
+        </ul>
+    </div>
+</body>
+</html>
